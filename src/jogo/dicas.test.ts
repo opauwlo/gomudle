@@ -57,14 +57,14 @@ describe('dicasDaCarta', () => {
 })
 
 describe('dicasDoModo', () => {
-  // Cor, custo, poder, traço e coleção já são coluna da grade: pagar a marca
-  // "sem dica" por algo que a grade entrega de graça seria roubo.
-  // Traço saiu da grade e virou dica: é a saída pra quando a carta do dia tem
-  // sósia, e agora custa a marca "sem dica".
-  it('na grade, a escada é quantidade, traços, conjunto e inicial', () => {
+  // Cor, custo/vida, poder, traço e coleção já são coluna da grade: pagar a
+  // marca "sem dica" por algo que a grade entrega de graça seria roubo.
+  // O TIPO não é coluna — medido, não cabe lá (ver a 11 do NOTAS) — e por isso
+  // ele é quem ocupa a vaga do meio da escada.
+  it('na grade, a escada é quantidade, tipo, conjunto e inicial', () => {
     expect(dicasDoModo(luffy, 'personagem').map((d) => d.rotulo)).toEqual([
       'Quantas palavras-chave',
-      'Traços',
+      'Tipo',
       'Palavras-chave',
       'Inicial do nome',
     ])
