@@ -154,15 +154,15 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
 11. **Não existe coluna de bloco, e isso é decisão medida.** Simulando um
    jogador de memória perfeita (que sempre chuta uma carta ainda possível):
 
-   Medido no deck unificado de 1.111 cartas, amostra de 400 respostas com
-   semente fixa:
+   Medido no deck da grade — 937 cartas, líder e personagem —, amostra de 400
+   respostas com semente fixa:
 
    | colunas | média | ≤5 palpites | pior caso | ambíguas |
    |---|---|---|---|---|
-   | cor · C/V · poder · coleção | 6,14 | 52% | 18 | 221 (20%) |
-   | **cor · C/V · poder · tipos · coleção** | **4,81** | **71%** | **14** | **67 (6%)** |
-   | + categoria | 4,54 | 74% | 12 | 59 (5%) |
-   | + categoria + atributo | 3,83 | 88% | 9 | 30 (3%) |
+   | cor · C/V · poder · coleção | 6,16 | 52% | 18 | 189 (20%) |
+   | **cor · C/V · poder · tipos · coleção** | **4,76** | **70%** | **13** | **54 (6%)** |
+   | + categoria | 4,63 | 72% | 13 | 54 (6%) |
+   | + categoria + atributo | 3,65 | 92% | 9 | 25 (3%) |
 
    A linha em negrito é a que está no ar. As duas pontas explicam por quê.
 
@@ -180,11 +180,14 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    um entra e o outro não — bloco é metadado de lançamento, saber é consulta,
    não dedução, e ele derrubava o deck num palpite só.
 
-   **CATEGORIA não é coluna, de propósito.** Ela custa 0,27 palpite (4,81 →
-   4,54) — pouco pra uma vaga inteira de largura numa grade que já tem cinco. E
-   ela já vaza: "—" em Poder só acontece em evento e stage. Deduzir vale mais
-   que ler. Onde ela entra é como DICA pedida (ver a 4), onde quem quer paga a
-   marca por ela.
+   **CATEGORIA não é coluna, de propósito.** Ela custa 0,13 palpite (4,76 →
+   4,63) — pouco pra uma vaga inteira de largura numa grade que já tem cinco. E
+   ela já vaza pela metade na própria coluna C/V: vida de líder vai de 2 a 6 e
+   custo de personagem de 1 a 10, então 1, 7, 8, 9 e 10 só podem ser custo, e
+   são 28% do deck se entregando sozinhas. Os valores do meio, que são a
+   maioria, ficam ambíguos de verdade — e é ali que está a graça. Onde a
+   categoria entra é como DICA pedida (ver a 4), onde quem quer paga a marca
+   por ela.
 
    **Atributo é a linha de "fácil demais":** 3,83 de média e 88% em cinco
    palpites é a zona onde o bloco estava. Não entra.
@@ -201,16 +204,24 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    EB-04 saíram juntas), então a escala teria que ser o bloco outra vez — e aí
    vale refazer a tabela acima antes, não depois.
 
-12. **Um deck só, com as quatro categorias de carta.** Líder, personagem,
-   evento e stage disputam o mesmo sorteio: a categoria virou parte do enigma
-   em vez de ser a divisão dos modos. O modo "Líder" deixou de existir junto — ele era o
-   mesmo jogo com 142 cartas e uma coluna trocada.
+12. **Um deck só de líder e personagem; evento e stage só no modo efeito.**
+   Líder e personagem disputam o mesmo sorteio — a categoria virou parte do
+   enigma em vez de ser a divisão dos modos, e o modo "Líder" deixou de existir
+   junto, porque era o mesmo jogo com 142 cartas e uma coluna trocada.
+   Evento e stage chegaram a entrar na grade e voltaram atrás. O motivo é
+   diversão, não dado: evento é texto curto e repetido — dezenas são "dê +1000
+   de poder" com outro nome — e nem evento nem stage têm poder, então eles
+   entravam com um "—" numa das cinco colunas. Coluna que não diz nada em 174
+   cartas não é enigma, é buraco.
+   **Sair não custou dificuldade**: com eles, 4,81 de média e 6% de ambíguas;
+   sem eles, 4,76 e 6%. Tamanho de deck quase não mexe na média — o que muda é
+   a qualidade do que está lá dentro.
+   No modo EFEITO eles entram, e ali fazem sentido: a carta é o TEXTO, e texto
+   de evento é tão enigma quanto o de personagem. É o único lugar onde a
+   repetição deles deixa de ser defeito, porque a comparação é de leitura.
    A régua de raridade abaixo só se aplica onde existe enchimento de booster:
    personagem (2.185 na fonte) e evento (410). Líder tem 142 no jogo inteiro e
-   stage tem 48 — filtrar esses dois por raridade deixaria TRÊS stages, e um
-   categoria com três cartas é resposta entregue no dia em que sai.
-   Evento e stage não têm poder. Isso não é dado faltando: o "—" na coluna é
-   informação, e é o que faz a categoria vazar sem precisar de coluna própria.
+   stage tem 48 — filtrar esses dois por raridade deixaria TRÊS stages.
 
    **O deck de personagem é R, SR e SEC — C e UC ficam fora.** Também medido
    (ver o comentário em `scripts/gerar-cartas.mjs`): o tamanho do deck quase
