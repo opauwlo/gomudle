@@ -279,9 +279,19 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
 18. **O termômetro conta grade E dica juntas.** Já esteve errado: nos modos com
    coluna ele só olhava a grade, então pedir dica não mexia no número e a ajuda
    parecia de graça. Ver `Cerco` em `jogo/candidatas.ts`.
-19. **O termômetro mostra a CONTA, nunca a lista.** Ver quantas candidatas
-   sobraram é o que transforma palpite errado em progresso; ver QUAIS
-   acabaria com o jogo em um clique.
+19. **O termômetro saiu, e a regra dele fica escrita pra quem quiser de volta.**
+   Durante a rodada havia um "Sobraram 41 de 1.111 cartas" com barra. A ideia
+   era boa e está anotada aqui de propósito: ver a conta cair transforma
+   palpite errado em progresso visível, e sem isso o segundo chute errado
+   parece igual ao primeiro. Saiu porque enche a tela de número no meio de uma
+   rodada que já tem grade, dicas e campo de busca.
+   Se voltar, duas coisas não podem mudar: mostra a CONTA, nunca a LISTA — ver
+   QUAIS cartas sobraram acaba com o jogo em um clique — e conta grade E dica
+   juntas, senão pedir dica não mexe no número e a ajuda parece de graça (ver
+   `Cerco` em `jogo/candidatas.ts`, que continua lá inteiro e testado).
+   **O afunilamento não sumiu do jogo**, só da rodada em andamento: ele aparece
+   no fim ("1.111 → 41 → 6") e na mensagem de compartilhar, que é onde ele
+   conta a história em vez de ocupar espaço.
 
 20. **A grade é planilha de MARCAS, não de valores.** Um cabeçalho só, grudado
    no topo, a primeira coluna é só a arte e cada célula tem só ✓ / ✕ / ▲ / ▼ /

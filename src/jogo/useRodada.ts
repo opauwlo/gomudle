@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import { candidatasRestantes, diaDificil, trilhaDeCandidatas, type Cerco } from './candidatas'
+import { diaDificil, trilhaDeCandidatas, type Cerco } from './candidatas'
 import { acharPorId } from './cartas'
 import { compararCarta } from './comparar'
 import { diaDoJogo, numeroDoDesafio } from './dia'
@@ -40,8 +40,6 @@ export interface Rodada {
   venceu: boolean
   encerrada: boolean
   emTreino: boolean
-  /** Quantas cartas ainda cabem em todas as pistas já vistas. */
-  candidatas: number
   dicasPedidas: number
   usouDica: boolean
   pedirDica: () => void
@@ -125,7 +123,6 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     [deck, estado.dicasPedidas, modo.colunas, modo.id, palpites, resposta],
   )
 
-  const candidatas = useMemo(() => candidatasRestantes(cerco).length, [cerco])
   const dificil = useMemo(
     () => diaDificil(deck, modo.colunas, resposta),
     [deck, modo.colunas, resposta],
@@ -234,7 +231,6 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     venceu,
     encerrada,
     emTreino,
-    candidatas,
     dicasPedidas: estado.dicasPedidas,
     usouDica: usouDica(estado),
     pedirDica,

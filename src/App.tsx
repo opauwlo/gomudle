@@ -12,7 +12,6 @@ import { PainelDeFim } from './componentes/PainelDeFim'
 import { precarregar } from './componentes/precarregar'
 import { Rodape } from './componentes/Rodape'
 import { BarraDeControles } from './componentes/BarraDeControles'
-import { Termometro } from './componentes/Termometro'
 import { escreverEndereco, lerEndereco } from './jogo/endereco'
 import { acharFormato, type IdDeFormato } from './jogo/formatos'
 import { acharModo, deckDoModo, MODOS } from './jogo/modos'
@@ -136,14 +135,6 @@ export function App() {
         {modo.id === 'efeito' && <PainelDeEfeito carta={rodada.resposta} />}
         {modo.id === 'arte' && (
           <PainelDeArte carta={rodada.resposta} palpites={chutou} revelar={encerrada} />
-        )}
-
-        {!encerrada && (
-          <Termometro
-            candidatas={rodada.candidatas}
-            total={rodada.deck.length}
-            palpites={chutou}
-          />
         )}
 
         {!encerrada && (
