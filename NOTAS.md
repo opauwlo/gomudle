@@ -87,10 +87,13 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    que o arquivo bate com o gerador.
 
 9. **A busca quebra o texto em termos e cada termo tem que casar** com o nome
-   ou com o código. É isso que faz "op02-036 nami" e "op11 nami" funcionarem —
+   ou com o código, e devolve TUDO que casou, sem corte. É isso que faz "op02-036 nami" e "op11 nami" funcionarem —
    procurar a string inteira não acharia nada. Nome e código são normalizados
    sem acento, pontuação nem caixa, porque o dataset escreve "Monkey.D.Luffy" e
    ninguém digita o ponto no lugar certo.
+   A lista já cortou em 12 e avisou "e mais 40 — escreva o código pra afinar".
+   Era pedir à pessoa exatamente o que ela não sabe: quem digita "luffy" está
+   procurando entre os Luffy, e são 42. Hoje vem tudo e a lista rola.
 
 10. **Ícone é componente, não emoji.** Tudo que é desenho na tela sai de
    `componentes/icones.ts` (Lucide) — emoji renderizava diferente em cada
@@ -123,6 +126,20 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    22 cartas que terminam a rodada com tudo verde e a carta errada. Se for
    mexer nisso de novo, meça antes: a simulação é umas 40 linhas em cima de
    `compararCarta`.
+
+   **O bloco voltou por uma fresta: ele ORDENA a coluna de coleção.** Não é a
+   coluna de bloco de volta — aquela punha os cinco valores na tela e um
+   palpite derrubava o deck. Aqui ele só dá a seta: ▲ quer dizer que a carta do
+   dia é de coleção mais nova que a chutada, e duas coleções do mesmo bloco
+   empatam em amarelo (mesma época, outra coleção). A comparação é sempre
+   contra o que a pessoa chutou, uma por vez.
+   Precisa do bloco porque o CÓDIGO não ordena: OP, ST, EB e PRB são numeradas
+   cada uma por conta própria — OP-15 e EB-04 saíram juntas, ST-30 é mais nova
+   que OP-09. Ver `blocoDaColecao` em `jogo/cartas.ts`, que tira o bloco de
+   cada coleção das próprias cartas (o mais comum, porque OP-16 e OP-17 têm
+   oito cartas de ícone X no meio).
+   **Isto facilita o jogo e a conta não foi refeita.** Os números da tabela
+   acima são de antes da seta. Quem for medir, meça as duas colunas de uma vez.
 
 12. **O deck de personagem é R, SR e SEC — C e UC ficam fora.** Também medido
    (ver o comentário em `scripts/gerar-cartas.mjs`): o tamanho do deck quase
@@ -167,10 +184,17 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    escolheu a carta sabe o que ela tem, e o X já informa "não é essa cor". Com
    isso a linha caiu de ~200px pra 44px e dá pra varrer a coluna de um golpe de
    vista. O valor continua no `title` e no texto do leitor de tela.
-   Dois detalhes que quebram isso em silêncio: o `sticky` do cabeçalho morre se
-   qualquer ancestral ganhar `overflow` (vira contexto de rolagem e ele gruda
-   nele), e a imagem da carta precisa de ALTURA fixa — sem ela, `object-cover`
-   cai na proporção 63×88 e estica a linha inteira pra 65px.
+   O `sticky` do cabeçalho quebra em silêncio se qualquer ancestral ganhar
+   `overflow`: vira contexto de rolagem e ele passa a grudar nele.
+   **A linha voltou a crescer, de propósito: hoje são ~76px.** A caixa da
+   miniatura tem a proporção da carta impressa (`aspect-[63/88]`) e a imagem é
+   `object-contain`, então a carta aparece INTEIRA. Antes eram 44px fixos com
+   `object-cover`, que mostrava a faixa de cima e cortava a carta no meio — dava
+   pra varrer a coluna, mas não pra reconhecer o palpite sem passar o mouse. A
+   troca é essa: cabe menos palpite na tela de uma vez, e em troca a primeira
+   coluna volta a valer alguma coisa. Quem mexer nisso decide de novo entre as
+   duas, não existe terceira opção — a largura da coluna é 3.4rem e a altura
+   sai dela.
 21. **A arte passa por CDN de imagem, não por link direto no oficial.** O
    dataset guarda o endereço do site da Bandai, e apontar a `<img>` pra ele
    tinha dois problemas. O primeiro derrubou o jogo: quem pede a imagem é o

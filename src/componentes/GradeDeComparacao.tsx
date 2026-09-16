@@ -25,10 +25,19 @@ function Marca({ pista }: { pista: Pista }) {
   return <Desenho aria-hidden="true" className="size-[1.15rem]" strokeWidth={2.75} />
 }
 
-function descrever(pista: Pista): string {
+/**
+ * O texto que o leitor de tela lê e que aparece ao passar o mouse.
+ *
+ * O sentido da seta sai da COLUNA porque "maior" não serve pra tudo: em
+ * coleção a seta é tempo, e "a resposta é maior" não quer dizer nada sobre uma
+ * coleção. Ver `sentido` em `jogo/comparar.ts`.
+ */
+function descrever(pista: Pista, coluna?: Coluna): string {
   const base = `${pista.rotulo}: ${pista.valor}.`
   if (pista.veredito === 'igual') return `${base} Acertou.`
-  const seta = pista.direcao ? ` A resposta é ${pista.direcao}.` : ''
+  const seta = pista.direcao
+    ? ` A resposta é ${coluna?.sentido?.[pista.direcao] ?? pista.direcao}.`
+    : ''
   return pista.veredito === 'parcial' ? `${base} Quase.${seta}` : `${base} Errou.${seta}`
 }
 
@@ -60,6 +69,7 @@ export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Pr
   // alternativo. O resto são colunas iguais, porque agora só cabe uma marca em
   // cada uma.
   const template = `3.4rem repeat(${colunas.length}, minmax(0, 1fr))`
+  const colunaPorChave = new Map(colunas.map((coluna) => [coluna.chave, coluna]))
 
   return (
     // Sem `overflow-x` aqui de propósito: qualquer overflow no ancestral vira
@@ -94,21 +104,25 @@ export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Pr
               style={{ gridTemplateColumns: template }}
             >
               {/*
-                Altura fixa de propósito: sem ela, `object-cover` cai na
-                proporção natural da carta (63×88) e ESTICA a linha inteira pra
-                65px — a altura da linha passava a ser decidida pela imagem, não
-                pelo conteúdo.
+                A caixa tem a proporção da carta impressa (63×88), então a
+                miniatura aparece INTEIRA — arte, nome, custo, tudo. Antes eram
+                44px de altura fixa com `object-cover`, que mostrava só a faixa
+                de cima e cortava a carta no meio.
+                É a imagem que decide a altura da linha agora (uns 76px na
+                largura de 3.4rem). Foi a troca escolhida: a linha ficou mais
+                alta e cabe menos palpite na tela de uma vez, e em troca dá pra
+                reconhecer a carta sem passar o mouse.
               */}
               <div
                 title={`${palpite.nome} (${palpite.id})${gemea ? ' — mesmas características da carta do dia, mas é outra' : ''}`}
-                className={`relative h-11 overflow-hidden rounded-md ${
+                className={`relative aspect-[63/88] overflow-hidden rounded-md ${
                   certa ? 'ring-2 ring-ok' : ''
                 }`}
               >
                 <ImagemDaCarta
                   carta={palpite}
                   compacta
-                  className="size-full rounded-md object-cover object-top"
+                  className="size-full rounded-md object-contain"
                 />
                 {gemea && (
                   <span
@@ -130,19 +144,19 @@ export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Pr
                 // Repetir "Amarelo" embaixo de um X é dizer duas vezes a mesma
                 // coisa: quem acabou de escolher a carta sabe o que ela tem, e
                 // o X já informa "não é essa cor". Tirar o texto é o que
-                // permite a linha caber em 44px e a coluna ser varrida de cima
-                // a baixo de um golpe de vista, que é como se lê planilha.
+                // deixa a coluna ser varrida de cima a baixo de um golpe de
+                // vista, que é como se lê planilha.
                 //
                 // O valor continua no `title` (passar o mouse) e no texto do
                 // leitor de tela — não sumiu, saiu da frente.
                 <div
                   key={pista.chave}
-                  title={descrever(pista)}
+                  title={descrever(pista, colunaPorChave.get(pista.chave))}
                   className={`pastilha anima-virar ${classeDe(pista.veredito)}`}
                   style={{ animationDelay: `${ordem * 45}ms` }}
                 >
                   <Marca pista={pista} />
-                  <span className="sr-only">{descrever(pista)}</span>
+                  <span className="sr-only">{descrever(pista, colunaPorChave.get(pista.chave))}</span>
                 </div>
               ))}
             </div>

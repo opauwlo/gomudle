@@ -4,8 +4,6 @@ import type { Carta } from '../jogo/tipos'
 import { TINTA_DA_COR } from './cores'
 import { ImagemDaCarta } from './ImagemDaCarta'
 
-const LIMITE = 12
-
 interface Props {
   deck: Carta[]
   jaChutados: string[]
@@ -34,14 +32,13 @@ export function CampoDePalpite({
   const caixa = useRef<HTMLDivElement>(null)
   const lista = useRef<HTMLUListElement>(null)
 
-  const { sugestoes, total } = useMemo(() => {
-    const achado = buscarCartas(deck, termo, LIMITE + jaChutados.length)
-    const sobraram = achado.cartas.filter((carta) => !jaChutados.includes(carta.id))
-    return {
-      sugestoes: sobraram.slice(0, LIMITE),
-      total: achado.total - (achado.cartas.length - sobraram.length),
-    }
-  }, [deck, termo, jaChutados])
+  // Sem corte: a busca devolve tudo que casou e a lista rola. Cortar em 12 e
+  // avisar "e mais 40" mandava a pessoa adivinhar um código pra afinar — e
+  // quem digita "luffy" quer ver os Luffy, não um aviso de que existem.
+  const sugestoes = useMemo(
+    () => buscarCartas(deck, termo).filter((carta) => !jaChutados.includes(carta.id)),
+    [deck, termo, jaChutados],
+  )
 
   useEffect(() => setDestaque(0), [termo])
 
@@ -85,7 +82,6 @@ export function CampoDePalpite({
   }
 
   const mostrarPainel = aberto && termo.trim() !== ''
-  const escondidas = total - sugestoes.length
 
   return (
     <div ref={caixa} className="relative">
@@ -119,54 +115,47 @@ export function CampoDePalpite({
               Não achei. Aqui entram {descricaoDoDeck}.
             </p>
           ) : (
-            <>
-              <ul ref={lista} id={idLista} role="listbox" className="max-h-[22rem] overflow-y-auto">
-                {sugestoes.map((carta, indice) => (
-                  <li key={carta.id} id={`${idLista}-${indice}`} role="option" aria-selected={indice === destaque}>
-                    <button
-                      type="button"
-                      onClick={() => escolher(carta)}
-                      onMouseEnter={() => setDestaque(indice)}
-                      className={`flex w-full items-center gap-2.5 px-2.5 py-2 text-left ${
-                        indice === destaque ? 'bg-surface' : ''
-                      }`}
-                    >
-                      <ImagemDaCarta
-                        carta={carta}
-                        compacta
-                        className="h-14 w-10 shrink-0 rounded object-cover object-top"
-                      />
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-medium">{carta.nome}</span>
-                        <span className="block truncate text-xs text-tinta-3">
-                          {carta.id} · {carta.colecao.nome}
-                        </span>
-                        <span className="mt-0.5 flex items-center gap-1.5 text-xs text-tinta-3">
-                          <span className="flex gap-1" aria-hidden="true">
-                            {carta.cores.map((cor) => (
-                              <span
-                                key={cor}
-                                className="size-2.5 rounded-full ring-1 ring-hairline"
-                                style={{ background: TINTA_DA_COR[cor] ?? '#64748b' }}
-                              />
-                            ))}
-                          </span>
-                          {carta.tipo === 'lider'
-                            ? `${carta.vida} de vida`
-                            : `custo ${carta.custo}`}{' '}
-                          · {carta.poder.toLocaleString('pt-BR')} de poder
-                        </span>
+            <ul ref={lista} id={idLista} role="listbox" className="max-h-[22rem] overflow-y-auto">
+              {sugestoes.map((carta, indice) => (
+                <li key={carta.id} id={`${idLista}-${indice}`} role="option" aria-selected={indice === destaque}>
+                  <button
+                    type="button"
+                    onClick={() => escolher(carta)}
+                    onMouseEnter={() => setDestaque(indice)}
+                    className={`flex w-full items-center gap-2.5 px-2.5 py-2 text-left ${
+                      indice === destaque ? 'bg-surface' : ''
+                    }`}
+                  >
+                    <ImagemDaCarta
+                      carta={carta}
+                      compacta
+                      className="h-14 w-10 shrink-0 rounded object-cover object-top"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">{carta.nome}</span>
+                      <span className="block truncate text-xs text-tinta-3">
+                        {carta.id} · {carta.colecao.nome}
                       </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              {escondidas > 0 && (
-                <p className="border-t border-hairline px-3 py-2 text-xs text-tinta-3">
-                  e mais {escondidas} — escreva o código ou a coleção pra afinar
-                </p>
-              )}
-            </>
+                      <span className="mt-0.5 flex items-center gap-1.5 text-xs text-tinta-3">
+                        <span className="flex gap-1" aria-hidden="true">
+                          {carta.cores.map((cor) => (
+                            <span
+                              key={cor}
+                              className="size-2.5 rounded-full ring-1 ring-hairline"
+                              style={{ background: TINTA_DA_COR[cor] ?? '#64748b' }}
+                            />
+                          ))}
+                        </span>
+                        {carta.tipo === 'lider'
+                          ? `${carta.vida} de vida`
+                          : `custo ${carta.custo}`}{' '}
+                        · {carta.poder.toLocaleString('pt-BR')} de poder
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       )}

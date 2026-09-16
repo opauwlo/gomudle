@@ -10,17 +10,17 @@ describe('chaveDeBusca', () => {
 })
 
 describe('buscarCartas', () => {
-  const ids = (texto: string, limite?: number) =>
-    buscarCartas(TODAS_AS_CARTAS, texto, limite).cartas.map((carta) => carta.id)
+  const ids = (texto: string) =>
+    buscarCartas(TODAS_AS_CARTAS, texto).map((carta) => carta.id)
 
   it('acha por nome mesmo com a pontuação errada', () => {
     expect(ids('monkey d luffy').length).toBeGreaterThan(0)
   })
 
   it('traz todas as cartas de mesmo nome, não só a primeira', () => {
-    const namis = buscarCartas(TODAS_AS_CARTAS, 'nami', 50)
-    expect(namis.cartas.length).toBeGreaterThan(5)
-    expect(namis.cartas.every((carta) => /nami/i.test(carta.nome))).toBe(true)
+    const namis = buscarCartas(TODAS_AS_CARTAS, 'nami')
+    expect(namis.length).toBeGreaterThan(5)
+    expect(namis.every((carta) => /nami/i.test(carta.nome))).toBe(true)
   })
 
   it('acha pelo código, com ou sem hífen, em qualquer caixa', () => {
@@ -39,7 +39,7 @@ describe('buscarCartas', () => {
   })
 
   it('aceita coleção e nome juntos', () => {
-    const achado = buscarCartas(TODAS_AS_CARTAS, 'op11 nami', 50).cartas
+    const achado = buscarCartas(TODAS_AS_CARTAS, 'op11 nami')
     expect(achado.length).toBeGreaterThan(0)
     expect(achado.every((carta) => carta.id.startsWith('OP11') && /nami/i.test(carta.nome))).toBe(true)
   })
@@ -52,15 +52,17 @@ describe('buscarCartas', () => {
     expect(ids('  ')).toEqual([])
   })
 
-  it('respeita o limite mas conta o total de verdade', () => {
-    const achado = buscarCartas(TODAS_AS_CARTAS, 'luffy', 5)
-    expect(achado.cartas.length).toBe(5)
-    expect(achado.total).toBeGreaterThan(5)
+  it('não corta a lista: quem tem 40 homônimos vê os 40', () => {
+    const luffys = buscarCartas(TODAS_AS_CARTAS, 'luffy')
+    const todos = TODAS_AS_CARTAS.filter((carta) => /luffy/i.test(carta.nome))
+    expect(luffys.length).toBe(todos.length)
+    // O corte antigo era 12; o teste só vale se o nome passa disso.
+    expect(luffys.length).toBeGreaterThan(12)
   })
 
   it('só olha o deck que recebeu', () => {
     const lideres = TODAS_AS_CARTAS.filter((carta) => carta.tipo === 'lider')
-    const achado = buscarCartas(lideres, 'nami', 50).cartas
+    const achado = buscarCartas(lideres, 'nami')
     expect(achado.length).toBeGreaterThan(0)
     expect(achado.every((carta) => carta.tipo === 'lider')).toBe(true)
   })

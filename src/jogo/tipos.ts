@@ -37,7 +37,10 @@ export interface Pista {
   /** Já formatado pra tela: '2.000', '—', 'Vermelho / Verde'. */
   valor: string
   veredito: Veredito
-  /** Pra onde a resposta está em relação ao palpite. Só em coluna numérica. */
+  /**
+   * Pra onde a resposta está em relação ao palpite. Sai em coluna numérica e
+   * na de texto que tenha escala (a coleção, ordenada por bloco).
+   */
   direcao?: Direcao
 }
 

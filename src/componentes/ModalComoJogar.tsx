@@ -27,14 +27,18 @@ export function ModalComoJogar({ aoFechar }: { aoFechar: () => void }) {
               </span>
               <span>
                 Amarelo: chegou perto. Numa lista (cor, atributo, traços) significa que uma parte
-                bate; num número, que a diferença é de um degrau — 1 de custo, 1.000 de poder.
+                bate; num número, que a diferença é de um degrau — 1 de custo, 1.000 de poder; em
+                Coleção, que é outra coleção da mesma época.
               </span>
             </li>
             <li className="flex gap-2">
               <span className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded bg-surface">
                 <ICONE.maior aria-hidden="true" className="size-3.5" />
               </span>
-              <span>A seta aponta pro lado da resposta: pra cima é maior, pra baixo é menor.</span>
+              <span>
+                A seta aponta pro lado da resposta: pra cima é maior, pra baixo é menor. Em
+                Coleção ela é tempo — pra cima, a carta do dia é de uma coleção mais nova.
+              </span>
             </li>
           </ul>
         </div>
