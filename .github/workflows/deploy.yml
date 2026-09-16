@@ -1,0 +1,57 @@
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Um deploy por vez. Dois pushes seguidos não podem publicar fora de ordem.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+
+      # O Pages serve em /<repositório>/, então os assets precisam sair com
+      # esse prefixo. Sem isso a página abre em branco com 404 no JS.
+      - run: pnpm build
+        env:
+          BASE_PUBLICA: /${{ github.event.repository.name }}/
+
+      # `enablement` liga o Pages sozinho na primeira publicação. Sem isso o
+      # passo quebra enquanto ninguém tiver aberto Configurações > Pages e
+      # escolhido GitHub Actions na mão — e publicar não pode depender de
+      # alguém lembrar de um clique.
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: publicacao
+        uses: actions/deploy-pages@v4

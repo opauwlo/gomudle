@@ -1,0 +1,170 @@
+@import 'tailwindcss';
+/* Selos de palavra-chave desenhados como a carta imprime (MIT, do pacote
+   optcg-card-rules). O @import precisa vir aqui em cima: CSS só aceita import
+   antes de qualquer regra. */
+@import 'optcg-card-rules/styles.css';
+
+/*
+ * Paleta emprestada do REFS (refs.cards), o sistema de reputação de carta
+ * colecionável do mesmo autor. Não é cópia por preguiça: os dois vivem do
+ * mesmo público, e quem joga aqui tem que reconhecer a mão quando cair lá.
+ *
+ * Os nomes são os de lá de propósito — `paper`, `foil`, `selo`, `tinta`,
+ * `playmat` — porque são vocabulário de carta, não de software, e quem mexer
+ * nos dois repositórios não precisa traduzir nada na cabeça.
+ *
+ * O que NÃO veio junto: os três temas (aqui é só o escuro, que é o do
+ * feltro), os tokens de chrome fixo e o `ink-panel`, que existe lá pra
+ * resolver um problema de tema que aqui não existe.
+ */
+@theme {
+  --color-paper: #0a1a15;
+  --color-paper-2: #16332a;
+  --color-surface: #16332a;
+  --color-surface-1: #12261f;
+  --color-hairline: rgba(242, 236, 224, 0.1);
+  --color-linha: #2c463c;
+  --color-controle: #50806d;
+
+  --color-tinta: #f2ece0;
+  --color-tinta-3: #a7b7ac;
+  --color-playmat: #f0e6cf;
+
+  --color-foil: #e8bb61;
+  --color-foil-strong: #f0d391;
+  --color-foil-text: #f3d98a;
+  --color-foil-tint: #2a2110;
+  --color-foil-tint-border: #5c4a22;
+
+  --color-ok: #6fcf9f;
+  --color-ok-strong: #9fe0bd;
+  --color-ok-tint: #0f2a1f;
+  --color-ok-tint-border: #2a5440;
+
+  --color-selo: #e2685a;
+  --color-selo-strong: #f0897c;
+  --color-selo-tint: #2c1613;
+  --color-selo-tint-border: #5a2e28;
+
+  --color-realce: #46e0c4;
+
+  /* Texto pra cima de superfície clara sólida (foil, ok). Fixo: essas cores
+     são claras, então o que lê nelas é sempre escuro. */
+  --color-ink-fixed: #12332c;
+
+  --font-titulo: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+  --radius-card: 1rem;
+  --radius-control: 0.875rem;
+}
+
+/* Fundo fora de @layer, e com `html body` pra ganhar especificidade, de
+   propósito: regra dentro de camada PERDE pra regra sem camada, e quando o
+   jogo roda embutido numa página que pinta o próprio fundo claro (foi o que
+   aconteceu publicando como artifact), o resultado é texto claro em fundo
+   claro — ilegível. Aqui o jogo pinta o chão dele em qualquer hospedeiro. */
+html body {
+  color-scheme: dark;
+  background-color: var(--color-paper);
+  /* O feltro: um clarão verde no topo, como a luz caindo no playmat. */
+  background-image:
+    radial-gradient(ellipse 85% 55% at 50% -15%, #16332a 0%, transparent 72%),
+    radial-gradient(ellipse 55% 40% at 88% 102%, #12261f 0%, transparent 65%);
+  background-attachment: fixed;
+  color: var(--color-tinta);
+  min-height: 100dvh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  ::selection {
+    @apply bg-foil/30;
+  }
+
+  /* Foco visível em tudo que é operável: o jogo inteiro dá pra jogar no
+     teclado, e sem isso a lista de sugestões vira um labirinto. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-realce;
+  }
+}
+
+@layer components {
+  .painel {
+    @apply rounded-2xl border border-hairline bg-surface-1;
+  }
+
+  .rotulo {
+    @apply text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-tinta-3;
+  }
+
+  .botao-foil {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-foil px-4 py-2.5 font-semibold text-ink-fixed transition hover:bg-foil-strong;
+  }
+
+  .botao-contorno {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-controle px-4 py-2.5 font-semibold text-tinta transition hover:border-foil hover:text-foil-text;
+  }
+
+  /* Planilha em qualquer largura: o `grid-template-columns` vem do componente,
+     montado com o peso de cada coluna. Era uma grade de três colunas que
+     quebrava a linha em duas no celular — cada tentativa ocupava 200px e
+     repetia os rótulos dentro das pastilhas. */
+  .linha-grade {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .pastilha {
+    @apply flex min-h-[2.4rem] items-center justify-center rounded-lg;
+  }
+
+  .pastilha-acerto {
+    @apply bg-ok text-ink-fixed;
+  }
+
+  .pastilha-quase {
+    @apply bg-foil text-ink-fixed;
+  }
+
+  .pastilha-erro {
+    @apply border border-hairline bg-surface text-tinta-3;
+  }
+}
+
+/* Vira cada pastilha em sequência, da esquerda pra direita. É o que dá tempo
+   da pessoa LER a linha nova em vez de ela aparecer pronta de uma vez. */
+@keyframes virar {
+  from {
+    opacity: 0;
+    transform: rotateX(-70deg) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.anima-virar {
+  animation: virar 0.32s ease-out backwards;
+}
+
+/* O contador de candidatas é o número que a pessoa vê cair. A batida marca
+   que ele MUDOU — sem isso, cair de 700 pra 40 passa despercebido. */
+@keyframes bater {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+.anima-bater {
+  animation: bater 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anima-virar,
+  .anima-bater {
+    animation: none;
+  }
+}
