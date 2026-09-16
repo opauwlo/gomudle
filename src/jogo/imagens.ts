@@ -109,6 +109,28 @@ const LARGURA: Record<TamanhoDaImagem, number> = {
   arte: TETO_NATIVO,
 }
 
+/**
+ * Largura da PRÉVIA: a versão minúscula que chega quase de graça e segura o
+ * lugar até a de verdade pintar por cima.
+ *
+ * 32px de largura em WebP de qualidade baixa dá menos de 1 kB — chega junto
+ * com o HTML, na prática. Esticada até o tamanho da tela ela vira um borrão
+ * com as formas e as cores certas, que é tudo que se pede de uma prévia:
+ * dizer "a imagem é ESTA" enquanto ela não chega.
+ *
+ * `null` na miniatura de propósito: ali a imagem de verdade tem 64px e já
+ * chega em poucos kB. Prévia ali seria uma requisição a mais pra economizar
+ * nada — e são doze miniaturas na lista de busca.
+ */
+const PREVIA: Record<TamanhoDaImagem, number | null> = {
+  miniatura: null,
+  carta: 32,
+  arte: 32,
+}
+
+/** Qualidade da prévia. Ela vai ser esticada e borrada: detalhe ali é byte jogado fora. */
+const QUALIDADE_DA_PREVIA = 35
+
 /** Proporção da carta impressa (63×88mm). Serve pra reservar o espaço. */
 const PROPORCAO = 88 / 63
 
@@ -116,6 +138,12 @@ export interface EnderecoDaImagem {
   src: string
   /** `undefined` na fonte que não redimensiona: 1× e 2× seriam o mesmo. */
   srcSet?: string
+  /**
+   * A prévia minúscula, pra pintar embaixo enquanto `src` não chega.
+   * `undefined` na miniatura (não vale a pena) e na fonte que não
+   * redimensiona, onde "prévia" seria o PNG de impressão inteiro.
+   */
+  previa?: string
   largura: number
   altura: number
 }
@@ -142,11 +170,20 @@ export function enderecoDaCarta(
   const src = fonte.enderecar(carta.imagem, largura, qualidade)
   const dobro = fonte.enderecar(carta.imagem, larguraDobro, qualidade)
 
+  const larguraDaPrevia = PREVIA[tamanho]
+  const previa =
+    larguraDaPrevia === null
+      ? undefined
+      : fonte.enderecar(carta.imagem, larguraDaPrevia, QUALIDADE_DA_PREVIA)
+
   return {
     src,
     // Endereços iguais viram `undefined`: é o caso da fonte que não
     // redimensiona e o do tamanho que já pede o nativo.
     srcSet: dobro === src ? undefined : `${src} 1x, ${dobro} 2x`,
+    // Prévia igual ao `src` é a fonte que não redimensiona: ali ela seria o
+    // PNG de impressão inteiro, o contrário do que uma prévia serve.
+    previa: previa === src ? undefined : previa,
     largura,
     altura: Math.round(largura * PROPORCAO),
   }

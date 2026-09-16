@@ -323,6 +323,21 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    três cartas troca de fonte, e a fonte nova tem outro endereço, logo outra
    chave. O pior caso é uma carta vindo do CDN reserva, não o jogo sem arte.
    Trocar `arte-v1` de nome invalida tudo, se um dia precisar.
+   **A imagem chega em duas etapas, e a primeira custa menos de 1 kB.** Onde a
+   imagem final é grande — o painel de fim (200px) e o modo arte (600px) — o
+   endereço vem com uma PRÉVIA junto: a mesma arte em 32px de largura e
+   qualidade 35. Esticada, ela é um borrão com as formas e as cores certas, que
+   é tudo que se pede: dizer "a imagem é ESTA" enquanto ela não chega.
+   As duas camadas moram no `background` da própria `<img>` — prévia em cima
+   das cores da carta. Quando o arquivo de verdade termina de baixar, o
+   navegador pinta por cima e a troca acontece sozinha: **sem estado, sem
+   segunda tag, sem um quadro de tela vazia no meio**. Como é a mesma
+   `<img>`, o `transform` do modo arte corta a prévia e a final igual.
+   A miniatura NÃO tem prévia, de propósito: ela já tem 64px e chega em poucos
+   kB, então ali seria uma requisição a mais pra economizar nada — e a lista de
+   busca mostra doze de uma vez. A fonte que não redimensiona também não tem:
+   ali "prévia" seria o PNG de impressão inteiro, exatamente o contrário.
+
    **O pré-carregamento aposta em duas coisas só:** a carta do dia dos outros
    modos (trocar de modo é o passo natural de quem terminou um) e a resposta
    do modo atual no tamanho da revelação. Sai com prioridade baixa e 1,5s

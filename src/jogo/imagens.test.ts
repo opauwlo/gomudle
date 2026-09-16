@@ -53,6 +53,26 @@ describe('enderecoDaCarta', () => {
     expect(miniatura.src).toContain('q=76')
   })
 
+  it('a prévia é minúscula e vem da mesma fonte', () => {
+    const { previa } = enderecoDaCarta(carta(OFICIAL), 'arte', 0)!
+    expect(previa).toContain('w=32&')
+    expect(previa).toContain('q=35')
+    expect(previa).toContain('wsrv.nl')
+  })
+
+  it('a miniatura não tem prévia: ela já é pequena', () => {
+    // Prévia ali seria uma requisição a mais pra economizar nada — e a lista de
+    // busca mostra doze miniaturas de uma vez.
+    expect(enderecoDaCarta(carta(OFICIAL), 'miniatura', 0)!.previa).toBeUndefined()
+    expect(enderecoDaCarta(carta(OFICIAL), 'carta', 0)!.previa).toContain('w=32&')
+  })
+
+  it('a fonte que não redimensiona não tem prévia', () => {
+    // Ali "prévia" seria o PNG de impressão inteiro, o contrário do que ela
+    // serve: o arquivo pesado chegando primeiro pra segurar o lugar dele.
+    expect(enderecoDaCarta(carta(OFICIAL), 'arte', ULTIMA)!.previa).toBeUndefined()
+  })
+
   it('reserva o espaço na proporção da carta impressa', () => {
     const { largura, altura } = enderecoDaCarta(carta(OFICIAL), 'carta', 0)!
     expect(altura / largura).toBeCloseTo(88 / 63, 2)

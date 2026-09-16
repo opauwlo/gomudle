@@ -34,15 +34,34 @@ interface Props {
 }
 
 /**
- * Enquanto o arquivo não chega, o espaço da carta fica pintado com as cores
- * dela em vez de ficar vazio — é de graça (não baixa nada), diz que ali vem
- * uma imagem e evita o pisca-pisca de retângulo vazio virando arte no meio de
- * uma lista que se refaz a cada tecla.
+ * O que ocupa o espaço da carta enquanto o arquivo não chega.
+ *
+ * São duas camadas, e a de cima só existe onde vale a pena: a PRÉVIA (ver
+ * `PREVIA` em `jogo/imagens.ts`), uma versão de 32px que chega em menos de
+ * 1 kB e, esticada, já mostra as formas e as cores certas. Embaixo dela, as
+ * cores da carta, que não custam requisição nenhuma e cobrem o instante antes
+ * até da prévia chegar.
+ *
+ * As duas ficam no `background` da PRÓPRIA `<img>`: quando o arquivo de
+ * verdade termina de baixar, o navegador pinta em cima e a troca acontece
+ * sozinha, sem estado, sem segunda tag e sem um quadro de tela vazia no meio.
+ * O `cover` acompanha o `object-cover` de quem chama, e o `transform` do modo
+ * arte se aplica ao elemento inteiro — prévia e imagem final cortam igual.
+ */
+function fundoDeEspera(carta: Carta, identidadeOculta: boolean, previa?: string): string {
+  const cores = coresDeEspera(carta, identidadeOculta)
+  return previa === undefined ? cores : `url("${previa}") center / cover no-repeat, ${cores}`
+}
+
+/**
+ * As cores da carta como fundo. É de graça — não baixa nada — e evita o
+ * pisca-pisca de retângulo vazio virando arte no meio de uma lista que se
+ * refaz a cada tecla.
  *
  * No modo arte isso seria entregar a resposta de mão beijada: cor é uma das
  * colunas do jogo. Lá o fundo é neutro.
  */
-function fundoDeEspera(carta: Carta, identidadeOculta: boolean): string {
+function coresDeEspera(carta: Carta, identidadeOculta: boolean): string {
   const neutro = 'var(--color-surface-1)'
   if (identidadeOculta) return neutro
   const tintas = carta.cores.map(
@@ -125,7 +144,10 @@ export function ImagemDaCarta({
       height={endereco.altura}
       alt={identidadeOculta ? 'Pedaço da arte da carta do dia' : `Carta ${carta.nome} (${carta.id})`}
       className={className}
-      style={{ background: fundoDeEspera(carta, identidadeOculta), ...estiloDaImagem }}
+      style={{
+        background: fundoDeEspera(carta, identidadeOculta, endereco.previa),
+        ...estiloDaImagem,
+      }}
       referrerPolicy="no-referrer"
       loading={prioritaria ? 'eager' : 'lazy'}
       fetchPriority={prioritaria ? 'high' : 'auto'}
