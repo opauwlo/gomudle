@@ -1,8 +1,13 @@
 /**
- * Os quatro tipos de carta do jogo. Evento e stage entraram junto com líder no
- * deck único — o tipo virou parte do enigma, não a divisão dos modos.
+ * As quatro categorias de carta. Evento e stage entraram junto com líder no
+ * deck único — a categoria virou parte do enigma, não a divisão dos modos.
+ *
+ * Chama-se CATEGORIA, e não tipo, porque `tipos` aqui é outra coisa: é o
+ * `Type` impresso na carta ("Straw Hat Crew", "Navy"). Em inglês os dois são
+ * *Type* e colidem; separar os nomes é o que impede `carta.tipo` e
+ * `carta.tipos` — uma letra de diferença — virarem duas colunas do jogo.
  */
-export type TipoDeCarta = 'lider' | 'personagem' | 'evento' | 'stage'
+export type CategoriaDeCarta = 'lider' | 'personagem' | 'evento' | 'stage'
 
 export interface Colecao {
   codigo: string
@@ -12,7 +17,7 @@ export interface Colecao {
 export interface Carta {
   id: string
   nome: string
-  tipo: TipoDeCarta
+  categoria: CategoriaDeCarta
   cores: string[]
   /** Líder não tem custo — tem vida. Os outros três têm custo. */
   custo: number | null
@@ -25,7 +30,12 @@ export interface Carta {
   poder: number | null
   contador: number | null
   atributos: string[]
-  tracos: string[]
+  /**
+   * O `Type` impresso na carta: "Straw Hat Crew", "Navy", "Supernovas". São
+   * 106 no jogo e toda carta tem pelo menos um. Não confundir com `categoria`
+   * — ver o comentário dela.
+   */
+  tipos: string[]
   /** [Blocker], [Rush]… sem os colchetes. Vira a pista de abertura. */
   palavrasChave: string[]
   raridade: string

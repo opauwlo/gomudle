@@ -11,7 +11,7 @@ export interface PalavraChave {
  * As palavras-chave viram a pista de abertura, desenhadas como a carta imprime
  * — selo laranja de habilidade, selo azul de tempo, octógono preto do DON!!.
  *
- * Por que palavra-chave e não cor, custo ou traço: esses já são coluna da
+ * Por que palavra-chave e não cor, custo ou tipo: esses já são coluna da
  * grade, e entregar coluna de graça encurtaria a rodada. Palavra-chave é o
  * único dado do jogo que nenhuma coluna compara — então a pista acrescenta um
  * eixo em vez de adiantar um que já existe.

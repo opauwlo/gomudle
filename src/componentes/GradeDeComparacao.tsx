@@ -48,9 +48,9 @@ interface Props {
  * linha: dá pra varrer a coluna de cima a baixo, que é como se lê tabela e é o
  * que o jogo pede.
  *
- * As larguras vêm do `peso` de cada coluna (ver `comparar.ts`) porque traço
- * precisa de mais espaço que custo, e `repeat()` com fração igual espremeria
- * os dois do mesmo jeito.
+ * A primeira coluna tem largura fixa (a arte) e as outras dividem o resto em
+ * frações iguais — cada uma cabe uma marca só, então não há o que pesar
+ * diferente entre elas.
  */
 export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Props) {
   if (palpites.length === 0) return null

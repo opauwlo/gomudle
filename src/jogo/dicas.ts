@@ -33,7 +33,7 @@ export interface Dica {
  * pessoa clica, ganha sem graça nenhuma e conclui que o jogo é quebrado.
  *
  * Dica também nunca repete coluna da grade: no modo da grade, cor, custo/vida,
- * poder, traço e coleção já são comparados a cada palpite, e pagar a marca
+ * poder, tipo e coleção já são comparados a cada palpite, e pagar a marca
  * "sem dica" por algo que a grade entrega de graça seria roubo.
  */
 export function dicasDoModo(carta: Carta, idDoModo: string): Dica[] {
@@ -57,21 +57,21 @@ export function dicasDoModo(carta: Carta, idDoModo: string): Dica[] {
   const daCarta = dicasDaCarta(carta)
   const inicial = daCarta[daCarta.length - 1] as Dica
   const semInicial = daCarta.slice(0, -1)
-  const tipo = daCarta.find((dica) => dica.rotulo === 'Tipo') as Dica
+  const categoria = daCarta.find((dica) => dica.rotulo === 'Categoria') as Dica
 
-  // Modo com grade: cor, custo/vida, poder, traço e coleção já são coluna. O
-  // TIPO não é, e isso foi medido: pôr tipo na grade vale nove centésimos de
+  // Modo com grade: cor, custo/vida, poder, tipo e coleção já são coluna. A
+  // CATEGORIA não é, e isso foi medido: pôr categoria na grade vale 0,27 de
   // palpite (4,38 -> 4,29), porque ele já vaza pelo "—" do poder, que só
   // acontece em evento e stage. De graça na grade ele quase não paga a vaga;
   // como dica PEDIDA ele vale, porque quem pede escolhe gastar a marca por
   // ele — e é a saída pra quando a carta do dia tem sósia.
-  if (idDoModo !== 'efeito' && idDoModo !== 'arte') return [quantidade, tipo, conjunto, inicial]
+  if (idDoModo !== 'efeito' && idDoModo !== 'arte') return [quantidade, categoria, conjunto, inicial]
   if (idDoModo === 'efeito') return daCarta
   return [quantidade, ...semInicial, conjunto, inicial]
 }
 
-/** Como cada tipo se chama na tela. */
-const NOME_DO_TIPO: Record<Carta['tipo'], string> = {
+/** Como cada categoria se chama na tela. */
+const NOME_DA_CATEGORIA: Record<Carta['categoria'], string> = {
   lider: 'Líder',
   personagem: 'Personagem',
   evento: 'Evento',
@@ -89,18 +89,18 @@ export function dicasDaCarta(carta: Carta): Dica[] {
       combina: (outra) => mesmoConjunto(outra.cores, carta.cores),
     },
     {
-      // Com quatro tipos no mesmo deck, esta é das dicas mais fortes que
-      // existem — e é justamente por isso que ela é PEDIDA e não uma coluna.
-      rotulo: 'Tipo',
-      valor: NOME_DO_TIPO[carta.tipo],
-      combina: (outra) => outra.tipo === carta.tipo,
+      // Com quatro categorias no mesmo deck, esta é das dicas mais fortes
+      // que existem — e é por isso que ela é PEDIDA e não uma coluna.
+      rotulo: 'Categoria',
+      valor: NOME_DA_CATEGORIA[carta.categoria],
+      combina: (outra) => outra.categoria === carta.categoria,
     },
     {
       // Rótulo neutro de propósito: "Custo" fechado já diria que a carta NÃO é
       // líder, e "Vida", que é — dica de graça antes da hora.
       rotulo: 'Custo ou vida',
       valor:
-        carta.tipo === 'lider'
+        carta.categoria === 'lider'
           ? `${carta.vida} de vida`
           : carta.custo == null
             ? 'sem custo'
@@ -115,9 +115,9 @@ export function dicasDaCarta(carta: Carta): Dica[] {
       combina: (outra) => outra.poder === carta.poder,
     },
     {
-      rotulo: 'Traços',
-      valor: carta.tracos.join(' · ') || '—',
-      combina: (outra) => mesmoConjunto(outra.tracos, carta.tracos),
+      rotulo: 'Tipos',
+      valor: carta.tipos.join(' · ') || '—',
+      combina: (outra) => mesmoConjunto(outra.tipos, carta.tipos),
     },
     {
       rotulo: 'Coleção',

@@ -120,7 +120,7 @@ export function App() {
             */}
             {rodada.diaDificil && (
               <span
-                title="A carta de hoje divide todas as características com outra. A grade sozinha não resolve: confie no ≠ ou peça a dica de traços."
+                title="A carta de hoje divide todas as características com outra. A grade sozinha não resolve: confie no ≠ ou peça a dica de tipos."
                 className="rounded-full bg-selo-tint px-2 py-0.5 text-[0.7rem] font-semibold text-selo-strong ring-1 ring-selo-tint-border"
               >
                 dia difícil

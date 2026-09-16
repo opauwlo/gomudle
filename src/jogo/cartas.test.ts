@@ -61,10 +61,10 @@ describe('buscarCartas', () => {
   })
 
   it('só olha o deck que recebeu', () => {
-    const lideres = TODAS_AS_CARTAS.filter((carta) => carta.tipo === 'lider')
+    const lideres = TODAS_AS_CARTAS.filter((carta) => carta.categoria === 'lider')
     const achado = buscarCartas(lideres, 'nami')
     expect(achado.length).toBeGreaterThan(0)
-    expect(achado.every((carta) => carta.tipo === 'lider')).toBe(true)
+    expect(achado.every((carta) => carta.categoria === 'lider')).toBe(true)
   })
 })
 
@@ -82,14 +82,14 @@ describe('dados gerados', () => {
 
   it('poder existe em líder e personagem, e não existe em evento e stage', () => {
     for (const carta of TODAS_AS_CARTAS) {
-      const deveTer = carta.tipo === 'lider' || carta.tipo === 'personagem'
-      expect(typeof carta.poder === 'number', `${carta.id} (${carta.tipo})`).toBe(deveTer)
+      const deveTer = carta.categoria === 'lider' || carta.categoria === 'personagem'
+      expect(typeof carta.poder === 'number', `${carta.id} (${carta.categoria})`).toBe(deveTer)
     }
   })
 
   it('só líder tem vida; os outros três têm custo no lugar', () => {
     for (const carta of TODAS_AS_CARTAS) {
-      if (carta.tipo === 'lider') expect(carta.custo, carta.id).toBeNull()
+      if (carta.categoria === 'lider') expect(carta.custo, carta.id).toBeNull()
       else expect(carta.vida, carta.id).toBeNull()
     }
   })

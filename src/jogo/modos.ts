@@ -69,7 +69,7 @@ const PODER: Coluna = {
  * É a decisão 5 do NOTAS aplicada à grade: "Custo" fechado entregaria que a
  * carta é personagem, evento ou stage, e "Vida", que é líder. Juntando os
  * dois, um 4 na coluna pode ser custo 4 ou vida 4 — e descobrir qual é faz
- * parte do enigma, agora que o tipo não é mais a divisão dos modos.
+ * parte do enigma, agora que a categoria não é mais a divisão dos modos.
  */
 const VALOR: Coluna = {
   chave: 'valor',
@@ -78,14 +78,17 @@ const VALOR: Coluna = {
   // inteiro está no `title` de cada pastilha e no texto do leitor de tela.
   abreviado: 'C/V',
   estilo: 'numero',
-  numero: (c) => (c.tipo === 'lider' ? c.vida : c.custo),
+  numero: (c) => (c.categoria === 'lider' ? c.vida : c.custo),
   tolerancia: 1,
 }
 
 /**
- * Traço é a coluna que RECOMPENSA saber de One Piece.
+ * O tipo da carta é a coluna que RECOMPENSA saber de One Piece.
  *
- * "Straw Hat Crew", "Navy", "Supernovas" — 106 traços distintos, e todas as
+ * É o `Type` impresso no rodapé da carta — e não a CATEGORIA (líder,
+ * personagem, evento, stage), que é outra coisa e não é coluna.
+ *
+ * "Straw Hat Crew", "Navy", "Supernovas" — 106 tipos distintos, e todas as
  * 1.111 cartas têm pelo menos um. Quem conhece a obra deduz; quem não conhece
  * aprende jogando. É o contrário do bloco, que é metadado de lançamento: saber
  * bloco é consulta, não dedução, e por isso ele ficou de fora (ver a 11).
@@ -94,12 +97,11 @@ const VALOR: Coluna = {
  * difícil: sem ela a média é 6,03 palpites com 20% de cartas ambíguas; com
  * ela, 4,38 e 6%.
  */
-const TRACOS: Coluna = {
-  chave: 'tracos',
-  rotulo: 'Traços',
-  abreviado: 'Traço',
+const TIPOS: Coluna = {
+  chave: 'tipos',
+  rotulo: 'Tipos',
   estilo: 'conjunto',
-  conjunto: (c) => c.tracos,
+  conjunto: (c) => c.tipos,
 }
 
 const COLECAO: Coluna = {
@@ -126,10 +128,10 @@ export const MODOS: Modo[] = [
     emojiDeCompartilhamento: '🃏',
     chamada: 'Qual é a carta de hoje?',
     comoJoga:
-      'Entra tudo: líder, personagem, evento e stage. Qual dos quatro é faz parte do enigma — evento e stage não têm poder, então um "—" ali já diz alguma coisa. Cada palpite compara cinco características, e o contador mostra quantas cartas ainda cabem.',
+      'Entra tudo: líder, personagem, evento e stage. Qual das quatro categorias é faz parte do enigma — evento e stage não têm poder, então um "—" ali já diz alguma coisa. Cada palpite compara cinco características, e o contador mostra quantas cartas ainda cabem.',
     descricaoDoDeck: 'líderes, personagens R/SR/SEC, eventos e stages',
     deck: TODAS_AS_CARTAS,
-    colunas: [COR, VALOR, PODER, TRACOS, COLECAO],
+    colunas: [COR, VALOR, PODER, TIPOS, COLECAO],
     arteNaBusca: true,
   },
   {

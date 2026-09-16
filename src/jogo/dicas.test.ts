@@ -6,12 +6,12 @@ import type { Carta } from './tipos'
 const luffy = {
   nome: 'Monkey.D.Luffy',
   palavrasChave: ['Blocker'],
-  tipo: 'lider',
+  categoria: 'lider',
   cores: ['Vermelho'],
   vida: 5,
   custo: null,
   poder: 5000,
-  tracos: ['Straw Hat Crew'],
+  tipos: ['Straw Hat Crew'],
   colecao: { codigo: 'OP-01', nome: 'ROMANCE DAWN' },
 } as Carta
 
@@ -45,11 +45,11 @@ describe('dicasDaCarta', () => {
     expect(dicas.at(-1)?.rotulo).toBe('Inicial do nome')
   })
 
-  it('mostra vida no líder e custo no personagem, sem entregar o tipo no rótulo', () => {
+  it('mostra vida no líder e custo no personagem, sem entregar a categoria no rótulo', () => {
     const doLider = dicasDaCarta(luffy).find((d) => d.rotulo === 'Custo ou vida')
     expect(doLider?.valor).toBe('5 de vida')
 
-    const personagem = { ...luffy, tipo: 'personagem', custo: 4, vida: null } as Carta
+    const personagem = { ...luffy, categoria: 'personagem', custo: 4, vida: null } as Carta
     expect(dicasDaCarta(personagem).find((d) => d.rotulo === 'Custo ou vida')?.valor).toBe(
       '4 de custo',
     )
@@ -57,14 +57,14 @@ describe('dicasDaCarta', () => {
 })
 
 describe('dicasDoModo', () => {
-  // Cor, custo/vida, poder, traço e coleção já são coluna da grade: pagar a
+  // Cor, custo/vida, poder, tipo e coleção já são coluna da grade: pagar a
   // marca "sem dica" por algo que a grade entrega de graça seria roubo.
-  // O TIPO não é coluna — medido, não cabe lá (ver a 11 do NOTAS) — e por isso
-  // ele é quem ocupa a vaga do meio da escada.
-  it('na grade, a escada é quantidade, tipo, conjunto e inicial', () => {
+  // A CATEGORIA não é coluna — medido, não cabe lá (ver a 11 do NOTAS) — e
+  // por isso ela é quem ocupa a vaga do meio da escada.
+  it('na grade, a escada é quantidade, categoria, conjunto e inicial', () => {
     expect(dicasDoModo(luffy, 'personagem').map((d) => d.rotulo)).toEqual([
       'Quantas palavras-chave',
-      'Tipo',
+      'Categoria',
       'Palavras-chave',
       'Inicial do nome',
     ])

@@ -5,13 +5,14 @@ import { TINTA_DA_COR } from './cores'
 import { ImagemDaCarta } from './ImagemDaCarta'
 
 /**
- * A linha de números da sugestão. Muda com o tipo: líder tem vida e não custo,
+ * A linha de números da sugestão. Muda com a categoria: líder tem vida e não
+ * custo,
  * e evento e stage não têm poder nenhum — repetir "— de poder" neles seria
  * ruído onde não há dado.
  */
 function resumoDaCarta(carta: Carta): string {
   const partes: string[] = []
-  if (carta.tipo === 'lider') partes.push(`${carta.vida} de vida`)
+  if (carta.categoria === 'lider') partes.push(`${carta.vida} de vida`)
   else if (carta.custo != null) partes.push(`custo ${carta.custo}`)
   if (carta.poder != null) partes.push(`${carta.poder.toLocaleString('pt-BR')} de poder`)
   return partes.join(' · ')

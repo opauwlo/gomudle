@@ -26,7 +26,7 @@ export function ModalComoJogar({ aoFechar }: { aoFechar: () => void }) {
                 <ICONE.quase aria-hidden="true" className="size-3.5" />
               </span>
               <span>
-                Amarelo: chegou perto. Numa lista (cor, atributo, traços) significa que uma parte
+                Amarelo: chegou perto. Numa lista (cor, atributo, tipos) significa que uma parte
                 bate; num número, que a diferença é de um degrau — 1 de custo, 1.000 de poder.
               </span>
             </li>

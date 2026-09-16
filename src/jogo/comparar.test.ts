@@ -6,14 +6,14 @@ import type { Carta } from './tipos'
 const carta = (parcial: Partial<Carta>): Carta => ({
   id: 'OP01-001',
   nome: 'Teste',
-  tipo: 'personagem',
+  categoria: 'personagem',
   cores: ['Vermelho'],
   custo: 4,
   vida: null,
   poder: 5000,
   contador: 1000,
   atributos: ['Corte'],
-  tracos: ['Straw Hat Crew'],
+  tipos: ['Straw Hat Crew'],
   palavrasChave: ['Blocker'],
   raridade: 'SR',
   colecao: { codigo: 'OP-01', nome: 'ROMANCE DAWN' },
@@ -90,12 +90,12 @@ describe('compararCarta', () => {
 
   it('mostra travessão quando a lista está vazia', () => {
     const coluna: Coluna = {
-      chave: 'tracos',
-      rotulo: 'Traços',
+      chave: 'tipos',
+      rotulo: 'Tipos',
       estilo: 'conjunto',
-      conjunto: (c) => c.tracos,
+      conjunto: (c) => c.tipos,
     }
-    expect(compararCarta([coluna], carta({ tracos: [] }), carta({}))[0]?.valor).toBe('—')
+    expect(compararCarta([coluna], carta({ tipos: [] }), carta({}))[0]?.valor).toBe('—')
   })
 
   it('não dá acerto quando só a coleção bate', () => {
