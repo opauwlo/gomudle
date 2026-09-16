@@ -60,11 +60,13 @@ export function dicasDoModo(carta: Carta, idDoModo: string): Dica[] {
   const categoria = daCarta.find((dica) => dica.rotulo === 'Categoria') as Dica
 
   // Modo com grade: cor, custo/vida, poder, tipo e coleção já são coluna. A
-  // CATEGORIA não é, e isso foi medido: pôr categoria na grade vale 0,27 de
-  // palpite (4,38 -> 4,29), porque ele já vaza pelo "—" do poder, que só
-  // acontece em evento e stage. De graça na grade ele quase não paga a vaga;
-  // como dica PEDIDA ele vale, porque quem pede escolhe gastar a marca por
-  // ele — e é a saída pra quando a carta do dia tem sósia.
+  // CATEGORIA não é, e isso foi medido: pôr categoria na grade vale 0,13 de
+  // palpite (4,76 -> 4,63), pouco pra uma vaga inteira de largura. E ela já
+  // vaza pela metade na coluna C/V — vida de líder vai de 2 a 6, custo de
+  // personagem de 1 a 10, então 1, 7, 8, 9 e 10 só podem ser custo, e são 28%
+  // do deck se entregando sozinhas. De graça na grade ela quase não paga a
+  // vaga; como dica PEDIDA ela vale, porque quem pede escolhe gastar a marca
+  // por ela — e é a saída pra quando a carta do dia tem sósia.
   if (idDoModo !== 'efeito' && idDoModo !== 'arte') return [quantidade, categoria, conjunto, inicial]
   if (idDoModo === 'efeito') return daCarta
   return [quantidade, ...semInicial, conjunto, inicial]

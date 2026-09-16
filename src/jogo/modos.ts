@@ -67,9 +67,14 @@ const PODER: Coluna = {
  * Custo e vida na MESMA coluna, com rótulo neutro.
  *
  * É a decisão 5 do NOTAS aplicada à grade: "Custo" fechado entregaria que a
- * carta é personagem, evento ou stage, e "Vida", que é líder. Juntando os
- * dois, um 4 na coluna pode ser custo 4 ou vida 4 — e descobrir qual é faz
- * parte do enigma, agora que a categoria não é mais a divisão dos modos.
+ * carta é personagem, e "Vida", que é líder. Juntando os dois, um 4 na coluna
+ * pode ser custo 4 ou vida 4 — e descobrir qual é faz parte do enigma, agora
+ * que a categoria não é mais a divisão dos modos.
+ *
+ * O disfarce é parcial, e é bom saber disso: vida de líder vai de 2 a 6 e
+ * custo de personagem de 1 a 10, então 1, 7, 8, 9 e 10 só podem ser custo —
+ * 28% do deck se entrega sozinha. Os valores do meio, que são a maioria, ficam
+ * ambíguos de verdade.
  */
 const VALOR: Coluna = {
   chave: 'valor',
@@ -115,8 +120,27 @@ const COLECAO: Coluna = {
 
 // Efeito curto demais ("[Blocker]") não é enigma, é sorteio. 40 caracteres é o
 // ponto em que sobra texto pra deduzir alguma coisa.
+/**
+ * As cartas que se JOGA na mesa: líder e personagem.
+ *
+ * Evento e stage ficaram de fora dos modos de adivinhar a carta, e é decisão
+ * de diversão, não de dado. Evento é texto curto e repetido — dezenas deles
+ * são "dê +1000 de poder" com outro nome — e nem evento nem stage têm poder,
+ * então eles entravam na grade com um "—" numa das cinco colunas. Uma coluna
+ * que não diz nada em 174 cartas não é enigma, é buraco.
+ * Não custou dificuldade: com eles, média de 4,81 palpites e 6% de cartas
+ * ambíguas; sem eles, 4,76 e 6%. Confirma a decisão 12 — tamanho de deck quase
+ * não mexe na média.
+ */
+const daMesa = TODAS_AS_CARTAS.filter(
+  (c) => c.categoria === 'lider' || c.categoria === 'personagem',
+)
+
+// Efeito é o único modo onde evento e stage entram: lá a carta é o TEXTO, e o
+// texto de evento é tão enigma quanto o de personagem. É o lugar onde a
+// repetição deles deixa de ser defeito, porque a comparação é de leitura.
 const comEfeito = TODAS_AS_CARTAS.filter((c) => c.efeito.length >= 40)
-const comArte = TODAS_AS_CARTAS.filter((c) => c.imagem !== '')
+const comArte = daMesa.filter((c) => c.imagem !== '')
 
 export const MODOS: Modo[] = [
   {
@@ -128,9 +152,9 @@ export const MODOS: Modo[] = [
     emojiDeCompartilhamento: '🃏',
     chamada: 'Qual é a carta de hoje?',
     comoJoga:
-      'Entra tudo: líder, personagem, evento e stage. Qual das quatro categorias é faz parte do enigma — evento e stage não têm poder, então um "—" ali já diz alguma coisa. Cada palpite compara cinco características, e o contador mostra quantas cartas ainda cabem.',
-    descricaoDoDeck: 'líderes, personagens R/SR/SEC, eventos e stages',
-    deck: TODAS_AS_CARTAS,
+      'Líder e personagem no mesmo sorteio, e qual dos dois é faz parte do enigma: a coluna do meio mostra vida no líder e custo no personagem, sem dizer qual. Cada palpite compara cinco características.',
+    descricaoDoDeck: 'líderes e personagens R, SR e SEC',
+    deck: daMesa,
     colunas: [COR, VALOR, PODER, TIPOS, COLECAO],
     arteNaBusca: true,
   },
@@ -140,8 +164,8 @@ export const MODOS: Modo[] = [
     emojiDeCompartilhamento: '📜',
     chamada: 'Leia o efeito e diz que carta é',
     comoJoga:
-      'É o efeito da carta do dia, com o nome dela apagado. Cada erro libera uma dica nova — e vai afunilando.',
-    descricaoDoDeck: 'cartas com efeito',
+      'É o efeito da carta do dia, com o nome dela apagado. Aqui entram também evento e stage, que nos outros modos ficam de fora. Cada erro libera uma dica nova — e vai afunilando.',
+    descricaoDoDeck: 'cartas com efeito, de qualquer categoria',
     deck: comEfeito,
     colunas: [],
     arteNaBusca: false,
