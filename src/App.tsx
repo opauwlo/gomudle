@@ -13,23 +13,14 @@ import { precarregar } from './componentes/precarregar'
 import { Rodape } from './componentes/Rodape'
 import { BarraDeControles } from './componentes/BarraDeControles'
 import { Termometro } from './componentes/Termometro'
-import { acharFormato, FORMATO_PADRAO, FORMATOS, type IdDeFormato } from './jogo/formatos'
-import { acharModo, deckDoModo, MODO_PADRAO, MODOS } from './jogo/modos'
+import { escreverEndereco, lerEndereco } from './jogo/endereco'
+import { acharFormato, type IdDeFormato } from './jogo/formatos'
+import { acharModo, deckDoModo, MODOS } from './jogo/modos'
 import { cartaDoDia } from './jogo/sorteio'
 import type { IdDeModo } from './jogo/tipos'
 import { useRodada } from './jogo/useRodada'
 
-/**
- * Modo e formato vivem no hash: /#lider:egb abre direto no líder do EGB.
- * Hash antigo (só o modo) continua valendo e cai no formato padrão.
- */
-function doEndereco(): { modo: IdDeModo; formato: IdDeFormato } {
-  const [modo, formato] = window.location.hash.replace('#', '').split(':')
-  return {
-    modo: MODOS.some((m) => m.id === modo) ? (modo as IdDeModo) : MODO_PADRAO,
-    formato: FORMATOS.some((f) => f.id === formato) ? (formato as IdDeFormato) : FORMATO_PADRAO,
-  }
-}
+const doEndereco = () => lerEndereco(window.location.hash)
 
 export function App() {
   const [endereco, setEndereco] = useState(doEndereco)
@@ -78,7 +69,16 @@ export function App() {
   }, [modo, formato, rodada.resposta, rodada.numeroDoDesafio])
 
   const navegar = (proximo: { modo: IdDeModo; formato: IdDeFormato }) => {
-    window.location.hash = `${proximo.modo}:${proximo.formato}`
+    const hash = escreverEndereco(proximo)
+    if (hash === '') {
+      // Voltar pro padrão TIRA o hash em vez de deixar um `#` pendurado.
+      // `replaceState` porque `location.hash = ''` não apaga o `#` — e não
+      // dispara `hashchange`, o que aqui não faz falta: quem atualiza a tela é
+      // o `setEndereco` logo abaixo. O ouvinte existe pro voltar do navegador.
+      history.replaceState(null, '', window.location.pathname + window.location.search)
+    } else {
+      window.location.hash = hash
+    }
     setEndereco(proximo)
   }
 
