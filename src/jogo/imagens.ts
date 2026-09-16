@@ -26,18 +26,30 @@ export interface FonteDeImagem {
   nome: string
   /**
    * `oficial` é o endereço que veio no dataset. `largura` é em px — a fonte
-   * que não sabe redimensionar simplesmente ignora.
+   * que não sabe redimensionar simplesmente ignora. `qualidade` é 1 a 100.
    */
-  enderecar(oficial: string, largura: number): string
+  enderecar(oficial: string, largura: number, qualidade: number): string
 }
 
 /**
- * 76 é o ponto em que a carta ainda parece impressa e o arquivo já é pequeno.
- * Acima de 85 o WebP engorda rápido sem ganho visível num retângulo de 40px;
+ * A qualidade do WebP é POR USO, porque o mesmo número não serve pros dois
+ * extremos.
+ *
+ * 76 é o ponto em que a carta ainda parece impressa e o arquivo já é pequeno:
+ * acima de 85 o WebP engorda rápido sem ganho visível num retângulo de 40px, e
  * abaixo de 70 aparece sujeira no contorno da arte, que em carta chapada com
- * traço preto salta aos olhos.
+ * traço preto salta aos olhos. Vale pra miniatura e pro cartão.
+ *
+ * No modo arte não vale: lá a imagem enche a tela e ainda leva até 3× de zoom
+ * por cima, que é uma lupa em cima do artefato de compressão. O que numa
+ * miniatura de 40px ninguém vê, ali vira borrão em volta do traço. 90 é caro
+ * em bytes, mas é UMA imagem por rodada e ela é a tela inteira do modo.
  */
-const QUALIDADE = 76
+const QUALIDADE: Record<TamanhoDaImagem, number> = {
+  miniatura: 76,
+  carta: 76,
+  arte: 90,
+}
 
 /** Os dois CDNs recebem o endereço sem o protocolo. */
 const semProtocolo = (oficial: string) => oficial.replace(/^https?:\/\//, '')
@@ -47,14 +59,14 @@ export const FONTES: FonteDeImagem[] = [
     nome: 'wsrv',
     // `we` = sem ampliar: se a origem for menor que o pedido, vem a origem.
     // Ampliar no CDN só gastaria bytes pra borrar do mesmo jeito.
-    enderecar: (oficial, largura) =>
+    enderecar: (oficial, largura, qualidade) =>
       `https://wsrv.nl/?url=${encodeURIComponent(semProtocolo(oficial))}` +
-      `&w=${largura}&output=webp&q=${QUALIDADE}&we`,
+      `&w=${largura}&output=webp&q=${qualidade}&we`,
   },
   {
     nome: 'statically',
-    enderecar: (oficial, largura) =>
-      `https://cdn.statically.io/img/${semProtocolo(oficial)}?w=${largura}&q=${QUALIDADE}&f=webp`,
+    enderecar: (oficial, largura, qualidade) =>
+      `https://cdn.statically.io/img/${semProtocolo(oficial)}?w=${largura}&q=${qualidade}&f=webp`,
   },
   {
     nome: 'oficial',
@@ -66,18 +78,35 @@ export const FONTES: FonteDeImagem[] = [
 export type TamanhoDaImagem = 'miniatura' | 'carta' | 'arte'
 
 /**
- * Largura pedida ao CDN pro 1×, em px. O 2× é o dobro, e é ele que a tela de
- * celular usa — por isso o número aqui parece pequeno demais pra cada caso.
+ * A arte oficial tem 600×838. Medido, não estimado: o PNG do dataset, e o
+ * mesmo endereço pedido ao CDN com largura bem maior, voltam os três em
+ * 600×838.
  *
- * `arte` é o maior porque o painel do modo arte amplia a imagem em até 3× (ver
- * `jogo/arte.ts`). 360 (720 no 2×) pede mais do que a arte oficial costuma
- * ter: como a fonte não amplia, o que chega é o tamanho nativo dela — e é ele
- * o teto do que dá pra mostrar ampliado sem virar borrão.
+ * Esse é o TETO de tudo que aparece na tela. Pedir mais que isso não traz
+ * pixel nenhum — o `we` das fontes devolve o nativo — e ainda cria um endereço
+ * diferente, que faz o navegador baixar duas vezes a mesma imagem.
+ */
+const TETO_NATIVO = 600
+
+/**
+ * Largura pedida ao CDN pro 1×, em px. O 2× é o dobro, limitado ao teto.
+ *
+ * `arte` pede o nativo inteiro porque o painel do modo arte amplia a imagem em
+ * até 3× (ver `jogo/arte.ts`), e aí todo pixel que existe é usado. Já foi 360,
+ * no entendimento de que isso já passava do nativo — não passava, o nativo é
+ * 600. O estrago era na tela 1×: o navegador escolhe do `srcSet` pelo tamanho
+ * de LAYOUT da imagem, e o `transform: scale()` não entra nessa conta. Ele via
+ * uma imagem de 256px, pegava a variante de 360, e só então o zoom esticava
+ * aquilo pra 768px. Pedindo 600 de saída, o 1× já recebe o máximo que existe.
+ *
+ * Isso não elimina a ampliação: 600px mostrados em 768 (ou 1536 num celular
+ * 2×) ainda é esticar. Só que agora estica o nativo, que é o melhor que a
+ * origem tem — antes esticava um recorte de 60% dele.
  */
 const LARGURA: Record<TamanhoDaImagem, number> = {
   miniatura: 64,
   carta: 200,
-  arte: 360,
+  arte: TETO_NATIVO,
 }
 
 /** Proporção da carta impressa (63×88mm). Serve pra reservar o espaço. */
@@ -103,12 +132,20 @@ export function enderecoDaCarta(
   const fonte = FONTES[indiceDaFonte]
   if (!fonte || carta.imagem === '') return null
 
-  const largura = LARGURA[tamanho]
-  const src = fonte.enderecar(carta.imagem, largura)
-  const dobro = fonte.enderecar(carta.imagem, largura * 2)
+  const qualidade = QUALIDADE[tamanho]
+  const largura = Math.min(LARGURA[tamanho], TETO_NATIVO)
+  // O 2× também para no teto. Sem isso, `arte` anunciaria um 2× de 1200 que o
+  // CDN devolve em 600 — o mesmo arquivo em outro endereço, e a tela de
+  // celular baixaria a imagem duas vezes pra ver a mesma coisa.
+  const larguraDobro = Math.min(largura * 2, TETO_NATIVO)
+
+  const src = fonte.enderecar(carta.imagem, largura, qualidade)
+  const dobro = fonte.enderecar(carta.imagem, larguraDobro, qualidade)
 
   return {
     src,
+    // Endereços iguais viram `undefined`: é o caso da fonte que não
+    // redimensiona e o do tamanho que já pede o nativo.
     srcSet: dobro === src ? undefined : `${src} 1x, ${dobro} 2x`,
     largura,
     altura: Math.round(largura * PROPORCAO),

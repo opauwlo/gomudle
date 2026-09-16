@@ -33,6 +33,26 @@ describe('enderecoDaCarta', () => {
     expect(largura('carta')).toBeLessThan(largura('arte'))
   })
 
+  it('o modo arte pede o nativo inteiro, porque o zoom usa cada pixel', () => {
+    const { src, largura } = enderecoDaCarta(carta(OFICIAL), 'arte', 0)!
+    expect(largura).toBe(600)
+    expect(src).toContain('w=600&')
+  })
+
+  it('no nativo não existe 2×: seria o mesmo arquivo em outro endereço', () => {
+    // O `we` do CDN não amplia, então pedir 1200 volta 600. Anunciar isso como
+    // 2× faria a tela de celular baixar a imagem duas vezes à toa.
+    const { srcSet } = enderecoDaCarta(carta(OFICIAL), 'arte', 0)!
+    expect(srcSet).toBeUndefined()
+  })
+
+  it('a arte comprime menos que a miniatura: o zoom é lupa no artefato', () => {
+    const arte = enderecoDaCarta(carta(OFICIAL), 'arte', 0)!
+    const miniatura = enderecoDaCarta(carta(OFICIAL), 'miniatura', 0)!
+    expect(arte.src).toContain('q=90')
+    expect(miniatura.src).toContain('q=76')
+  })
+
   it('reserva o espaço na proporção da carta impressa', () => {
     const { largura, altura } = enderecoDaCarta(carta(OFICIAL), 'carta', 0)!
     expect(altura / largura).toBeCloseTo(88 / 63, 2)

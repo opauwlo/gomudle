@@ -222,6 +222,27 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    cru no fim — e três cartas falhando na mesma fonte trocam a fonte do jogo
    inteiro, pra lista de doze não pagar doze vezes a mesma descoberta. Ver
    `jogo/imagens.ts`.
+
+   **A arte oficial tem 600×838, e esse é o teto de tudo.** É medido: o PNG do
+   dataset e o mesmo endereço pedido ao CDN com largura bem maior voltam os
+   três em 600×838. Como as fontes usam "sem ampliar", pedir acima disso não
+   traz pixel nenhum — só um endereço diferente pro navegador baixar a mesma
+   imagem de novo. Por isso a largura do modo arte É o teto, e ali não se
+   anuncia 2×.
+   Duas coisas estavam jogando qualidade fora no modo arte, e valem pra
+   qualquer tela que amplie imagem:
+   (a) **o `srcSet` não sabe de `transform`.** O navegador escolhe a variante
+   pelo tamanho de LAYOUT da imagem, e o zoom por `transform: scale()` entra
+   depois. Ele via 256px, pegava a variante de 360, e só então o zoom esticava
+   pra 768. Quem amplia por transform tem que pedir a imagem grande de saída,
+   não confiar no 2× do `srcSet`.
+   (b) **a qualidade do WebP é por uso.** 76 foi calibrado num retângulo de
+   40px, onde ninguém vê artefato. O modo arte põe uma lupa de 3× em cima do
+   mesmo artefato — lá é 90.
+   O que isso NÃO resolve: 600px mostrados em 1536 (celular 2× no zoom máximo)
+   continua sendo ampliar 2,5×. Não existe pixel além do nativo. Se um dia a
+   nitidez do primeiro palpite ainda incomodar, o lugar de mexer é a escala
+   inicial em `jogo/arte.ts`, que é decisão de jogo — ver a 22.
 22. **O modo arte abre em 3×, não em 7,5×.** Zoom demais não é dificuldade, é
    sorteio: o que aparecia era uma mancha colorida, sem traço nem cenário pra
    deduzir, e ainda por cima feia — ampliar tanto estica um punhado de pixels
