@@ -142,6 +142,26 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    indistinguíveis) e a quantidade de cartas com o mesmo nome na busca — 32
    "Monkey.D.Luffy" hoje, 45 com tudo. R entra porque é carta que se joga.
 
+   **A promo entra, mas só a inédita.** A régua de raridade acima NÃO se aplica
+   a ela: promo de personagem tem raridade própria (`P`), então aplicar a régua
+   ali derrubaria todas. O que corta promo é outra coisa — ela só entra se for
+   carta que ainda não existe no jogo. `assinatura`, em
+   `scripts/gerar-cartas.mjs`, compara a carta sem o que é embalagem (código,
+   coleção, raridade, arte): se bate, é reimpressão e fica de fora.
+   Hoje o filtro derruba zero, e isso é esperado, não bug: das 235 promo da
+   fonte, 129 são arte alternativa e já saíam antes; as que sobram são carta
+   de evento com efeito próprio. Existe um "Jinbe" promo e um "Jinbe" OP07-045
+   e eles não têm nada em comum além do nome. A comparação fica de rede de
+   segurança pra quando a fonte trouxer uma reimpressão de verdade — o gerador
+   diz na saída quantas caíram.
+   **Todas as promo moram numa coleção só, `P`.** Cada P-xxx virando a própria
+   coleção faria a coluna "Col." ser impressão digital: valor único, que ou
+   entrega a carta ou não diz nada.
+   O que isso custou, medido: o deck de personagem foi de 702 pra 795 cartas, e
+   as que dividem a linha inteira com outra passaram de 125 (18%) pra 170
+   (21%) — 45 das 93 promo colidem entre si, porque compartilham a coleção `P`.
+   Se um dia isso incomodar, o lugar de mexer é aqui, não na grade.
+
 13. **Formato é parte da identidade do jogo, não um filtro de tela.** A chave
    do sorteio e do progresso é `modo:formato` (`personagem:standard`), então
    Standard e EGB têm carta do dia e sequência próprias. Mexeu na chave, zerou

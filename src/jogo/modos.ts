@@ -79,8 +79,8 @@ export const MODOS: Modo[] = [
     emojiDeCompartilhamento: '🃏',
     chamada: 'Qual é o personagem de hoje?',
     comoJoga:
-      'Chuta qualquer personagem R, SR ou SEC. Cada palpite compara quatro características com a carta do dia — e o contador mostra quantas ainda cabem.',
-    descricaoDoDeck: 'personagens R, SR e SEC',
+      'Chuta qualquer personagem R, SR ou SEC, mais as promo exclusivas de evento. Cada palpite compara quatro características com a carta do dia — e o contador mostra quantas ainda cabem.',
+    descricaoDoDeck: 'personagens R, SR e SEC, mais as promo',
     deck: personagens,
     colunas: [
       COR,
@@ -101,7 +101,7 @@ export const MODOS: Modo[] = [
     emojiDeCompartilhamento: '👑',
     chamada: 'Qual líder tá na mesa hoje?',
     comoJoga:
-      'Só líder entra aqui, de OP-01 até a coleção mais nova. No lugar do custo, a vida.',
+      'Só líder entra aqui, de OP-01 até a coleção mais nova, promo incluída. No lugar do custo, a vida.',
     descricaoDoDeck: 'líderes',
     deck: lideres,
     colunas: [

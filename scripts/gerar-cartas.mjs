@@ -37,10 +37,19 @@ const ATRIBUTO = {
   Wisdom: 'Sabedoria',
 }
 
-// Só coleções numeradas. Promo solta (P-001, "Anime Expo 2023") fica de fora:
-// são cartas que muita gente nunca viu, e um palpite impossível de deduzir
-// estraga a rodada inteira.
+// As coleções numeradas: booster, deck inicial, extra booster e premium.
 const NUMERO_OFICIAL = /^(OP|ST|EB|PRB)(\d+)-(\d+)$/
+
+// Promo (P-001, P-117). Entra só o que for INÉDITO — ver `assinatura` e o
+// segundo passe lá embaixo. A promo é quase sempre a mesma carta de uma
+// coleção numerada impressa de novo pra um evento; incluir a repetida daria
+// duas linhas idênticas na grade e queimaria um palpite à toa.
+const NUMERO_PROMO = /^P-(\d+)$/
+
+// Todas as promo caem numa coleção só. Cada P-xxx virando a própria coleção
+// faria a coluna "Col." ser uma impressão digital: valor único, ou entrega a
+// carta ou não diz nada.
+const COLECAO_PROMO = { codigo: 'P', nome: 'Promo' }
 
 // Raridade que entra no deck de personagens.
 //
@@ -92,20 +101,29 @@ function colecaoDe(cardNumber, cardSets) {
 }
 
 const vistas = new Map()
+const vistasPromo = new Map()
 for (const carta of brutas) {
   // Arte alternativa é a MESMA carta com outro desenho: mesmo custo, mesmo
   // poder, mesmo efeito. Duas linhas idênticas na grade seriam um palpite
   // queimado à toa.
   if (carta.is_alternate_art) continue
-  if (!NUMERO_OFICIAL.test(carta.card_number)) continue
-  if (!vistas.has(carta.card_number)) vistas.set(carta.card_number, carta)
+  const balde = NUMERO_OFICIAL.test(carta.card_number)
+    ? vistas
+    : NUMERO_PROMO.test(carta.card_number)
+      ? vistasPromo
+      : null
+  if (balde === null) continue
+  if (!balde.has(carta.card_number)) balde.set(carta.card_number, carta)
 }
 
-const cartas = []
-for (const carta of vistas.values()) {
+function converter(carta, ehPromo) {
   const ehLider = carta.card_type === 'LEADER'
-  const ehPersonagem = carta.card_type === 'CHARACTER' && RARIDADE_PERSONAGEM.has(carta.rarity)
-  if (!ehLider && !ehPersonagem) continue
+  // A régua de raridade vale pra coleção numerada, onde ela corta enchimento
+  // de booster (C e UC). Promo não tem enchimento: a raridade dela é 'P' pra
+  // todas, então aplicar a régua ali derrubaria as promo inteiras.
+  const ehPersonagem =
+    carta.card_type === 'CHARACTER' && (ehPromo || RARIDADE_PERSONAGEM.has(carta.rarity))
+  if (!ehLider && !ehPersonagem) return null
 
   const cores = listaLimpa(carta.colors).map((c) => COR[c] ?? c)
   const atributos = listaLimpa(carta.attributes).map((a) => ATRIBUTO[a] ?? a)
@@ -115,10 +133,10 @@ for (const carta of vistas.values()) {
   // tratar caso especial por uma carta torta do dataset: descarta.
   if (cores.length === 0 || poder == null) {
     if (verboso) console.warn('descartada (dado incompleto):', carta.card_number, carta.card_name)
-    continue
+    return null
   }
 
-  cartas.push({
+  return {
     id: carta.card_number,
     nome: texto(carta.card_name),
     tipo: ehLider ? 'lider' : 'personagem',
@@ -134,11 +152,54 @@ for (const carta of vistas.values()) {
     // porque é o único dado do jogo que nenhuma coluna da grade compara.
     palavrasChave: listaLimpa(carta.card_effects).map((chave) => chave.replace(/^\[|\]$/g, '')),
     raridade: carta.rarity,
-    colecao: colecaoDe(carta.card_number, carta.card_sets),
+    colecao: ehPromo ? { ...COLECAO_PROMO } : colecaoDe(carta.card_number, carta.card_sets),
     bloco: texto(carta.block_icon) === 'X' ? null : numero(carta.block_icon),
     efeito: texto(carta.effects) === '-' ? '' : texto(carta.effects),
     imagem: texto(carta.image_url),
-  })
+  }
+}
+
+/**
+ * A carta sem o que é só embalagem: fora o código, a coleção, a raridade e a
+ * arte. Se isto bate, é a MESMA carta impressa de novo — e é assim que a promo
+ * repetida é reconhecida.
+ */
+const assinatura = (c) =>
+  JSON.stringify([
+    c.nome,
+    c.tipo,
+    [...c.cores].sort(),
+    c.custo,
+    c.vida,
+    c.poder,
+    c.contador,
+    [...c.atributos].sort(),
+    [...c.tracos].sort(),
+    [...c.palavrasChave].sort(),
+    c.efeito,
+  ])
+
+const cartas = []
+for (const carta of vistas.values()) {
+  const convertida = converter(carta, false)
+  if (convertida) cartas.push(convertida)
+}
+
+// As promo entram por último, e só as inéditas: a coleção numerada é a
+// impressão de referência, então quem chegou primeiro fica com a vaga.
+const jaNoJogo = new Set(cartas.map(assinatura))
+let promoRepetida = 0
+for (const carta of vistasPromo.values()) {
+  const convertida = converter(carta, true)
+  if (convertida === null) continue
+  const chave = assinatura(convertida)
+  if (jaNoJogo.has(chave)) {
+    promoRepetida++
+    if (verboso) console.warn('promo repetida:', convertida.id, convertida.nome)
+    continue
+  }
+  jaNoJogo.add(chave)
+  cartas.push(convertida)
 }
 
 cartas.sort((a, b) => a.id.localeCompare(b.id))
@@ -168,4 +229,6 @@ writeFileSync(destino, `${JSON.stringify({
 
 const lideres = cartas.filter((c) => c.tipo === 'lider').length
 console.log(`cartas.json: ${cartas.length} cartas (${lideres} líderes, ${cartas.length - lideres} personagens)`)
+const promos = cartas.filter((c) => c.colecao.codigo === COLECAO_PROMO.codigo).length
+console.log(`promo: ${promos} inéditas entraram, ${promoRepetida} repetidas ficaram de fora`)
 console.log(`fonte: one-piece-card-game-json@${versaoPacote}`)

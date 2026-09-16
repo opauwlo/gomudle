@@ -22126,6 +22126,2895 @@
    "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/OP17-119.png"
   },
   {
+   "id": "P-001",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "DON!! x2",
+    "Rush"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x2] This Character gains [Rush]. (This card can attack on the turn in which it is played.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-001.png"
+  },
+  {
+   "id": "P-003",
+   "nome": "Eustass\"Captain\"Kid",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Kid Pirates"
+   ],
+   "palavrasChave": [
+    "DON!! x2",
+    "Double Attack"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x2] This Character gains [Double Attack]. (This card deals 2 damage.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-003.png"
+  },
+  {
+   "id": "P-004",
+   "nome": "Crocodile",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "The Seven Warlords of the Sea",
+    "Baroque Works"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] This Character gains [Blocker]. (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-004.png"
+  },
+  {
+   "id": "P-005",
+   "nome": "Kaido",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 8000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Animal Kingdom Pirates"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Banish"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Activate: Main] DON!! −2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): This Character gains [Banish] during this turn. (When this card deals damage, the target card is trashed without activating its Trigger.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-005.png"
+  },
+  {
+   "id": "P-006",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 3000,
+   "contador": 2000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "DON!! x2",
+    "Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x2] [Your Turn] This Character gains +2000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-006.png"
+  },
+  {
+   "id": "P-007",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] This Character cannot be K.O.'d in battle by ＜Strike＞ attribute Leaders or Characters.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-007.png"
+  },
+  {
+   "id": "P-008",
+   "nome": "Yamato",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Land of Wano"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Activate: Main] You may rest this Character: Rest 1 of your opponent's Characters with a cost of 2 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-008.png"
+  },
+  {
+   "id": "P-009",
+   "nome": "Trafalgar Law",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[On Play] If your opponent has 6 or more cards in their hand, your opponent adds 1 card from their Life area to their hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-009.png"
+  },
+  {
+   "id": "P-010",
+   "nome": "Kaido",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 8,
+   "vida": null,
+   "poder": 9000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Animal Kingdom Pirates"
+   ],
+   "palavrasChave": [
+    "End of Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[End of Your Turn] Add 1 DON!! card from your DON!! deck and set it as active.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-010.png"
+  },
+  {
+   "id": "P-011",
+   "nome": "Uta",
+   "tipo": "lider",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": null,
+   "vida": 5,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "FILM"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Once Per Turn"
+   ],
+   "raridade": "L",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Activate: Main] [Once Per Turn] ① (You may rest the specified number of DON!! cards in your cost area.): Up to 1 of your Characters with no base effect gains +2000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-011.png"
+  },
+  {
+   "id": "P-012",
+   "nome": "Jellyfish Pirates",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "FILM",
+    "Jellyfish Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-012.png"
+  },
+  {
+   "id": "P-013",
+   "nome": "Gordon",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 2000,
+   "contador": null,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "FILM"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Activate: Main] You may place this Character at the bottom of the owner's deck: Give up to 1 of your opponent's Characters −3000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-013.png"
+  },
+  {
+   "id": "P-014",
+   "nome": "Koby",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 3000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "FILM",
+    "Navy"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [Trigger] Play this card.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-014.png"
+  },
+  {
+   "id": "P-015",
+   "nome": "Sunny-Kun",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 3000,
+   "contador": 1000,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "FILM",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-015.png"
+  },
+  {
+   "id": "P-016",
+   "nome": "Shanks",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 8,
+   "vida": null,
+   "poder": 10000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "FILM",
+    "The Four Emperors",
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-016.png"
+  },
+  {
+   "id": "P-017",
+   "nome": "Trafalgar Law",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "FILM",
+    "Supernovas",
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[On Play] Give up to 1 of your opponent's Characters −2000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-017.png"
+  },
+  {
+   "id": "P-018",
+   "nome": "Bartolomeo",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 3000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "FILM",
+    "Supernovas",
+    "Barto Club"
+   ],
+   "palavrasChave": [
+    "Blocker"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-018.png"
+  },
+  {
+   "id": "P-019",
+   "nome": "Bepo",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 2000,
+   "contador": 2000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "FILM",
+    "Minks",
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] [When Attacking] K.O. up to 1 of your opponent's Characters with 3000 power or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-019.png"
+  },
+  {
+   "id": "P-020",
+   "nome": "Helmeppo",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 2000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "FILM",
+    "Navy"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[On Play] Up to 1 of your Leader or Character cards gains +1000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-020.png"
+  },
+  {
+   "id": "P-021",
+   "nome": "Benn.Beckman",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 9000,
+   "contador": 1000,
+   "atributos": [
+    "Distância"
+   ],
+   "tracos": [
+    "FILM",
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-021.png"
+  },
+  {
+   "id": "P-022",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "FILM",
+    "Supernovas",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-022.png"
+  },
+  {
+   "id": "P-023",
+   "nome": "Yasopp",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 8000,
+   "contador": 1000,
+   "atributos": [
+    "Distância"
+   ],
+   "tracos": [
+    "FILM",
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-023.png"
+  },
+  {
+   "id": "P-025",
+   "nome": "Smoker",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Navy"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] This Character cannot be K.O.'d in battle by Characters without the &lt;Special&gt; attribute.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-025.png"
+  },
+  {
+   "id": "P-026",
+   "nome": "Morgan",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Navy"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[When Attacking] Give up to 1 of your opponent's Characters −3 cost during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-026.png"
+  },
+  {
+   "id": "P-027",
+   "nome": "General Franky",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 4000,
+   "contador": null,
+   "atributos": [
+    "Distância"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Opponent's Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "Also treat this card's name as [Franky] according to the rules. [Opponent's Turn] All of your Characters with 3000 base power or less gain +1000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-027.png"
+  },
+  {
+   "id": "P-028",
+   "nome": "Portgas.D.Ace",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Whitebeard Pirates"
+   ],
+   "palavrasChave": [
+    "Double Attack"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Double Attack] (This card deals 2 damage.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-028.png"
+  },
+  {
+   "id": "P-029",
+   "nome": "Bartolomeo",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 3000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "FILM",
+    "Supernovas",
+    "Barto Club"
+   ],
+   "palavrasChave": [
+    "End of Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[End of Your Turn] You may rest this Character: Set up to 1 of your {FILM} type Characters other than [Bartolomeo] as active.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-029.png"
+  },
+  {
+   "id": "P-030",
+   "nome": "Jinbe",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Fish-Man",
+    "The Seven Warlords of the Sea",
+    "The Sun Pirates"
+   ],
+   "palavrasChave": [
+    "On K.O."
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[On K.O.] Place up to 1 Character with a cost of 3 or less at the bottom of the owner's deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-030.png"
+  },
+  {
+   "id": "P-031",
+   "nome": "Uta",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "FILM"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[On Play] Add up to 1 DON!! card from your DON!! deck and rest it.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-031.png"
+  },
+  {
+   "id": "P-032",
+   "nome": "Sengoku",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "Navy"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] [Your Turn] Give all of your opponent's Characters −2 cost.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-032.png"
+  },
+  {
+   "id": "P-033",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Activate: Main] You may place this Character at the bottom of the owner's deck: Draw 1 card.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-033.png"
+  },
+  {
+   "id": "P-034",
+   "nome": "Sanji",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "The Vinsmoke Family"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] [Your Turn] If you have 2 or less Life cards, this Character gains +2000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-034.png"
+  },
+  {
+   "id": "P-035",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[DON!! x1] [When Attacking] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost of 0.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-035.png"
+  },
+  {
+   "id": "P-036",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Land of Wano",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[When Attacking] You may add 1 card from the top or bottom of your Life cards to your hand: This Character and up to 1 of your Leader gain +1000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-036.png"
+  },
+  {
+   "id": "P-037",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 4000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[When Attacking] If you have 2 or more rested Characters, this Character gains +1000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-037.png"
+  },
+  {
+   "id": "P-039",
+   "nome": "Bellamy",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Bellamy Pirates"
+   ],
+   "palavrasChave": [
+    "Banish",
+    "DON!! x2"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 1,
+   "efeito": "[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.) [DON!! x2] If you have 0 Life cards, this Character gains +2000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-039.png"
+  },
+  {
+   "id": "P-041",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 10,
+   "vida": null,
+   "poder": 12000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-041.png"
+  },
+  {
+   "id": "P-042",
+   "nome": "Roronoa Zoro",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Land of Wano",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "- [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 4 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-042.png"
+  },
+  {
+   "id": "P-043",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] Return up to 1 Character with a cost of 3 or less to the owner's hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-043.png"
+  },
+  {
+   "id": "P-044",
+   "nome": "Sabo",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Revolutionary Army"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[DON!! x1] If you have 4 or less cards in your hand, this Character gains +2000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-044.png"
+  },
+  {
+   "id": "P-045",
+   "nome": "Roronoa Zoro",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Banish"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Banish] (When this card deals damage, the target card is trashed without activating its Trigger.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-045.png"
+  },
+  {
+   "id": "P-046",
+   "nome": "Yamato",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 2000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Land of Wano"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] You may place all cards in your hand at the bottom of your deck in any order. If you do, draw cards equal to the number you placed at the bottom of your deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-046.png"
+  },
+  {
+   "id": "P-047",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "lider",
+   "cores": [
+    "Azul"
+   ],
+   "custo": null,
+   "vida": 5,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[DON!! x1] [When Attacking] Draw 1 card if you have 3 or less cards in your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-047.png"
+  },
+  {
+   "id": "P-048",
+   "nome": "Arlong",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Fish-Man",
+    "Arlong Pirates"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[DON!! x1] [When Attacking] If you have 4 or more Life cards, your opponent places 1 card from their hand at the bottom of their deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-048.png"
+  },
+  {
+   "id": "P-049",
+   "nome": "Usopp",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 3000,
+   "contador": 1000,
+   "atributos": [
+    "Distância"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-049.png"
+  },
+  {
+   "id": "P-050",
+   "nome": "Sanji",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 2000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "DON!! x1",
+    "Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [DON!! x1] [Your Turn] If you have 3 or less cards in your hand, this Character gains +4000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-050.png"
+  },
+  {
+   "id": "P-051",
+   "nome": "Shanks",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 9000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[When Attacking] You may trash any number of cards from your hand. This Character gains +1000 power during this battle for every card trashed.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-051.png"
+  },
+  {
+   "id": "P-052",
+   "nome": "Dracule Mihawk",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Seven Warlords of the Sea"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[DON!! x1] This Character cannot be K.O.'d in battle by &lt;Slash&gt; attribute cards.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-052.png"
+  },
+  {
+   "id": "P-053",
+   "nome": "Nami",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 1000,
+   "contador": 2000,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] If you have 3 or less cards in your hand, return up to 1 of your opponent's Characters with a cost of 3 or less to the owner's hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-053.png"
+  },
+  {
+   "id": "P-054",
+   "nome": "Monkey.D.Garp",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Navy"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[DON!! x1] This Character cannot be K.O.'d in battle by &lt;Strike&gt; attribute cards.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-054.png"
+  },
+  {
+   "id": "P-055",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] You may trash 2 cards from your hand: Your opponent places 1 of their Characters at the bottom of the owner's deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-055.png"
+  },
+  {
+   "id": "P-056",
+   "nome": "Roronoa Zoro",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] ➁ (You may rest the specified number of DON!! cards in your cost area.): Return up to 1 Character with a cost of 5 or less to the owner's hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-056.png"
+  },
+  {
+   "id": "P-061",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 8,
+   "vida": null,
+   "poder": 10000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "FILM",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-061.png"
+  },
+  {
+   "id": "P-062",
+   "nome": "Hody & Hyouzou",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Corte",
+    "Golpe"
+   ],
+   "tracos": [
+    "Fish-Man",
+    "Merfolk",
+    "New Fish-Man Pirates"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] [Once Per Turn] Rest up to 1 of your opponent's Characters with a cost of 4 or less and this Character gains +1000 power during this turn. Then, add 1 card from the top of your Life cards to your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-062.png"
+  },
+  {
+   "id": "P-063",
+   "nome": "Jinbe",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 2000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Fish-Man"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] Rest up to 1 of your opponent's Characters with a cost of 1 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-063.png"
+  },
+  {
+   "id": "P-065",
+   "nome": "Tony Tony.Chopper",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "Animal",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[When Attacking] If your opponent has a Character with a cost of 0, this Character gains +2000 power until the start of your next turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-065.png"
+  },
+  {
+   "id": "P-068",
+   "nome": "Sanji",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 2000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Kingdom of GERMA",
+    "The Vinsmoke Family"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] You may trash this Character: Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-068.png"
+  },
+  {
+   "id": "P-069",
+   "nome": "Koala",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 1,
+   "vida": null,
+   "poder": 1000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Revolutionary Army"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] [Once Per Turn] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-069.png"
+  },
+  {
+   "id": "P-070",
+   "nome": "Carrot",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 2,
+   "vida": null,
+   "poder": 2000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Minks"
+   ],
+   "palavrasChave": [
+    "Blocker"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-070.png"
+  },
+  {
+   "id": "P-071",
+   "nome": "Marco",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Whitebeard Pirates"
+   ],
+   "palavrasChave": [
+    "On K.O."
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[On K.O.] You may add this Character card to your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-071.png"
+  },
+  {
+   "id": "P-072",
+   "nome": "Ryuma",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "MONSTERS"
+   ],
+   "palavrasChave": [
+    "On K.O.",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[On Play]/[On K.O.] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-072.png"
+  },
+  {
+   "id": "P-073",
+   "nome": "Sabo",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 5000,
+   "contador": 2000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Dressrosa",
+    "Revolutionary Army"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] [Once Per Turn] You may add 1 card from the top or bottom of your Life cards to your hand: This Character gains +1000 power during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-073.png"
+  },
+  {
+   "id": "P-074",
+   "nome": "Portgas.D.Ace",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Whitebeard Pirates"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] You may return this Character to the owner's hand: Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-074.png"
+  },
+  {
+   "id": "P-075",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 7000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[On Play] Give up to 1 rested DON!! card to your Leader or 1 of your Characters. [When Attacking] If you have a Character with a cost of 8 or more on your field, draw 1 card and trash 1 card from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-075.png"
+  },
+  {
+   "id": "P-076",
+   "nome": "Sakazuki",
+   "tipo": "lider",
+   "cores": [
+    "Azul",
+    "Preto"
+   ],
+   "custo": null,
+   "vida": 4,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Navy"
+   ],
+   "palavrasChave": [
+    "Activate: Main",
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 2,
+   "efeito": "[Activate: Main] [Once Per Turn] You may trash 1 {Navy} type card from your hand: Give up to 1 of your opponent's Characters －1 cost during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-076.png"
+  },
+  {
+   "id": "P-077",
+   "nome": "Ulti",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Animal Kingdom Pirates"
+   ],
+   "palavrasChave": [
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Once Per Turn] When 2 or more DON!! cards on your field are returned to your DON!! deck, add up to 1 DON!! card from your DON!! deck and rest it. Then, set up to 1 of your purple Stages as active.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-077.png"
+  },
+  {
+   "id": "P-078",
+   "nome": "Adio",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 2000,
+   "atributos": [
+    "Distância"
+   ],
+   "tracos": [
+    "ODYSSEY"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "If you have 2 or more rested {ODYSSEY} type Characters, this Character gains +1000 power.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-078.png"
+  },
+  {
+   "id": "P-081",
+   "nome": "Dracule Mihawk",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Cross Guild"
+   ],
+   "palavrasChave": [
+    "Activate: Main"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Activate: Main] You may return this Character to the owner's hand: If you have 3 or more blue {Cross Guild} type Characters, play up to 1 {Cross Guild} type Character card with a cost of 5 from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-081.png"
+  },
+  {
+   "id": "P-082",
+   "nome": "Crocodile",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 7000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Cross Guild",
+    "Former Baroque Works"
+   ],
+   "palavrasChave": [
+    "On Play",
+    "Your Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Your Turn] [On Play] If your Leader has the {Cross Guild} type or a type including \"Baroque Works\", place up to 1 of your opponent's Characters with 2000 power or less at the bottom of the owner's deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-082.png"
+  },
+  {
+   "id": "P-083",
+   "nome": "Shanks",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [
+    "DON!! x1",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[DON!! x1] [When Attacking] You may trash 1 Character card from your hand: Give up to 1 of your opponent's Characters −1000 power during this turn. Then, draw 1 card.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-083.png"
+  },
+  {
+   "id": "P-084",
+   "nome": "Buggy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 8000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Cross Guild"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "This Character cannot attack. If your Leader is [Buggy], all Characters with a cost of 3 or 4 cannot attack. [On Play] Play up to 1 {Cross Guild} type Character card with a cost of 6 or less from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-084.png"
+  },
+  {
+   "id": "P-085",
+   "nome": "Jewelry Bonney",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Bonney Pirates"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[On Play] If your Leader has the {Supernovas} type and the number of your Life cards is equal to or less than the number of your opponent's Life cards, add up to 1 of your opponent's Characters with a cost of 4 or less to the top or bottom of the owner's Life cards face-up.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-085.png"
+  },
+  {
+   "id": "P-088",
+   "nome": "Trafalgar Law",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 2000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "- [Trigger] If your Leader has the {Supernovas} type and you and your opponent have a total of 5 or less Life cards, play this card.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-088.png"
+  },
+  {
+   "id": "P-089",
+   "nome": "Tony Tony.Chopper",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Animal",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-089.png"
+  },
+  {
+   "id": "P-090",
+   "nome": "Charlotte Smoothie",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Big Mom Pirates"
+   ],
+   "palavrasChave": [
+    "On K.O.",
+    "Opponent's Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Opponent's Turn] [On K.O.] DON!! −1: Play up to 1 {Big Mom Pirates} type Character card with a cost equal to or less than the number of DON!! cards on your opponent's field other than [Charlotte Smoothie] from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-090.png"
+  },
+  {
+   "id": "P-092",
+   "nome": "Koby",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Navy",
+    "SWORD"
+   ],
+   "palavrasChave": [
+    "Opponent's Turn",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Opponent's Turn] Give this Character −3000 power. [When Attacking] If your Leader has the {Navy} type, your Leader's base power becomes 7000 until the end of your opponent's next turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-092.png"
+  },
+  {
+   "id": "P-093",
+   "nome": "Trafalgar Law",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Blocker] [On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 DON!! card from your DON!! deck and rest it.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-093.png"
+  },
+  {
+   "id": "P-097",
+   "nome": "Shanks",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 10,
+   "vida": null,
+   "poder": 12000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Red-Haired Pirates"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[On Play]/[When Attacking] Your opponent cannot activate [Blocker] during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-097.png"
+  },
+  {
+   "id": "P-098",
+   "nome": "Buggy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 10,
+   "vida": null,
+   "poder": 12000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Cross Guild"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] If you do not have 5 Characters with a cost of 5 or more, place this Character at the bottom of the owner's deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-098.png"
+  },
+  {
+   "id": "P-099",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 10,
+   "vida": null,
+   "poder": 12000,
+   "contador": null,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[When Attacking] DON!! −10 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Set this Character as active.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-099.png"
+  },
+  {
+   "id": "P-100",
+   "nome": "Marshall.D.Teach",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 10,
+   "vida": null,
+   "poder": 12000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Blackbeard Pirates"
+   ],
+   "palavrasChave": [
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 3,
+   "efeito": "[When Attacking] Negate the effects of your opponent's Leader and all of their Characters during this turn.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-100.png"
+  },
+  {
+   "id": "P-101",
+   "nome": "Tony Tony.Chopper",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Animal",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Give up to 1 rested DON!! card to your Leader.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-101.png"
+  },
+  {
+   "id": "P-102",
+   "nome": "Nami",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 4000,
+   "contador": 2000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Egghead",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[On Play] If your Leader has the {Straw Hat Crew} type, set up to 2 of your DON!! cards as active.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-102.png"
+  },
+  {
+   "id": "P-103",
+   "nome": "Portgas.D.Ace",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Whitebeard Pirates"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[On Play] Draw 2 cards and place 2 cards from your hand at the top or bottom of your deck in any order. Then, give up to 1 rested DON!! card to your Leader.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-103.png"
+  },
+  {
+   "id": "P-104",
+   "nome": "Shanks",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 8,
+   "vida": null,
+   "poder": 10000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "The Four Emperors",
+    "Red-Haired Pirates",
+    "Former Roger Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "If either you or your opponent has 10 DON!! cards on the field, this Character cannot be removed from the field by your opponent's effects.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-104.png"
+  },
+  {
+   "id": "P-105",
+   "nome": "Sabo",
+   "tipo": "personagem",
+   "cores": [
+    "Preto"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": null,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Revolutionary Army"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "If your Leader has the {Revolutionary Army} type, this Character gains [Blocker] and +4 cost. [On Play] You may add 1 card from the top or bottom of your Life cards to your hand: Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-105.png"
+  },
+  {
+   "id": "P-106",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Egghead",
+    "The Four Emperors",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "End of Your Turn",
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[End of Your Turn] You may turn 1 card from the top of your Life cards face-up: Set up to 1 of your {Egghead} type Characters as active. [Trigger] Draw 1 card and K.O. up to 1 of your opponent's Characters with a cost of 2 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-106.png"
+  },
+  {
+   "id": "P-107",
+   "nome": "Gol.D.Roger",
+   "tipo": "personagem",
+   "cores": [
+    "Roxo"
+   ],
+   "custo": 8,
+   "vida": null,
+   "poder": 10000,
+   "contador": null,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "King of the Pirates",
+    "Roger Pirates"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[On Play] If either you or your opponent has 10 DON!! cards on the field, your Leader gains +2000 power until the end of your opponent's next End Phase.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-107.png"
+  },
+  {
+   "id": "P-110",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 7,
+   "vida": null,
+   "poder": 9000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Elbaph",
+    "The Four Emperors",
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-110.png"
+  },
+  {
+   "id": "P-111",
+   "nome": "Nico Robin",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 3,
+   "vida": null,
+   "poder": 4000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Once Per Turn"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[Once Per Turn] If your {Straw Hat Crew} type Character would be removed from the field by your opponent's effect, you may rest 1 of your DON!! cards instead.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-111.png"
+  },
+  {
+   "id": "P-112",
+   "nome": "Nami",
+   "tipo": "personagem",
+   "cores": [
+    "Azul"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[On Play] If your Leader is [Nami], give up to 1 rested DON!! card to your Leader. Then, play up to 1 Character card with a cost of 2 or less from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-112.png"
+  },
+  {
+   "id": "P-113",
+   "nome": "Jewelry Bonney",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 4000,
+   "contador": 2000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Bonney Pirates"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "DON!! x2",
+    "Opponent's Turn",
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[DON!! x2] [Opponent's Turn] This Character gains [Blocker] and +2000 power. [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 3 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-113.png"
+  },
+  {
+   "id": "P-115",
+   "nome": "Boa Hancock",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 6,
+   "vida": null,
+   "poder": 7000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "The Seven Warlords of the Sea",
+    "Kuja Pirates"
+   ],
+   "palavrasChave": [
+    "On Play",
+    "Trigger"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "[On Play] Give up to 1 rested DON!! card to your Leader or 1 of your Characters. [Trigger] Play up to 1 yellow Character card with 5000 power or less and a [Trigger] from your hand.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-115.png"
+  },
+  {
+   "id": "P-117",
+   "nome": "Nami",
+   "tipo": "lider",
+   "cores": [
+    "Azul"
+   ],
+   "custo": null,
+   "vida": 5,
+   "poder": 5000,
+   "contador": null,
+   "atributos": [
+    "Sabedoria"
+   ],
+   "tracos": [
+    "East Blue"
+   ],
+   "palavrasChave": [
+    "DON!! x1"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "Under the rules of this game, you can only include {East Blue} type cards in your deck and when your deck is reduced to 0, you win the game instead of losing. [DON!! x1] When this Leader's attack deals damage to your opponent's Life, you may trash 1 card from the top of your deck.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-117.png"
+  },
+  {
+   "id": "P-119",
+   "nome": "Portgas.D.Ace",
+   "tipo": "personagem",
+   "cores": [
+    "Vermelho"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 6000,
+   "contador": 1000,
+   "atributos": [
+    "Especial"
+   ],
+   "tracos": [
+    "Whitebeard Pirates"
+   ],
+   "palavrasChave": [],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 4,
+   "efeito": "",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-119.png"
+  },
+  {
+   "id": "P-135",
+   "nome": "Monkey.D.Luffy",
+   "tipo": "personagem",
+   "cores": [
+    "Verde"
+   ],
+   "custo": 5,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Golpe"
+   ],
+   "tracos": [
+    "Straw Hat Crew"
+   ],
+   "palavrasChave": [
+    "Blocker",
+    "On Play"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 5,
+   "efeito": "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Rest up to 1 of your opponent's Characters with a cost of 5 or less.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-135.png"
+  },
+  {
+   "id": "P-155",
+   "nome": "Trafalgar Law",
+   "tipo": "personagem",
+   "cores": [
+    "Amarelo"
+   ],
+   "custo": 4,
+   "vida": null,
+   "poder": 5000,
+   "contador": 1000,
+   "atributos": [
+    "Corte"
+   ],
+   "tracos": [
+    "Supernovas",
+    "Heart Pirates"
+   ],
+   "palavrasChave": [
+    "Trigger",
+    "When Attacking"
+   ],
+   "raridade": "P",
+   "colecao": {
+    "codigo": "P",
+    "nome": "Promo"
+   },
+   "bloco": 5,
+   "efeito": "[When Attacking] You may trash 1 card with a [Trigger] from your hand: Give up to 1 of your opponent's Characters −2000 power during this turn. [Trigger] If your opponent has 3 or less Life cards, play this card.",
+   "imagem": "https://en.onepiece-cardgame.com/images/cardlist/card/P-155.png"
+  },
+  {
    "id": "PRB01-001",
    "nome": "Sanji",
    "tipo": "lider",

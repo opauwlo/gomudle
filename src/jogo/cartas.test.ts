@@ -77,7 +77,7 @@ describe('dados gerados', () => {
     for (const carta of TODAS_AS_CARTAS) {
       expect(carta.cores.length, carta.id).toBeGreaterThan(0)
       expect(typeof carta.poder, carta.id).toBe('number')
-      expect(carta.colecao.codigo, carta.id).toMatch(/^(OP|ST|EB|PRB)-\d+$/)
+      expect(carta.colecao.codigo, carta.id).toMatch(/^(P|(OP|ST|EB|PRB)-\d+)$/)
     }
   })
 
