@@ -64,6 +64,19 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
 3. **No modo arte, nem o `alt` da imagem nem o aviso de falha podem dizer que
    carta é.** Já entregou a resposta escrita no meio da tela. Ver
    `identidadeOculta` em `componentes/ImagemDaCarta.tsx`.
+   **Com a identidade oculta a imagem também não é alvo de clique**
+   (`pointer-events: none`). Sem isso, o botão direito em cima dela abre o menu
+   de IMAGEM, e "abrir imagem em nova guia" mostra a carta do dia inteira — sem
+   recorte, sem zoom, com o código dela no endereço. Era o jeito mais fácil que
+   existia de furar o modo, e não exigia saber nada. Sem ser alvo, o clique
+   atravessa pro painel e o menu que abre é o da página. Revelou a carta, o
+   `pointer-events` volta: aí não tem mais segredo pra guardar.
+   **Isso é tranca de porta, não cofre, e a diferença importa.** Quem abre as
+   ferramentas do navegador vê o endereço na aba de rede, e não tem como
+   impedir: quem pede a imagem é o navegador de quem joga. Esconder de verdade
+   exigiria um servidor entregando a arte já recortada, e o jogo não tem
+   servidor — é página estática, e isso é decisão, não limitação temporária.
+   Vale travar o acidente e o impulso; não vale prometer mais que isso.
 4. **Dica é pedida, vem em escada e nunca repete coluna da grade.** Duas coisas
    já foram feitas errado aqui: (a) a dica caía sozinha a cada N palpites, o
    que tirava da pessoa a única decisão que sobra depois de chutar; (b) o

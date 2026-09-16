@@ -103,6 +103,24 @@ export function ImagemDaCarta({
 
   const endereco = enderecoDaCarta(carta, tamanho, indice)
 
+  /*
+   * Com a identidade oculta, a imagem deixa de ser alvo de clique.
+   *
+   * Sem isso, o menu do botão direito em cima dela é o menu de IMAGEM — "abrir
+   * imagem em nova guia" mostra a carta do dia inteira, sem recorte, sem zoom
+   * e com o código dela no endereço. É o jeito mais fácil que existe de furar
+   * o modo arte, e não exige saber nada.
+   * Sem ser alvo, o clique atravessa pro painel atrás e o menu que abre é o da
+   * página, que não tem entrada de imagem nenhuma.
+   *
+   * **Isto é tranca de porta, não cofre.** Quem abre as ferramentas do
+   * navegador vê o endereço na aba de rede, e não tem como impedir: é o
+   * navegador de quem joga que pede a imagem. Esconder de verdade exigiria um
+   * servidor servindo a arte recortada, e o jogo não tem servidor — ver a
+   * ressalva na `identidadeOculta` acima.
+   */
+  const classes = identidadeOculta ? `${className} pointer-events-none` : className
+
   if (endereco === null) {
     if (compacta) {
       return (
@@ -143,7 +161,7 @@ export function ImagemDaCarta({
       width={endereco.largura}
       height={endereco.altura}
       alt={identidadeOculta ? 'Pedaço da arte da carta do dia' : `Carta ${carta.nome} (${carta.id})`}
-      className={className}
+      className={classes}
       style={{
         background: fundoDeEspera(carta, identidadeOculta, endereco.previa),
         ...estiloDaImagem,
