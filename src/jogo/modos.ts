@@ -123,7 +123,8 @@ export const MODOS: Modo[] = [
     nome: 'Arte',
     emojiDeCompartilhamento: '🖼️',
     chamada: 'Só um pedaço da arte. Que carta é?',
-    comoJoga: 'Começa num zoom absurdo. Cada erro afasta a câmera e solta uma dica.',
+    comoJoga:
+      'Começa num pedaço da arte, fora de foco. Cada erro afasta a câmera e solta uma dica.',
     descricaoDoDeck: 'líderes e personagens',
     deck: comArte,
     colunas: [],

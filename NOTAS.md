@@ -184,6 +184,12 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    cru no fim — e três cartas falhando na mesma fonte trocam a fonte do jogo
    inteiro, pra lista de doze não pagar doze vezes a mesma descoberta. Ver
    `jogo/imagens.ts`.
+22. **O modo arte abre em 3×, não em 7,5×.** Zoom demais não é dificuldade, é
+   sorteio: o que aparecia era uma mancha colorida, sem traço nem cenário pra
+   deduzir, e ainda por cima feia — ampliar tanto estica um punhado de pixels
+   da origem pela tela inteira. A escada agora vai de 3× a 1,08×, com desfoque
+   leve que some no quarto passo, e a dificuldade mora no RECORTE. Ver
+   `jogo/arte.ts`, que é onde ela é testada.
 
 ## Armadilhas
 
@@ -200,6 +206,10 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
   e é por isso que o fim da fila é o endereço oficial cru, que é o único que
   não depende de ninguém. Caiu a fila inteira, o modo arte cai no fallback e as
   dicas seguram a rodada — não é bug, é o combinado.
+- **Hash de carta desloca com `>>>`, nunca com `>>`.** O hash de `focoDaArte`
+  passa de 2³¹, e o deslocamento COM sinal devolve negativo — o resto vira
+  porcentagem negativa e o recorte ancora fora da arte. Estava assim em 708 das
+  840 cartas: o modo arte abria na borda de cima da moldura.
 - **`BASE_PUBLICA` existe por causa do Pages**, que serve em `/gomudle/`. Build
   sem isso abre página em branco lá.
 - **Cor sozinha não pode carregar informação.** Toda pastilha tem ícone (✓ ≈ ✕

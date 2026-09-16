@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { focoDaArte, zoomDaArte } from '../jogo/arte'
 import type { Carta } from '../jogo/tipos'
 import { ImagemDaCarta } from './ImagemDaCarta'
 
@@ -8,19 +9,12 @@ interface Props {
   revelar: boolean
 }
 
-/** Ponto do recorte, estável por carta: todo mundo vê o mesmo pedaço da arte. */
-function foco(id: string): { x: number; y: number } {
-  let h = 0
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0
-  return { x: 28 + (h % 45), y: 22 + ((h >> 8) % 40) }
-}
-
 export function PainelDeArte({ carta, palpites, revelar }: Props) {
   const [semImagem, setSemImagem] = useState(false)
-  const passo = Math.min(palpites, 6)
-  const escala = revelar ? 1 : Math.max(1.15, 7.5 - passo * 1.05)
-  const desfoque = revelar ? 0 : Math.max(0, 2.5 - passo * 1.2)
-  const { x, y } = foco(carta.id)
+  // A escada do zoom é regra de jogo, não detalhe de tela: mora em jogo/arte.ts
+  // e é testada lá.
+  const { escala, desfoque } = zoomDaArte(palpites, revelar)
+  const { x, y } = focoDaArte(carta.id)
 
   return (
     <div>

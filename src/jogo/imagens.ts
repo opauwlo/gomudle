@@ -69,15 +69,15 @@ export type TamanhoDaImagem = 'miniatura' | 'carta' | 'arte'
  * Largura pedida ao CDN pro 1×, em px. O 2× é o dobro, e é ele que a tela de
  * celular usa — por isso o número aqui parece pequeno demais pra cada caso.
  *
- * `arte` é o maior porque o painel do modo arte dá zoom de até 7,5× na imagem.
- * Não precisa cobrir o zoom inteiro: nos passos de zoom alto a imagem sai
- * borrada de propósito, e o borrão come qualquer resolução. 320 (640 no 2×)
- * cobre os passos finais, que são os que aparecem nítidos.
+ * `arte` é o maior porque o painel do modo arte amplia a imagem em até 3× (ver
+ * `jogo/arte.ts`). 360 (720 no 2×) pede mais do que a arte oficial costuma
+ * ter: como a fonte não amplia, o que chega é o tamanho nativo dela — e é ele
+ * o teto do que dá pra mostrar ampliado sem virar borrão.
  */
 const LARGURA: Record<TamanhoDaImagem, number> = {
   miniatura: 64,
   carta: 200,
-  arte: 320,
+  arte: 360,
 }
 
 /** Proporção da carta impressa (63×88mm). Serve pra reservar o espaço. */
