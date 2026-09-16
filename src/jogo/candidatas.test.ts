@@ -59,7 +59,7 @@ describe('candidatasRestantes', () => {
 })
 
 describe('modo sem grade', () => {
-  const arte = MODOS[3]!
+  const arte = MODOS.find((m) => m.id === 'arte')!
   const deckArte = deckDoModo(arte, acharFormato('egb'))
   const resposta = deckArte[10] as Carta
   const daArte = (parcial: Partial<Cerco> = {}): Cerco => ({

@@ -32,9 +32,9 @@ export interface Dica {
  * Uma dica que resolve a rodada não é dica, é botão de revelar resposta: a
  * pessoa clica, ganha sem graça nenhuma e conclui que o jogo é quebrado.
  *
- * Dica também nunca repete coluna da grade: no modo personagem, "Cor" já é
- * comparada a cada palpite, e pagar a marca "sem dica" por algo que a grade
- * entrega de graça seria roubo.
+ * Dica também nunca repete coluna da grade: no modo da grade, cor, custo/vida,
+ * poder, traço e coleção já são comparados a cada palpite, e pagar a marca
+ * "sem dica" por algo que a grade entrega de graça seria roubo.
  */
 export function dicasDoModo(carta: Carta, idDoModo: string): Dica[] {
   const quantidade: Dica = {
@@ -57,14 +57,25 @@ export function dicasDoModo(carta: Carta, idDoModo: string): Dica[] {
   const daCarta = dicasDaCarta(carta)
   const inicial = daCarta[daCarta.length - 1] as Dica
   const semInicial = daCarta.slice(0, -1)
-  const tracos = daCarta.find((dica) => dica.rotulo === 'Traços') as Dica
+  const tipo = daCarta.find((dica) => dica.rotulo === 'Tipo') as Dica
 
-  // Modo com grade: cor, custo, poder e coleção já são coluna. Traço NÃO é
-  // mais — saiu da grade e virou dica, que é a saída pra quando a carta do dia
-  // tem sósia: a informação continua alcançável, só que agora custa a marca.
-  if (idDoModo !== 'efeito' && idDoModo !== 'arte') return [quantidade, tracos, conjunto, inicial]
+  // Modo com grade: cor, custo/vida, poder, traço e coleção já são coluna. O
+  // TIPO não é, e isso foi medido: pôr tipo na grade vale nove centésimos de
+  // palpite (4,38 -> 4,29), porque ele já vaza pelo "—" do poder, que só
+  // acontece em evento e stage. De graça na grade ele quase não paga a vaga;
+  // como dica PEDIDA ele vale, porque quem pede escolhe gastar a marca por
+  // ele — e é a saída pra quando a carta do dia tem sósia.
+  if (idDoModo !== 'efeito' && idDoModo !== 'arte') return [quantidade, tipo, conjunto, inicial]
   if (idDoModo === 'efeito') return daCarta
   return [quantidade, ...semInicial, conjunto, inicial]
+}
+
+/** Como cada tipo se chama na tela. */
+const NOME_DO_TIPO: Record<Carta['tipo'], string> = {
+  lider: 'Líder',
+  personagem: 'Personagem',
+  evento: 'Evento',
+  stage: 'Stage',
 }
 
 export function dicasDaCarta(carta: Carta): Dica[] {
@@ -78,21 +89,29 @@ export function dicasDaCarta(carta: Carta): Dica[] {
       combina: (outra) => mesmoConjunto(outra.cores, carta.cores),
     },
     {
+      // Com quatro tipos no mesmo deck, esta é das dicas mais fortes que
+      // existem — e é justamente por isso que ela é PEDIDA e não uma coluna.
       rotulo: 'Tipo',
-      valor: carta.tipo === 'lider' ? 'Líder' : 'Personagem',
+      valor: NOME_DO_TIPO[carta.tipo],
       combina: (outra) => outra.tipo === carta.tipo,
     },
     {
-      // Rótulo neutro de propósito: "Custo" fechado já diria que a carta é
-      // personagem, e "Vida", que é líder — dica de graça antes da hora.
+      // Rótulo neutro de propósito: "Custo" fechado já diria que a carta NÃO é
+      // líder, e "Vida", que é — dica de graça antes da hora.
       rotulo: 'Custo ou vida',
       valor:
-        carta.tipo === 'lider' ? `${carta.vida} de vida` : `${carta.custo} de custo`,
+        carta.tipo === 'lider'
+          ? `${carta.vida} de vida`
+          : carta.custo == null
+            ? 'sem custo'
+            : `${carta.custo} de custo`,
       combina: (outra) => outra.custo === carta.custo && outra.vida === carta.vida,
     },
     {
+      // Evento e stage não têm poder. O travessão é resposta legítima: quem
+      // pediu a dica fica sabendo que a carta é de um desses dois.
       rotulo: 'Poder',
-      valor: carta.poder.toLocaleString('pt-BR'),
+      valor: carta.poder == null ? '—' : carta.poder.toLocaleString('pt-BR'),
       combina: (outra) => outra.poder === carta.poder,
     },
     {

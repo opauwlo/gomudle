@@ -71,7 +71,7 @@ describe('dicasDoModo', () => {
   })
 
   it('a primeira dica é sempre mais fraca que a última', () => {
-    for (const modo of ['personagem', 'lider', 'arte', 'efeito']) {
+    for (const modo of ['personagem', 'arte', 'efeito']) {
       const dicas = dicasDoModo(luffy, modo)
       const cabem = (d: (typeof dicas)[number]) =>
         TODAS_AS_CARTAS.filter((carta) => d.combina(carta)).length

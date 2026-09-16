@@ -51,7 +51,31 @@ const NUMERO_PROMO = /^P-(\d+)$/
 // carta ou não diz nada.
 const COLECAO_PROMO = { codigo: 'P', nome: 'Promo' }
 
-// Raridade que entra no deck de personagens.
+/** O `card_type` da fonte no vocabulário do jogo. Fora daqui não entra. */
+const TIPO = {
+  LEADER: 'lider',
+  CHARACTER: 'personagem',
+  EVENT: 'evento',
+  STAGE: 'stage',
+}
+
+/**
+ * Os tipos que têm poder. Evento e stage não têm — não é dado faltando, é a
+ * carta não ter esse número. O "—" na grade é informação.
+ */
+const TEM_PODER = new Set(['lider', 'personagem'])
+
+/**
+ * Onde a régua de raridade se aplica.
+ *
+ * Ela existe pra cortar enchimento de booster, então só faz sentido onde tem
+ * enchimento: personagem (2.185 na fonte) e evento (410). Líder tem 142 no
+ * jogo inteiro e stage tem 48 — filtrar esses por raridade deixaria TRÊS
+ * stages, e um tipo com três cartas é resposta entregue no dia em que sai.
+ */
+const TEM_ENCHIMENTO = new Set(['personagem', 'evento'])
+
+// Raridade que entra onde a régua se aplica.
 //
 // C e UC ficam de fora: são enchimento de booster, arte genérica, ninguém
 // lembra. R entra porque em OPTCG tem R que é staple de deck competitivo — o
@@ -68,7 +92,7 @@ const COLECAO_PROMO = { codigo: 'P', nome: 'Promo' }
 // qualquer jeito. O que cresce é a ambiguidade (rodada que acaba com tudo
 // verde e a carta errada) e a quantidade de cartas com o mesmo nome: 23
 // "Monkey.D.Luffy" hoje, 45 se entrasse tudo.
-const RARIDADE_PERSONAGEM = new Set(['SR', 'SEC', 'R'])
+const RARIDADE_ACEITA = new Set(['SR', 'SEC', 'R'])
 
 const numero = (valor) => {
   if (valor == null) return null
@@ -117,21 +141,22 @@ for (const carta of brutas) {
 }
 
 function converter(carta, ehPromo) {
-  const ehLider = carta.card_type === 'LEADER'
+  const tipo = TIPO[carta.card_type]
+  if (tipo === undefined) return null
+
   // A régua de raridade vale pra coleção numerada, onde ela corta enchimento
   // de booster (C e UC). Promo não tem enchimento: a raridade dela é 'P' pra
   // todas, então aplicar a régua ali derrubaria as promo inteiras.
-  const ehPersonagem =
-    carta.card_type === 'CHARACTER' && (ehPromo || RARIDADE_PERSONAGEM.has(carta.rarity))
-  if (!ehLider && !ehPersonagem) return null
+  if (TEM_ENCHIMENTO.has(tipo) && !ehPromo && !RARIDADE_ACEITA.has(carta.rarity)) return null
 
   const cores = listaLimpa(carta.colors).map((c) => COR[c] ?? c)
   const atributos = listaLimpa(carta.attributes).map((a) => ATRIBUTO[a] ?? a)
-  const poder = numero(carta.power)
+  const temPoder = TEM_PODER.has(tipo)
+  const poder = temPoder ? numero(carta.power) : null
 
-  // Sem cor ou sem poder a linha da grade fica com buraco. Não vale a pena
-  // tratar caso especial por uma carta torta do dataset: descarta.
-  if (cores.length === 0 || poder == null) {
+  // Sem cor a linha da grade fica com buraco, e líder ou personagem sem poder
+  // é dado torto do dataset. Não vale tratar caso especial: descarta.
+  if (cores.length === 0 || (temPoder && poder == null)) {
     if (verboso) console.warn('descartada (dado incompleto):', carta.card_number, carta.card_name)
     return null
   }
@@ -139,10 +164,10 @@ function converter(carta, ehPromo) {
   return {
     id: carta.card_number,
     nome: texto(carta.card_name),
-    tipo: ehLider ? 'lider' : 'personagem',
+    tipo,
     cores,
-    custo: ehLider ? null : numero(carta.cost),
-    vida: ehLider ? numero(carta.life) : null,
+    custo: tipo === 'lider' ? null : numero(carta.cost),
+    vida: tipo === 'lider' ? numero(carta.life) : null,
     poder,
     contador: numero(carta.counter),
     atributos,
@@ -227,8 +252,13 @@ writeFileSync(destino, `${JSON.stringify({
   cartas,
 }, null, 1)}\n`)
 
-const lideres = cartas.filter((c) => c.tipo === 'lider').length
-console.log(`cartas.json: ${cartas.length} cartas (${lideres} líderes, ${cartas.length - lideres} personagens)`)
+const porTipo = {}
+for (const carta of cartas) porTipo[carta.tipo] = (porTipo[carta.tipo] ?? 0) + 1
+const resumo = Object.entries(porTipo)
+  .sort((a, b) => b[1] - a[1])
+  .map(([tipo, quantas]) => `${quantas} ${tipo}`)
+  .join(', ')
+console.log(`cartas.json: ${cartas.length} cartas (${resumo})`)
 const promos = cartas.filter((c) => c.colecao.codigo === COLECAO_PROMO.codigo).length
 console.log(`promo: ${promos} inéditas entraram, ${promoRepetida} repetidas ficaram de fora`)
 console.log(`fonte: one-piece-card-game-json@${versaoPacote}`)

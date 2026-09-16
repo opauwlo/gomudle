@@ -4,6 +4,19 @@ import type { Carta } from '../jogo/tipos'
 import { TINTA_DA_COR } from './cores'
 import { ImagemDaCarta } from './ImagemDaCarta'
 
+/**
+ * A linha de números da sugestão. Muda com o tipo: líder tem vida e não custo,
+ * e evento e stage não têm poder nenhum — repetir "— de poder" neles seria
+ * ruído onde não há dado.
+ */
+function resumoDaCarta(carta: Carta): string {
+  const partes: string[] = []
+  if (carta.tipo === 'lider') partes.push(`${carta.vida} de vida`)
+  else if (carta.custo != null) partes.push(`custo ${carta.custo}`)
+  if (carta.poder != null) partes.push(`${carta.poder.toLocaleString('pt-BR')} de poder`)
+  return partes.join(' · ')
+}
+
 interface Props {
   deck: Carta[]
   jaChutados: string[]
@@ -146,10 +159,7 @@ export function CampoDePalpite({
                             />
                           ))}
                         </span>
-                        {carta.tipo === 'lider'
-                          ? `${carta.vida} de vida`
-                          : `custo ${carta.custo}`}{' '}
-                        · {carta.poder.toLocaleString('pt-BR')} de poder
+                        {resumoDaCarta(carta)}
                       </span>
                     </span>
                   </button>

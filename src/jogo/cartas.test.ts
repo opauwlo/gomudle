@@ -73,15 +73,21 @@ describe('dados gerados', () => {
     expect(new Set(TODAS_AS_CARTAS.map((c) => c.id)).size).toBe(TODAS_AS_CARTAS.length)
   })
 
-  it('tem cor, poder e coleção em toda carta', () => {
+  it('tem cor e coleção em toda carta', () => {
     for (const carta of TODAS_AS_CARTAS) {
       expect(carta.cores.length, carta.id).toBeGreaterThan(0)
-      expect(typeof carta.poder, carta.id).toBe('number')
       expect(carta.colecao.codigo, carta.id).toMatch(/^(P|(OP|ST|EB|PRB)-\d+)$/)
     }
   })
 
-  it('separa custo de líder e de personagem', () => {
+  it('poder existe em líder e personagem, e não existe em evento e stage', () => {
+    for (const carta of TODAS_AS_CARTAS) {
+      const deveTer = carta.tipo === 'lider' || carta.tipo === 'personagem'
+      expect(typeof carta.poder === 'number', `${carta.id} (${carta.tipo})`).toBe(deveTer)
+    }
+  })
+
+  it('só líder tem vida; os outros três têm custo no lugar', () => {
     for (const carta of TODAS_AS_CARTAS) {
       if (carta.tipo === 'lider') expect(carta.custo, carta.id).toBeNull()
       else expect(carta.vida, carta.id).toBeNull()

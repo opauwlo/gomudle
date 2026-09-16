@@ -14,7 +14,7 @@ describe('cartaDoDia', () => {
   it('separa os modos: o mesmo dia não repete a carta entre eles', () => {
     const cartas = deck(200)
     const iguais = Array.from({ length: 30 }, (_, i) => i + 1).filter(
-      (dia) => cartaDoDia(cartas, 'personagem', dia).id === cartaDoDia(cartas, 'lider', dia).id,
+      (dia) => cartaDoDia(cartas, 'personagem', dia).id === cartaDoDia(cartas, 'efeito', dia).id,
     )
     expect(iguais.length).toBeLessThan(3)
   })

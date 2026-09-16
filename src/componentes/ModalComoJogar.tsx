@@ -8,7 +8,7 @@ export function ModalComoJogar({ aoFechar }: { aoFechar: () => void }) {
     <Modal titulo="Como jogar" aoFechar={aoFechar}>
       <div className="space-y-4 text-sm leading-relaxed text-tinta">
         <p>
-          Todo dia, quatro cartas do One Piece Card Game entram em jogo — uma por modo. Chute
+          Todo dia, três cartas do One Piece Card Game entram em jogo — uma por modo. Chute
           quantas vezes precisar; não tem limite de palpite.
         </p>
 

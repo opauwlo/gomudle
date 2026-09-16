@@ -1,4 +1,8 @@
-export type TipoDeCarta = 'lider' | 'personagem'
+/**
+ * Os quatro tipos de carta do jogo. Evento e stage entraram junto com líder no
+ * deck único — o tipo virou parte do enigma, não a divisão dos modos.
+ */
+export type TipoDeCarta = 'lider' | 'personagem' | 'evento' | 'stage'
 
 export interface Colecao {
   codigo: string
@@ -10,11 +14,15 @@ export interface Carta {
   nome: string
   tipo: TipoDeCarta
   cores: string[]
-  /** Líder não tem custo. Personagem sempre tem. */
+  /** Líder não tem custo — tem vida. Os outros três têm custo. */
   custo: number | null
   /** Só líder tem vida. */
   vida: number | null
-  poder: number
+  /**
+   * `null` em evento e stage: essas cartas não têm poder, e o "—" na grade é
+   * informação, não dado faltando. Líder e personagem sempre têm.
+   */
+  poder: number | null
   contador: number | null
   atributos: string[]
   tracos: string[]
@@ -41,4 +49,10 @@ export interface Pista {
   direcao?: Direcao
 }
 
-export type IdDeModo = 'personagem' | 'lider' | 'efeito' | 'arte'
+/**
+ * `personagem` é o nome guardado do modo do deck único, e ele fica.
+ * A chave do sorteio e do progresso é `modo:formato` (decisão 13 do NOTAS):
+ * renomear zeraria a sequência e a estatística de todo mundo. Na tela ele se
+ * chama "Carta" — o id é identidade de dado, não rótulo.
+ */
+export type IdDeModo = 'personagem' | 'efeito' | 'arte'

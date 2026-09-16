@@ -35,7 +35,15 @@ export function BarraDeControles({
   return (
     <div className="overflow-hidden rounded-2xl border border-hairline bg-surface-1">
       <nav aria-label="Modos de jogo">
-        <ul className="grid grid-cols-4">
+        {/*
+          As colunas saem da lista de modos, não de uma classe fixa: com
+          `grid-cols-4` escrito à mão, tirar um modo deixava uma célula vazia
+          na barra — e ninguém lembra de vir aqui ao mexer em `MODOS`.
+        */}
+        <ul
+          className="grid"
+          style={{ gridTemplateColumns: `repeat(${MODOS.length}, minmax(0, 1fr))` }}
+        >
           {MODOS.map((outro) => {
             const ativo = outro.id === modo
             const feito = resumoDoDia[outro.id]

@@ -56,6 +56,45 @@ const PODER: Coluna = {
 // coleção puxaria o bloco de volta pra dentro do jogo por uma fresta — e o
 // bloco é justamente o que fazia o deck desabar num palpite só.
 
+/**
+ * Custo e vida na MESMA coluna, com rótulo neutro.
+ *
+ * É a decisão 5 do NOTAS aplicada à grade: "Custo" fechado entregaria que a
+ * carta é personagem, evento ou stage, e "Vida", que é líder. Juntando os
+ * dois, um 4 na coluna pode ser custo 4 ou vida 4 — e descobrir qual é faz
+ * parte do enigma, agora que o tipo não é mais a divisão dos modos.
+ */
+const VALOR: Coluna = {
+  chave: 'valor',
+  rotulo: 'Custo ou vida',
+  // O cabeçalho tem uns 55px no celular: "CUSTO OU VIDA" não cabe. O nome
+  // inteiro está no `title` de cada pastilha e no texto do leitor de tela.
+  abreviado: 'C/V',
+  estilo: 'numero',
+  numero: (c) => (c.tipo === 'lider' ? c.vida : c.custo),
+  tolerancia: 1,
+}
+
+/**
+ * Traço é a coluna que RECOMPENSA saber de One Piece.
+ *
+ * "Straw Hat Crew", "Navy", "Supernovas" — 106 traços distintos, e todas as
+ * 1.111 cartas têm pelo menos um. Quem conhece a obra deduz; quem não conhece
+ * aprende jogando. É o contrário do bloco, que é metadado de lançamento: saber
+ * bloco é consulta, não dedução, e por isso ele ficou de fora (ver a 11).
+ *
+ * Medido no deck unificado, ela é a diferença entre um jogo longo e um jogo
+ * difícil: sem ela a média é 6,03 palpites com 20% de cartas ambíguas; com
+ * ela, 4,38 e 6%.
+ */
+const TRACOS: Coluna = {
+  chave: 'tracos',
+  rotulo: 'Traços',
+  abreviado: 'Traço',
+  estilo: 'conjunto',
+  conjunto: (c) => c.tracos,
+}
+
 const COLECAO: Coluna = {
   chave: 'colecao',
   rotulo: 'Coleção',
@@ -64,8 +103,6 @@ const COLECAO: Coluna = {
   texto: (c) => c.colecao.codigo,
 }
 
-const personagens = TODAS_AS_CARTAS.filter((c) => c.tipo === 'personagem')
-const lideres = TODAS_AS_CARTAS.filter((c) => c.tipo === 'lider')
 
 // Efeito curto demais ("[Blocker]") não é enigma, é sorteio. 40 caracteres é o
 // ponto em que sobra texto pra deduzir alguma coisa.
@@ -74,42 +111,18 @@ const comArte = TODAS_AS_CARTAS.filter((c) => c.imagem !== '')
 
 export const MODOS: Modo[] = [
   {
+    // O id continua 'personagem' de propósito, e a tela chama de "Carta": a
+    // chave do sorteio e do progresso é `modo:formato` (decisão 13 do NOTAS),
+    // e renomear zeraria a sequência e a estatística de quem já joga.
     id: 'personagem',
-    nome: 'Personagem',
+    nome: 'Carta',
     emojiDeCompartilhamento: '🃏',
-    chamada: 'Qual é o personagem de hoje?',
+    chamada: 'Qual é a carta de hoje?',
     comoJoga:
-      'Chuta qualquer personagem R, SR ou SEC, mais as promo exclusivas de evento. Cada palpite compara quatro características com a carta do dia — e o contador mostra quantas ainda cabem.',
-    descricaoDoDeck: 'personagens R, SR e SEC, mais as promo',
-    deck: personagens,
-    colunas: [
-      COR,
-      {
-        chave: 'custo',
-        rotulo: 'Custo',
-        estilo: 'numero',
-        numero: (c) => c.custo,
-        tolerancia: 1,
-      },
-      PODER,
-      COLECAO,
-    ],
-  },
-  {
-    id: 'lider',
-    nome: 'Líder',
-    emojiDeCompartilhamento: '👑',
-    chamada: 'Qual líder tá na mesa hoje?',
-    comoJoga:
-      'Só líder entra aqui, de OP-01 até a coleção mais nova, promo incluída. No lugar do custo, a vida.',
-    descricaoDoDeck: 'líderes',
-    deck: lideres,
-    colunas: [
-      COR,
-      { chave: 'vida', rotulo: 'Vida', estilo: 'numero', numero: (c) => c.vida, tolerancia: 1 },
-      PODER,
-      COLECAO,
-    ],
+      'Entra tudo: líder, personagem, evento e stage. Qual dos quatro é faz parte do enigma — evento e stage não têm poder, então um "—" ali já diz alguma coisa. Cada palpite compara cinco características, e o contador mostra quantas cartas ainda cabem.',
+    descricaoDoDeck: 'líderes, personagens R/SR/SEC, eventos e stages',
+    deck: TODAS_AS_CARTAS,
+    colunas: [COR, VALOR, PODER, TRACOS, COLECAO],
   },
   {
     id: 'efeito',

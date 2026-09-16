@@ -30,7 +30,7 @@ src/dados/cartas.json      GERADO e commitado. Não edite à mão.
 src/jogo/                  regra de jogo, tudo puro e testado
   tipos.ts                 Carta, Pista, veredito
   cartas.ts                carrega o JSON, busca por nome, código e os dois
-  modos.ts                 os 4 modos: deck de cartas + colunas da grade
+  modos.ts                 os 3 modos: deck de cartas + colunas da grade
   formatos.ts              Standard x EGB: o filtro de bloco que corta o deck
   candidatas.ts            quantas cartas ainda cabem nas pistas (o termômetro)
   comparar.ts              igual / parcial / diferente, e a seta ▲▼
@@ -69,15 +69,22 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    que tirava da pessoa a única decisão que sobra depois de chutar; (b) o
    conjunto completo de palavras-chave era a primeira dica e derrubava 24
    candidatas pra 1 — dica que resolve a rodada não é dica, é botão de revelar
-   resposta. Hoje a ordem é por força: quantidade de palavras-chave, depois o
-   conjunto, depois a inicial do nome. No modo efeito não existe dica de
-   palavra-chave, porque o texto exibido já traz os selos.
+   resposta. Hoje a ordem é por força: quantidade de palavras-chave, o TIPO da
+   carta, o conjunto de palavras-chave, a inicial do nome. No modo efeito não
+   existe dica de palavra-chave, porque o texto exibido já traz os selos.
+   O tipo ocupa essa vaga desde que traço virou coluna da grade — e é a única
+   dica que o deck único criou. Ele é forte (dizer "evento" corta 1.111 pra
+   126) e é justamente por isso que fica aqui e não na grade: como dica, quem
+   quer a informação escolhe pagar a marca por ela. Ver a 11.
    **Quem desenha o selo é `optcg-card-rules` (MIT)**, não CSS nosso: são seis
    formatos diferentes (habilidade, tempo, DON!!, Trigger, Counter, Once Per
    Turn) e aproximar isso à mão erra cor e formato de algum. Ver
    `componentes/SeloDePalavraChave.tsx`.
-5. **A dica de custo/vida tem rótulo neutro.** "Custo" fechado já entregaria que
-   a carta é personagem, e "Vida", que é líder.
+5. **Custo e vida dividem um rótulo neutro, na dica E na grade.** "Custo"
+   fechado entregaria que a carta NÃO é líder, e "Vida", que é. Na grade eles
+   são uma coluna só (`C/V`, "Custo ou vida" por extenso no `title`): um 4 ali
+   pode ser custo 4 ou vida 4, e descobrir qual é faz parte do enigma agora
+   que o tipo não divide mais os modos.
 6. **O dia é o de Brasília, calculado com `Intl`.** Fuso do navegador faria o
    mesmo desafio ter cartas diferentes, e aí compartilhar resultado não
    significa nada.
@@ -106,28 +113,44 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
 11. **Não existe coluna de bloco, e isso é decisão medida.** Simulando um
    jogador de memória perfeita (que sempre chuta uma carta ainda possível):
 
-   | colunas | média | ≤5 palpites | pior caso | com sósia |
+   Medido no deck unificado de 1.111 cartas, amostra de 400 respostas com
+   semente fixa:
+
+   | colunas | média | ≤5 palpites | pior caso | ambíguas |
    |---|---|---|---|---|
-   | 8 (com bloco, atributo e contador) | 2,65¹ | — | 5 | 2 |
-   | 7 (sem bloco) | 3,51 | 94% | 8 | 13 (2%) |
-   | 5 (sem atributo nem contador) | 4,69 | 73% | 13 | 46 (7%) |
-   | **4 (sem traços)** | **5,89** | **52%** | **15** | **125 (18%)** |
+   | cor · C/V · poder · coleção | 6,14 | 52% | 18 | 221 (20%) |
+   | **cor · C/V · poder · traços · coleção** | **4,81** | **71%** | **14** | **67 (6%)** |
+   | + tipo | 4,54 | 74% | 12 | 59 (5%) |
+   | + tipo + atributo | 3,83 | 88% | 9 | 30 (3%) |
 
-   ¹ medida no deck antigo, de 311 cartas.
+   A linha em negrito é a que está no ar. As duas pontas explicam por quê.
 
-   Bloco era a coluna mais informativa — cinco valores ordenados com seta — e
-   fazia o deck desabar num palpite só. Atributo e contador saíram depois, a
-   pedido: derrubam a média pra 4,7, que é a faixa do gênero, ao custo de 7%
-   de cartas que dividem a linha inteira com outra (18 pares, 2 trios, 1
-   quarteto). Nesses casos a linha avisa — "mesmas características, outra
-   carta" — e custa um palpite, não a rodada. Coleção fica: tirá-la junto
-   dobraria esse 7%.
+   **Sem traços o jogo não era difícil, era longo.** Seis palpites de média,
+   metade das rodadas passando de cinco e UMA EM CADA CINCO cartas dividindo a
+   linha inteira com outra. Difícil e longo não são a mesma coisa: pior caso
+   de 18 palpites num jogo diário é maratona, não desafio. E o número é
+   otimista — o jogador simulado tem memória perfeita e sempre chuta uma carta
+   ainda possível; gente de verdade chuta a que lembra.
 
-   Bloco era a coluna mais informativa e fazia o deck desabar num palpite só.
-   Coleção fica porque tirá-la custa quase nada em dificuldade (+0,09) e cria
-   22 cartas que terminam a rodada com tudo verde e a carta errada. Se for
-   mexer nisso de novo, meça antes: a simulação é umas 40 linhas em cima de
-   `compararCarta`.
+   **Traço é a coluna que recompensa saber de One Piece.** Sozinha ela leva a
+   média de 6,14 pra 4,81 e a ambiguidade de 20% pra 6%. "Straw Hat Crew",
+   "Navy", "Supernovas": 106 traços distintos, presentes em todas as 1.111
+   cartas. Quem conhece a obra deduz. É o contrário do bloco, e é por isso que
+   um entra e o outro não — bloco é metadado de lançamento, saber é consulta,
+   não dedução, e ele derrubava o deck num palpite só.
+
+   **Tipo NÃO é coluna, de propósito.** Ele custa 0,27 palpite (4,81 → 4,54) —
+   pouco pra uma vaga inteira de largura numa grade que já tem cinco. E ele já
+   vaza: "—" em Poder só acontece em evento e stage. Deduzir vale mais que
+   ler. Onde ele entra é como DICA pedida (ver a 4), onde quem quer paga a
+   marca por ele.
+
+   **Atributo é a linha de "fácil demais":** 3,83 de média e 88% em cinco
+   palpites é a zona onde o bloco estava. Não entra.
+
+   Se for mexer nisso, meça antes — e cuidado com a armadilha: se o primeiro
+   candidato for o sósia da resposta, a lista de candidatas nunca encolhe e a
+   simulação não termina. Tem que tirar a carta já chutada a cada rodada.
 
    **A coluna de coleção é binária: bate ou não bate, sem seta.** Já foi
    ordenada por bloco uma vez, e voltou atrás no mesmo dia — ordenar coleção é
@@ -137,7 +160,18 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    EB-04 saíram juntas), então a escala teria que ser o bloco outra vez — e aí
    vale refazer a tabela acima antes, não depois.
 
-12. **O deck de personagem é R, SR e SEC — C e UC ficam fora.** Também medido
+12. **Um deck só, com os quatro tipos de carta.** Líder, personagem, evento e
+   stage disputam o mesmo sorteio: o tipo virou parte do enigma em vez de ser
+   a divisão dos modos. O modo "Líder" deixou de existir junto — ele era o
+   mesmo jogo com 142 cartas e uma coluna trocada.
+   A régua de raridade abaixo só se aplica onde existe enchimento de booster:
+   personagem (2.185 na fonte) e evento (410). Líder tem 142 no jogo inteiro e
+   stage tem 48 — filtrar esses dois por raridade deixaria TRÊS stages, e um
+   tipo com três cartas é resposta entregue no dia em que sai.
+   Evento e stage não têm poder. Isso não é dado faltando: o "—" na coluna é
+   informação, e é o que faz o tipo vazar sem precisar de coluna própria.
+
+   **O deck de personagem é R, SR e SEC — C e UC ficam fora.** Também medido
    (ver o comentário em `scripts/gerar-cartas.mjs`): o tamanho do deck quase
    não mexe na média de palpites, porque a grade afunila rápido de qualquer
    jeito. O que cresce com C e UC é a ambiguidade (2% → 5% de cartas

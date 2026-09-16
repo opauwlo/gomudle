@@ -11,7 +11,7 @@ export interface ResumoDaRodada {
   emojiDoModo: string
   numeroDoDesafio: number
   historico: Pista[][]
-  /** Candidatas restantes a cada palpite: "702 → 41 → 6". */
+  /** Candidatas restantes a cada palpite: "1.111 → 41 → 6". */
   trilha: number[]
   dicasPedidas: number
   diaDificil: boolean
@@ -35,8 +35,8 @@ export function gradeDeEmojis(historico: Pista[][], venceu: boolean): string {
 }
 
 /**
- * A linha do afunilamento ("702 → 41 → 6") entra na mensagem de propósito: ela
- * é o que o placar sozinho não conta. "4 palpites" é resultado; "cortei de 702
+ * A linha do afunilamento ("1.111 → 41 → 6") entra na mensagem de propósito: ela
+ * é o que o placar sozinho não conta. "4 palpites" é resultado; "cortei de 1.111
  * pra 6 no segundo chute" é história, e história é o que faz alguém responder
  * no grupo perguntando como.
  */
