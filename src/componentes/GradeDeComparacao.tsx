@@ -25,19 +25,10 @@ function Marca({ pista }: { pista: Pista }) {
   return <Desenho aria-hidden="true" className="size-[1.15rem]" strokeWidth={2.75} />
 }
 
-/**
- * O texto que o leitor de tela lê e que aparece ao passar o mouse.
- *
- * O sentido da seta sai da COLUNA porque "maior" não serve pra tudo: em
- * coleção a seta é tempo, e "a resposta é maior" não quer dizer nada sobre uma
- * coleção. Ver `sentido` em `jogo/comparar.ts`.
- */
-function descrever(pista: Pista, coluna?: Coluna): string {
+function descrever(pista: Pista): string {
   const base = `${pista.rotulo}: ${pista.valor}.`
   if (pista.veredito === 'igual') return `${base} Acertou.`
-  const seta = pista.direcao
-    ? ` A resposta é ${coluna?.sentido?.[pista.direcao] ?? pista.direcao}.`
-    : ''
+  const seta = pista.direcao ? ` A resposta é ${pista.direcao}.` : ''
   return pista.veredito === 'parcial' ? `${base} Quase.${seta}` : `${base} Errou.${seta}`
 }
 
@@ -69,7 +60,6 @@ export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Pr
   // alternativo. O resto são colunas iguais, porque agora só cabe uma marca em
   // cada uma.
   const template = `3.4rem repeat(${colunas.length}, minmax(0, 1fr))`
-  const colunaPorChave = new Map(colunas.map((coluna) => [coluna.chave, coluna]))
 
   return (
     // Sem `overflow-x` aqui de propósito: qualquer overflow no ancestral vira
@@ -151,12 +141,12 @@ export function GradeDeComparacao({ colunas, palpites, historico, resposta }: Pr
                 // leitor de tela — não sumiu, saiu da frente.
                 <div
                   key={pista.chave}
-                  title={descrever(pista, colunaPorChave.get(pista.chave))}
+                  title={descrever(pista)}
                   className={`pastilha anima-virar ${classeDe(pista.veredito)}`}
                   style={{ animationDelay: `${ordem * 45}ms` }}
                 >
                   <Marca pista={pista} />
-                  <span className="sr-only">{descrever(pista, colunaPorChave.get(pista.chave))}</span>
+                  <span className="sr-only">{descrever(pista)}</span>
                 </div>
               ))}
             </div>

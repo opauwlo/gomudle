@@ -1,4 +1,4 @@
-import type { Carta, Direcao, Pista, Veredito } from './tipos'
+import type { Carta, Pista, Veredito } from './tipos'
 
 export type EstiloDeColuna = 'conjunto' | 'numero' | 'texto'
 
@@ -11,14 +11,6 @@ export interface Coluna {
   conjunto?: (carta: Carta) => string[]
   numero?: (carta: Carta) => number | null
   texto?: (carta: Carta) => string
-  /**
-   * Põe uma coluna de TEXTO numa escala ordenada, o que lhe dá a seta ▲▼.
-   * Devolve `null` quando a carta não tem posição nessa escala. Hoje só a
-   * coleção usa, e a escala é o bloco (ver `blocoDaColecao` em `cartas.ts`).
-   */
-  ordem?: (carta: Carta) => number | null
-  /** Como ler a seta desta coluna. Sem isto, "maior" e "menor". */
-  sentido?: { maior: string; menor: string }
   /** Diferença que ainda conta como "quase" (amarelo). */
   tolerancia?: number
   formatar?: (valor: number | null) => string
@@ -47,28 +39,6 @@ export function compararNumero(
   const direcao = resposta > palpite ? 'maior' : 'menor'
   const perto = tolerancia > 0 && Math.abs(resposta - palpite) <= tolerancia
   return { veredito: perto ? 'parcial' : 'diferente', direcao }
-}
-
-/**
- * Texto com escala por trás: além de igual/diferente, sai a seta.
- *
- * Mesma posição na escala com texto diferente é "quase", não erro: a pessoa
- * acertou a época e errou a coleção, e some a seta porque não há pra onde
- * apontar — as duas coleções empataram.
- */
-export function compararTexto(
-  palpite: string,
-  resposta: string,
-  ordemDoPalpite?: number | null,
-  ordemDaResposta?: number | null,
-): { veredito: Veredito; direcao?: Direcao } {
-  if (palpite === resposta) return { veredito: 'igual' }
-  if (ordemDoPalpite == null || ordemDaResposta == null) return { veredito: 'diferente' }
-  if (ordemDoPalpite === ordemDaResposta) return { veredito: 'parcial' }
-  return {
-    veredito: 'diferente',
-    direcao: ordemDaResposta > ordemDoPalpite ? 'maior' : 'menor',
-  }
 }
 
 export const formatarMilhar = (valor: number | null): string =>
@@ -112,18 +82,11 @@ export function compararCarta(colunas: Coluna[], palpite: Carta, resposta: Carta
 
     const doPalpite = coluna.texto?.(palpite) ?? ''
     const daResposta = coluna.texto?.(resposta) ?? ''
-    const { veredito, direcao } = compararTexto(
-      doPalpite,
-      daResposta,
-      coluna.ordem?.(palpite),
-      coluna.ordem?.(resposta),
-    )
     return {
       chave: coluna.chave,
       rotulo: coluna.rotulo,
       valor: doPalpite === '' ? '—' : doPalpite,
-      veredito,
-      ...(direcao ? { direcao } : {}),
+      veredito: doPalpite === daResposta ? 'igual' : 'diferente',
     }
   })
 }

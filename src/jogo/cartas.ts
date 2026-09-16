@@ -8,51 +8,6 @@ export const FONTE_DOS_DADOS = dados.fonte
 export const DADOS_GERADOS_EM = dados.geradoEm
 
 /**
- * O bloco de cada coleção — a única escala ORDENADA e oficial que atravessa as
- * quatro famílias do jogo.
- *
- * O código da coleção não serve de ordem: OP, ST, EB e PRB são numeradas cada
- * uma por conta própria, então OP-15 e EB-04 são a mesma época e ST-30 é mais
- * nova que OP-09. O bloco (1 a 5) é o agrupamento que a Bandai usa pra
- * rotação, e ele acompanha a ordem de lançamento.
- *
- * Sai das cartas em vez de lista escrita à mão pra coleção nova entrar sozinha
- * quando o dataset crescer. É o bloco MAIS COMUM da coleção porque algumas
- * cartas vêm com ícone X (bloco nulo) no meio de uma coleção que tem bloco —
- * OP-16 e OP-17 têm oito delas.
- */
-const BLOCO_POR_COLECAO = (() => {
-  const contagem = new Map<string, Map<number, number>>()
-  for (const carta of TODAS_AS_CARTAS) {
-    if (carta.bloco == null) continue
-    const porBloco = contagem.get(carta.colecao.codigo) ?? new Map<number, number>()
-    porBloco.set(carta.bloco, (porBloco.get(carta.bloco) ?? 0) + 1)
-    contagem.set(carta.colecao.codigo, porBloco)
-  }
-
-  const mapa = new Map<string, number>()
-  for (const [codigo, porBloco] of contagem) {
-    let escolhido: number | null = null
-    let maisVisto = 0
-    for (const [bloco, vezes] of porBloco) {
-      // Empate desempata pelo bloco menor, pra dois datasets iguais darem
-      // sempre a mesma ordem.
-      if (vezes > maisVisto || (vezes === maisVisto && escolhido != null && bloco < escolhido)) {
-        escolhido = bloco
-        maisVisto = vezes
-      }
-    }
-    if (escolhido != null) mapa.set(codigo, escolhido)
-  }
-  return mapa
-})()
-
-/** `null` na coleção que não tem bloco nenhum: aí não há seta pra mostrar. */
-export function blocoDaColecao(codigo: string): number | null {
-  return BLOCO_POR_COLECAO.get(codigo) ?? null
-}
-
-/**
  * Tira acento, pontuação e caixa. Existe porque o dataset escreve o mesmo
  * personagem de duas formas — "Monkey.D.Luffy" e "Monkey D. Luffy" — e ninguém
  * vai digitar o ponto no lugar certo pra achar a carta.

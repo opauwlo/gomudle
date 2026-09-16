@@ -127,19 +127,13 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    mexer nisso de novo, meça antes: a simulação é umas 40 linhas em cima de
    `compararCarta`.
 
-   **O bloco voltou por uma fresta: ele ORDENA a coluna de coleção.** Não é a
-   coluna de bloco de volta — aquela punha os cinco valores na tela e um
-   palpite derrubava o deck. Aqui ele só dá a seta: ▲ quer dizer que a carta do
-   dia é de coleção mais nova que a chutada, e duas coleções do mesmo bloco
-   empatam em amarelo (mesma época, outra coleção). A comparação é sempre
-   contra o que a pessoa chutou, uma por vez.
-   Precisa do bloco porque o CÓDIGO não ordena: OP, ST, EB e PRB são numeradas
-   cada uma por conta própria — OP-15 e EB-04 saíram juntas, ST-30 é mais nova
-   que OP-09. Ver `blocoDaColecao` em `jogo/cartas.ts`, que tira o bloco de
-   cada coleção das próprias cartas (o mais comum, porque OP-16 e OP-17 têm
-   oito cartas de ícone X no meio).
-   **Isto facilita o jogo e a conta não foi refeita.** Os números da tabela
-   acima são de antes da seta. Quem for medir, meça as duas colunas de uma vez.
+   **A coluna de coleção é binária: bate ou não bate, sem seta.** Já foi
+   ordenada por bloco uma vez, e voltou atrás no mesmo dia — ordenar coleção é
+   o bloco entrando por uma fresta, e é justamente o bloco que derruba a
+   dificuldade pro chão. Quem quiser tentar de novo: o código NÃO serve de
+   ordem (OP, ST, EB e PRB são numeradas cada uma por conta própria, OP-15 e
+   EB-04 saíram juntas), então a escala teria que ser o bloco outra vez — e aí
+   vale refazer a tabela acima antes, não depois.
 
 12. **O deck de personagem é R, SR e SEC — C e UC ficam fora.** Também medido
    (ver o comentário em `scripts/gerar-cartas.mjs`): o tamanho do deck quase

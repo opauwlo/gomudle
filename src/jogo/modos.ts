@@ -1,4 +1,4 @@
-import { blocoDaColecao, TODAS_AS_CARTAS } from './cartas'
+import { TODAS_AS_CARTAS } from './cartas'
 import { formatarPoder, type Coluna } from './comparar'
 import type { Formato } from './formatos'
 import type { Carta, IdDeModo } from './tipos'
@@ -52,11 +52,9 @@ const PODER: Coluna = {
 // si, e 7% das rodadas terminariam com a grade toda verde e a carta errada.
 // Bloco fora, coleção dentro.
 //
-// O bloco voltou por uma fresta, e de propósito: é ele que ORDENA a coluna de
-// coleção, e é o que dá a seta. Não é a coluna de bloco de volta — aquela
-// mostrava os cinco valores de cara, um palpite e o deck desabava. Aqui a
-// pessoa vê "mais nova" ou "mais antiga" em relação ao que ela chutou, uma
-// comparação por vez, e as coleções da mesma época empatam em amarelo.
+// A coluna é BINÁRIA de propósito: bate ou não bate, sem seta. Ordenar
+// coleção puxaria o bloco de volta pra dentro do jogo por uma fresta — e o
+// bloco é justamente o que fazia o deck desabar num palpite só.
 
 const COLECAO: Coluna = {
   chave: 'colecao',
@@ -64,11 +62,6 @@ const COLECAO: Coluna = {
   abreviado: 'Col.',
   estilo: 'texto',
   texto: (c) => c.colecao.codigo,
-  // A seta aponta pra ÉPOCA, não pro número: OP, ST, EB e PRB são numeradas
-  // cada uma por conta própria, então OP-15 e EB-04 são contemporâneas e o
-  // número não diz isso. Quem sabe disso é o bloco.
-  ordem: (c) => blocoDaColecao(c.colecao.codigo),
-  sentido: { maior: 'de uma coleção mais nova', menor: 'de uma coleção mais antiga' },
 }
 
 const personagens = TODAS_AS_CARTAS.filter((c) => c.tipo === 'personagem')
