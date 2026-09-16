@@ -15,9 +15,6 @@ export function Cabecalho({ habito, aoAbrirAjuda, aoAbrirEstatisticas }: Props) 
     <header className="flex items-center justify-between gap-3">
       <div className="min-w-0">
         <h1 className="font-titulo text-2xl tracking-tight text-playmat sm:text-3xl">Gomudle</h1>
-        <p className="truncate text-xs text-tinta-3 sm:text-sm">
-          o desafio diário de quem joga One Piece Card Game
-        </p>
       </div>
 
       <div className="flex shrink-0 items-center gap-1.5">
