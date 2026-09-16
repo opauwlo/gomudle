@@ -2,6 +2,20 @@ import { numeroDoDesafio } from './dia'
 
 export interface RodadaSalva {
   dia: string
+  /**
+   * A carta que era a resposta quando a rodada começou.
+   *
+   * Sem isto, a resposta de hoje era recalculada a cada carga da página — e
+   * `cartaDoDia` percorre uma permutação do DECK, então deck novo reordena a
+   * permutação e a carta de hoje passa a ser outra. A rodada que a pessoa já
+   * tinha fechado reabria com outra resposta, os palpites dela passavam a ser
+   * comparados contra uma carta que ela nunca viu, e o modo voltava a aparecer
+   * como não jogado. Acontecia a cada publicação que mexesse no `cartas.json`.
+   *
+   * Opcional porque rodada salva antes disto não tem o campo: ali o
+   * comportamento continua o antigo, e some sozinho no virar do dia.
+   */
+  resposta?: string
   /** Ids das cartas chutadas, na ordem. */
   palpites: string[]
   venceu: boolean

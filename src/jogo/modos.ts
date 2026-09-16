@@ -21,6 +21,13 @@ export interface Modo {
   deck: Carta[]
   /** Vazio nos modos que não mostram grade de comparação. */
   colunas: Coluna[]
+  /**
+   * A lista de sugestões mostra a arte da carta?
+   *
+   * No modo efeito, não: ali o enigma é texto, e a fileira de artes na lista
+   * transforma escolher a carta em reconhecer o desenho — que é o outro modo.
+   */
+  arteNaBusca: boolean
 }
 
 const COR: Coluna = {
@@ -123,6 +130,7 @@ export const MODOS: Modo[] = [
     descricaoDoDeck: 'líderes, personagens R/SR/SEC, eventos e stages',
     deck: TODAS_AS_CARTAS,
     colunas: [COR, VALOR, PODER, TRACOS, COLECAO],
+    arteNaBusca: true,
   },
   {
     id: 'efeito',
@@ -134,6 +142,7 @@ export const MODOS: Modo[] = [
     descricaoDoDeck: 'cartas com efeito',
     deck: comEfeito,
     colunas: [],
+    arteNaBusca: false,
   },
   {
     id: 'arte',
@@ -145,6 +154,7 @@ export const MODOS: Modo[] = [
     descricaoDoDeck: 'líderes e personagens',
     deck: comArte,
     colunas: [],
+    arteNaBusca: true,
   },
 ]
 

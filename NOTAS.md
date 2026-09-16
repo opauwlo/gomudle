@@ -92,6 +92,19 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    repete antes de o deck inteiro sair. Quando entra coleção nova o deck cresce
    e a ordem se reordena — aceito, porque o que ficou salvo é o resultado, não
    uma recontagem do passado.
+   **Isso só passou a ser verdade depois de um bug.** A frase acima descrevia a
+   intenção; o código recalculava `cartaDoDia` a cada carga da página. Deck
+   novo reordenava a permutação, a carta de hoje virava outra, e a rodada que a
+   pessoa já tinha FECHADO reabria: os palpites dela continuavam salvos, só que
+   agora comparados contra uma carta que ela nunca viu, e o modo voltava a
+   aparecer como não jogado. Acontecia a cada publicação que mexesse no
+   `cartas.json` — e num jogo que regenera o dataset quando sai coleção, isso é
+   toda semana boa.
+   Hoje `RodadaSalva` guarda o id da resposta, e o dia é fixado por ela: o
+   sorteio só é consultado quando o dia ainda não começou. O deck pode mudar
+   embaixo; o desafio de hoje é o que começou hoje.
+   O `resumoDoDia` já estava certo, e é a pista de que era bug e não decisão:
+   ele lê o `venceu` salvo, enquanto o modo aberto recalculava.
 8. **`cartas.json` é commitado.** Build não pode depender de rede. O CI confere
    que o arquivo bate com o gerador.
 

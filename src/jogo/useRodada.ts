@@ -77,9 +77,18 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
   // Standard não é a mesma do EGB, e a sequência de um não conta pro outro.
   const chave = `${modo.id}:${formato.id}`
   const deck = useMemo(() => deckDoModo(modo, formato), [modo, formato])
-  const respostaDoDia = useMemo(() => cartaDoDia(deck, chave, numero), [deck, chave, numero])
-
   const salva = rodadaDeHoje(progresso, chave, dia)
+
+  const sorteada = useMemo(() => cartaDoDia(deck, chave, numero), [deck, chave, numero])
+  // A resposta de hoje é a que FICOU SALVA, quando existe — o sorteio só entra
+  // quando o dia ainda não começou. Ver `RodadaSalva.resposta`: recalcular
+  // fazia o dia mudar embaixo de quem já estava jogando toda vez que o deck
+  // mudava, porque a permutação do sorteio se reordena junto com ele.
+  const respostaDoDia = useMemo(() => {
+    const fixada = salva?.resposta != null ? acharPorId(deck, salva.resposta) : undefined
+    return fixada ?? sorteada
+  }, [deck, salva?.resposta, sorteada])
+
   const emTreino = treino !== null
   const resposta = treino?.resposta ?? respostaDoDia
   const estado: EstadoDaRodada = treino?.estado ?? {
@@ -159,6 +168,7 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
       const ganhou = venceuRodada(proximo, resposta.id)
       let atualizado = guardarRodada(progresso, chave, {
         dia,
+        resposta: resposta.id,
         palpites: proximo.palpites,
         venceu: ganhou,
         dicasPedidas: proximo.dicasPedidas,
@@ -179,13 +189,14 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     }
     const comDerrota = guardarRodada(progresso, chave, {
       dia,
+      resposta: resposta.id,
       palpites: estado.palpites,
       venceu: false,
       desistiu: true,
       dicasPedidas: estado.dicasPedidas,
     })
     gravar(registrarFim(comDerrota, chave, dia, estado.palpites.length, false))
-  }, [chave, dia, encerrada, estado.palpites, gravar, progresso, treino])
+  }, [chave, dia, encerrada, estado.palpites, gravar, progresso, resposta.id, treino])
 
   const pedirDica = useCallback(() => {
     const disponiveis = dicasDoModo(resposta, modo.id).length

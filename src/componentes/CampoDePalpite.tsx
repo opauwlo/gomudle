@@ -23,6 +23,8 @@ interface Props {
   aoChutar: (carta: Carta) => void
   /** Ex.: "311 personagens SR e SEC" — aparece quando a busca não acha nada. */
   descricaoDoDeck: string
+  /** Ver `arteNaBusca` em `jogo/modos.ts`. */
+  comArte?: boolean
   desabilitado?: boolean
 }
 
@@ -36,6 +38,7 @@ export function CampoDePalpite({
   jaChutados,
   aoChutar,
   descricaoDoDeck,
+  comArte = true,
   desabilitado = false,
 }: Props) {
   const [termo, setTermo] = useState('')
@@ -139,11 +142,13 @@ export function CampoDePalpite({
                       indice === destaque ? 'bg-surface' : ''
                     }`}
                   >
-                    <ImagemDaCarta
-                      carta={carta}
-                      compacta
-                      className="h-14 w-10 shrink-0 rounded object-cover object-top"
-                    />
+                    {comArte && (
+                      <ImagemDaCarta
+                        carta={carta}
+                        compacta
+                        className="h-14 w-10 shrink-0 rounded object-cover object-top"
+                      />
+                    )}
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-medium">{carta.nome}</span>
                       <span className="block truncate text-xs text-tinta-3">

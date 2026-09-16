@@ -152,6 +152,7 @@ export function App() {
             jaChutados={rodada.palpites.map((carta) => carta.id)}
             aoChutar={rodada.chutar}
             descricaoDoDeck={`${rodada.deck.length} ${modo.descricaoDoDeck} no ${formato.nome}`}
+            comArte={modo.arteNaBusca}
           />
         )}
 
