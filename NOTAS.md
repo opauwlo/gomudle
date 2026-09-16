@@ -46,6 +46,8 @@ src/jogo/                  regra de jogo, tudo puro e testado
   useRodada.ts             o único arquivo de jogo/ que usa React
 src/componentes/           UI
   icones.ts                o único arquivo que conhece a biblioteca de ícones
+  precarregar.ts           baixa a arte antes de ela ser pedida (toca em DOM)
+public/sw.js               cache local da arte. Não toca no app, só na imagem.
 ```
 
 A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
@@ -243,6 +245,30 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    continua sendo ampliar 2,5×. Não existe pixel além do nativo. Se um dia a
    nitidez do primeiro palpite ainda incomodar, o lugar de mexer é a escala
    inicial em `jogo/arte.ts`, que é decisão de jogo — ver a 22.
+
+   **A arte fica guardada no aparelho, e o service worker NÃO toca no app.**
+   O endereço da imagem carrega código da carta, largura e qualidade, então
+   cada endereço é arquivo imutável: é o caso perfeito pra cache-primeiro.
+   `public/sw.js` intercepta só os três hosts de arte; HTML, JavaScript e CSS
+   passam direto, sem cache nenhum. **Isso é a decisão, não um detalhe**:
+   service worker servindo app shell guardado é o jeito clássico de deixar
+   alguém presa numa versão antiga do site sem entender por quê, e cache de
+   imagem não vale esse preço. Ele não é registrado em `pnpm dev` (atrapalha o
+   recarregar) nem no build de arquivo único (seria um segundo arquivo), e
+   falha calado: sem ele o jogo funciona igual.
+   A imagem vem opaca, porque é outra origem sem CORS — dá pra desenhar, não
+   dá pra ler o status daqui. Ou seja, um 404 entra no cache parecendo arte. O
+   risco é limitado de propósito: a `<img>` falha, o jogo conta a falha e em
+   três cartas troca de fonte, e a fonte nova tem outro endereço, logo outra
+   chave. O pior caso é uma carta vindo do CDN reserva, não o jogo sem arte.
+   Trocar `arte-v1` de nome invalida tudo, se um dia precisar.
+   **O pré-carregamento aposta em duas coisas só:** a carta do dia dos outros
+   modos (trocar de modo é o passo natural de quem terminou um) e a resposta
+   do modo atual no tamanho da revelação. Sai com prioridade baixa e 1,5s
+   depois da tela montar — aposta no que vem a seguir não pode atrasar o que a
+   pessoa está olhando agora. O modo arte pede o tamanho grande dele, o que
+   custa uns 150 kB pra quem nunca troca de modo: é o preço de aquele modo, que
+   é uma imagem em tela cheia, abrir pronto.
 22. **O modo arte abre em 3×, não em 7,5×.** Zoom demais não é dificuldade, é
    sorteio: o que aparecia era uma mancha colorida, sem traço nem cenário pra
    deduzir, e ainda por cima feia — ampliar tanto estica um punhado de pixels

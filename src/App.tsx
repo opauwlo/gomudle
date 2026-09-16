@@ -9,11 +9,13 @@ import { ModalEstatisticas } from './componentes/ModalEstatisticas'
 import { PainelDeArte } from './componentes/PainelDeArte'
 import { PainelDeEfeito } from './componentes/PainelDeEfeito'
 import { PainelDeFim } from './componentes/PainelDeFim'
+import { precarregar } from './componentes/precarregar'
 import { Rodape } from './componentes/Rodape'
 import { BarraDeControles } from './componentes/BarraDeControles'
 import { Termometro } from './componentes/Termometro'
 import { acharFormato, FORMATO_PADRAO, FORMATOS, type IdDeFormato } from './jogo/formatos'
-import { acharModo, MODO_PADRAO, MODOS } from './jogo/modos'
+import { acharModo, deckDoModo, MODO_PADRAO, MODOS } from './jogo/modos'
+import { cartaDoDia } from './jogo/sorteio'
 import type { IdDeModo } from './jogo/tipos'
 import { useRodada } from './jogo/useRodada'
 
@@ -43,6 +45,37 @@ export function App() {
     window.addEventListener('hashchange', aoTrocarHash)
     return () => window.removeEventListener('hashchange', aoTrocarHash)
   }, [])
+
+  /*
+   * Pré-carrega a arte que vem a seguir.
+   *
+   * Duas apostas, as duas boas: a carta do dia dos OUTROS modos, porque trocar
+   * de modo é o passo natural de quem terminou um (é o que a chamada do
+   * "próximo modo" empurra), e a resposta do modo atual no tamanho da
+   * revelação, que é a única imagem grande que a rodada ainda vai pedir.
+   *
+   * O modo arte pede o tamanho dele: lá a imagem é a tela toda, e chegar
+   * naquele modo com ela já guardada é a diferença entre abrir e esperar.
+   *
+   * O atraso é pra não competir com a tela atual. Pré-carregar na largada
+   * faria a aposta no que vem depois atrasar o que está na frente da pessoa
+   * agora — que é exatamente o contrário do que isto serve.
+   */
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      precarregar(rodada.resposta, 'carta')
+      for (const outro of MODOS) {
+        if (outro.id === modo.id) continue
+        const doDia = cartaDoDia(
+          deckDoModo(outro, formato),
+          `${outro.id}:${formato.id}`,
+          rodada.numeroDoDesafio,
+        )
+        precarregar(doDia, outro.id === 'arte' ? 'arte' : 'carta')
+      }
+    }, 1500)
+    return () => window.clearTimeout(id)
+  }, [modo, formato, rodada.resposta, rodada.numeroDoDesafio])
 
   const navegar = (proximo: { modo: IdDeModo; formato: IdDeFormato }) => {
     window.location.hash = `${proximo.modo}:${proximo.formato}`

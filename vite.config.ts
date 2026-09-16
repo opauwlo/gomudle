@@ -13,6 +13,11 @@ const arquivoUnico = process.env.ARQUIVO_UNICO === '1'
 // Pages serve a página mas os assets dão 404.
 export default defineConfig({
   base: process.env.BASE_PUBLICA ?? '/',
+  define: {
+    // O service worker mora num arquivo à parte, e o ponto do build de arquivo
+    // único é não ter arquivo à parte nenhum. Quem registra consulta isto.
+    __ARQUIVO_UNICO__: JSON.stringify(arquivoUnico),
+  },
   plugins: [react(), tailwindcss(), ...(arquivoUnico ? [viteSingleFile()] : [])],
   build: {
     outDir: arquivoUnico ? 'dist-unico' : 'dist',
