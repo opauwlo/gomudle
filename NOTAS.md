@@ -215,6 +215,20 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    do sorteio e do progresso é `modo:formato` (`personagem:standard`), então
    Standard e EGB têm carta do dia e sequência próprias. Mexeu na chave, zerou
    a estatística de todo mundo.
+   **É por isso que o modo do deck único ainda se chama `personagem` no código
+   e "Carta" na tela.** Quando líder, evento e stage entraram nele, renomear o
+   id teria zerado a sequência de quem já jogava. Id é identidade de dado, nome
+   é rótulo — e eles podem divergir sem problema.
+   **E é por isso que o padrão não aparece na URL.** A tela inicial é `/`, sem
+   hash: escrever `#personagem:standard` pra dizer "o de sempre" é barulho na
+   barra de endereço, e ainda espalha um id interno que só continua existindo
+   pra não zerar ninguém. Só o que foge do padrão vai pro hash — `#efeito`,
+   `#egb`, `#efeito:egb`.
+   A leitura não vai por posição: procura cada pedaço nas duas listas. É o que
+   faz `#egb` sozinho funcionar (por posição, o primeiro pedaço só podia ser
+   modo, e `#egb` caía no formato padrão) e o que mantém
+   `#personagem:standard` abrindo onde abria, pra link salvo não morrer. Ver
+   `jogo/endereco.ts`.
 14. **`BLOCO_MAIS_ANTIGO_NO_STANDARD` é número escrito à mão, e tem que ser.**
    A rotação anda um bloco todo 1º de abril; em abril de 2027 esse 2 vira 3.
    Derivar da data chutaria o futuro e faria o jogo mentir com cara de certeza
