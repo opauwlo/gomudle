@@ -27,6 +27,8 @@ export function PainelDeArte({ carta, palpites, revelar }: Props) {
       <div className="painel mx-auto aspect-[5/7] w-56 overflow-hidden sm:w-64">
         <ImagemDaCarta
           carta={carta}
+          tamanho="arte"
+          prioritaria
           identidadeOculta={!revelar}
           className="size-full object-cover transition-all duration-500"
           estiloDaImagem={{
@@ -39,7 +41,7 @@ export function PainelDeArte({ carta, palpites, revelar }: Props) {
       </div>
       <p className="mt-2 text-center text-xs text-tinta-3">
         {semImagem
-          ? 'A arte não carregou — a fonte oficial pode estar bloqueando. Use as dicas abaixo.'
+          ? 'A arte não carregou por nenhuma das fontes. Use as dicas abaixo.'
           : revelar
             ? 'Carta revelada.'
             : `Zoom ${escala.toFixed(1)}× — cada erro afasta a câmera.`}

@@ -42,6 +42,7 @@ src/jogo/                  regra de jogo, tudo puro e testado
   palavras-chave.ts        explicação de cada palavra-chave da carta
   dicas.ts                 a escada de dicas que a pessoa PEDE, fraca -> forte
   compartilhar.ts          grade de emoji do Wordle
+  imagens.ts               de onde vem a arte: CDN, tamanho por uso, fila de fontes
   useRodada.ts             o único arquivo de jogo/ que usa React
 src/componentes/           UI
   icones.ts                o único arquivo que conhece a biblioteca de ícones
@@ -170,18 +171,35 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    qualquer ancestral ganhar `overflow` (vira contexto de rolagem e ele gruda
    nele), e a imagem da carta precisa de ALTURA fixa — sem ela, `object-cover`
    cai na proporção 63×88 e estica a linha inteira pra 65px.
+21. **A arte passa por CDN de imagem, não por link direto no oficial.** O
+   dataset guarda o endereço do site da Bandai, e apontar a `<img>` pra ele
+   tinha dois problemas. O primeiro derrubou o jogo: quem pede a imagem é o
+   navegador de quem joga, e link de fora nem sempre é aceito — a tela ficava
+   sem arte nenhuma. O segundo é peso: o arquivo é PNG em tamanho de
+   impressão, centenas de kB por carta, numa tela que mostra doze miniaturas
+   enquanto a pessoa digita. Agora o endereço oficial vai DENTRO de um CDN de
+   imagem: ele busca no oficial pelo servidor dele (não é mais o navegador de
+   quem joga pedindo), converte pra WebP, entrega na largura que a tela usa de
+   verdade e guarda em cache. São três fontes em fila — dois CDNs e o oficial
+   cru no fim — e três cartas falhando na mesma fonte trocam a fonte do jogo
+   inteiro, pra lista de doze não pagar doze vezes a mesma descoberta. Ver
+   `jogo/imagens.ts`.
 
 ## Armadilhas
 
 - **Toda leitura de `localStorage` passa por `progresso.ts` e falha em
   silêncio.** Aba anônima derruba `localStorage`, e derrubar o jogo por causa de
   estatística seria ridículo.
-- **As miniaturas da busca usam a mesma arte hotlinkada.** Falhou, cada uma
-  vira um quadrinho com a inicial do nome (`compacta` em `ImagemDaCarta`) — o
-  aviso "arte indisponível" não cabe em 40px e vazava da lista inteira.
-- **As artes vêm por link direto do site oficial.** O projeto não hospeda
-  imagem de carta. Se um dia o oficial bloquear, o modo arte cai no fallback e
-  as dicas seguram a rodada — não é bug, é o combinado.
+- **As miniaturas da busca usam a mesma arte da grade.** Falhou em todas as
+  fontes, cada uma vira um quadrinho com o código da carta (`compacta` em
+  `ImagemDaCarta`) — o aviso "arte indisponível" não cabe em 40px e vazava da
+  lista de sugestões inteira.
+- **Nenhuma fonte de arte é do projeto.** O jogo não hospeda imagem de carta —
+  é material da Bandai — e os dois CDNs são serviço de terceiro: podem cair,
+  mudar de parâmetro ou deixar de aceitar a origem. É por isso que existe fila,
+  e é por isso que o fim da fila é o endereço oficial cru, que é o único que
+  não depende de ninguém. Caiu a fila inteira, o modo arte cai no fallback e as
+  dicas seguram a rodada — não é bug, é o combinado.
 - **`BASE_PUBLICA` existe por causa do Pages**, que serve em `/gomudle/`. Build
   sem isso abre página em branco lá.
 - **Cor sozinha não pode carregar informação.** Toda pastilha tem ícone (✓ ≈ ✕

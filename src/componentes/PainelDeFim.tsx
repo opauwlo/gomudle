@@ -80,6 +80,7 @@ export function PainelDeFim({
       <div className="space-y-2">
         <ImagemDaCarta
           carta={resposta}
+          tamanho="carta"
           className="mx-auto h-56 w-[10rem] rounded-xl object-cover shadow-lg shadow-black/40 sm:h-64 sm:w-[11.4rem]"
         />
         <div>
