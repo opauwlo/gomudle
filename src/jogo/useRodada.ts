@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
-import { diaDificil, trilhaDeCandidatas, type Cerco } from './candidatas'
+import { diaDificil } from './candidatas'
 import { acharPorId } from './cartas'
 import { compararCarta } from './comparar'
 import { diaDoJogo, numeroDoDesafio } from './dia'
@@ -43,8 +43,6 @@ export interface Rodada {
   dicasPedidas: number
   usouDica: boolean
   pedirDica: () => void
-  /** Um número por palpite: a história do afunilamento. */
-  trilha: number[]
   /** A carta de ontem, pra fechar o ciclo de quem volta. */
   cartaDeOntem: Carta | null
   /** A carta de hoje tem sósia: a grade sozinha não resolve. */
@@ -111,23 +109,10 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
   const venceu = venceuRodada(estado, resposta.id)
   const encerrada = encerrouRodada(estado, resposta.id)
 
-  const cerco: Cerco = useMemo(
-    () => ({
-      deck,
-      colunas: modo.colunas,
-      palpites,
-      resposta,
-      dicasPedidas: estado.dicasPedidas,
-      idDoModo: modo.id,
-    }),
-    [deck, estado.dicasPedidas, modo.colunas, modo.id, palpites, resposta],
-  )
-
   const dificil = useMemo(
     () => diaDificil(deck, modo.colunas, resposta),
     [deck, modo.colunas, resposta],
   )
-  const trilha = useMemo(() => (encerrada ? trilhaDeCandidatas(cerco) : []), [cerco, encerrada])
 
   // Só faz sentido no desafio do dia: no treino não existe "ontem".
   const cartaDeOntem = useMemo(
@@ -234,7 +219,6 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     dicasPedidas: estado.dicasPedidas,
     usouDica: usouDica(estado),
     pedirDica,
-    trilha,
     cartaDeOntem,
     diaDificil: dificil,
     resumoDoDia,

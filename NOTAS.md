@@ -300,9 +300,13 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    QUAIS cartas sobraram acaba com o jogo em um clique — e conta grade E dica
    juntas, senão pedir dica não mexe no número e a ajuda parece de graça (ver
    `Cerco` em `jogo/candidatas.ts`, que continua lá inteiro e testado).
-   **O afunilamento não sumiu do jogo**, só da rodada em andamento: ele aparece
-   no fim ("1.111 → 41 → 6") e na mensagem de compartilhar, que é onde ele
-   conta a história em vez de ocupar espaço.
+   **O afunilamento saiu da tela inteira.** Ele ainda apareceu um tempo no fim
+   da rodada e na mensagem de compartilhar ("1.111 → 41 → 6"), e saiu de lá
+   também: no painel de fim quem acabou de jogar quer ver a CARTA e o placar,
+   não uma conta de quantas candidatas sobravam a cada chute; no print, a
+   sequência de números competia com a grade de emoji, que já conta a rodada. A
+   conta continua em `trilhaDeCandidatas` (`jogo/candidatas.ts`), testada, pra
+   quem quiser trazer de volta.
 
 20. **A grade é planilha de MARCAS, não de valores.** Um cabeçalho só, grudado
    no topo, a primeira coluna é só a arte e cada célula tem só ✓ / ✕ / ▲ / ▼ /

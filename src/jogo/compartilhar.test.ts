@@ -24,7 +24,6 @@ describe('textoDeCompartilhamento', () => {
     modo: 'Personagem',
     emojiDoModo: '🃏',
     numeroDoDesafio: 259,
-    trilha: [] as number[],
     dicasPedidas: 0,
     diaDificil: false,
     endereco: 'https://gomudle.exemplo',
@@ -75,21 +74,12 @@ describe('textoDeCompartilhamento', () => {
     expect(texto).toContain('#259 — X palpites')
   })
 
-  it('conta a história do afunilamento quando ela existe', () => {
+  // A linha do afunilamento ("702 → 41 → 6") saiu da mensagem: o placar e a
+  // grade contam a rodada, e a conta de candidatas enchia o print de número.
+  it('não leva a linha do afunilamento', () => {
     const texto = textoDeCompartilhamento({
       ...base,
-      trilha: [702, 41, 6],
       historico: [linha('diferente'), linha('parcial'), linha('igual')],
-      venceu: true,
-    })
-    expect(texto).toContain('702 → 41 → 6')
-  })
-
-  it('omite a linha do afunilamento quando foi de primeira', () => {
-    const texto = textoDeCompartilhamento({
-      ...base,
-      trilha: [0],
-      historico: [linha('igual')],
       venceu: true,
     })
     expect(texto).not.toContain('→')
