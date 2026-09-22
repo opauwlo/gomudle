@@ -23,6 +23,13 @@ export interface RodadaSalva {
   desistiu?: boolean
   /** Quantas dicas foram pedidas nessa rodada. */
   dicasPedidas?: number
+  /**
+   * Esta vitória já foi somada no contador de quem resolveu (ver
+   * `jogo/contador.ts`). Existe só pra F5 não somar de novo — e mora na rodada
+   * do dia de propósito: quando o dia vira, a rodada salva é substituída e a
+   * marca some junto, sem lista pra limpar.
+   */
+  contabilizada?: boolean
 }
 
 export interface Estatisticas {
@@ -189,6 +196,23 @@ export function registrarFim(
     estatisticas: { ...progresso.estatisticas, [chave]: estatisticas },
     habito: marcarDia(progresso.habito, dia),
   }
+}
+
+/**
+ * Marca que a vitória de hoje já entrou no contador compartilhado.
+ *
+ * Devolve o mesmo progresso quando não há o que marcar — rodada de outro dia,
+ * rodada inexistente ou marca que já estava lá. Quem chama pode gravar sem
+ * checar: igual é igual, e o React não re-renderiza à toa.
+ */
+export function marcarContabilizada(
+  progresso: Progresso,
+  chave: ChaveDeJogo,
+  dia: string,
+): Progresso {
+  const salva = rodadaDeHoje(progresso, chave, dia)
+  if (salva === null || salva.contabilizada === true) return progresso
+  return guardarRodada(progresso, chave, { ...salva, contabilizada: true })
 }
 
 /** Desistir também conta como dia jogado: a sequência premia aparecer. */

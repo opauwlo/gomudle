@@ -1,8 +1,10 @@
 # Gomudle
 
 Jogo diário de adivinhar carta do One Piece Card Game. Página estática, sem
-backend e sem conta: tudo roda no navegador e o progresso mora no
-`localStorage`.
+backend próprio e sem conta: tudo roda no navegador e o progresso mora no
+`localStorage`. Só duas coisas vêm de fora, e as duas falham caladas: a arte
+das cartas (por CDN de imagem) e o contador de quem já resolveu o desafio do
+dia.
 
 ```bash
 pnpm install

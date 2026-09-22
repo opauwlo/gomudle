@@ -1,7 +1,9 @@
 # Gomudle
 
 Jogo diário de adivinhar carta do One Piece Card Game. Página estática, sem
-backend, sem conta: tudo roda no navegador e o progresso mora no localStorage.
+backend próprio, sem conta: tudo roda no navegador e o progresso mora no
+localStorage. As duas coisas que saem daqui são a arte (por CDN de imagem) e o
+contador de quem já resolveu — as duas falham caladas. Ver a 21 e a 23.
 
 **Tudo aqui é escrito em português** — comentário, copy, commit, nome de
 arquivo e de função. Só o que vem do dataset (nome de carta, tipo, texto de
@@ -58,6 +60,8 @@ src/jogo/                  regra de jogo, tudo puro e testado
   dicas.ts                 a escada de dicas que a pessoa PEDE, fraca -> forte
   compartilhar.ts          grade de emoji do Wordle
   imagens.ts               de onde vem a arte: CDN, tamanho por uso, fila de fontes
+  arte.ts                  a escada do modo arte: mosaico e janela nítida
+  contador.ts              quantas pessoas resolveram hoje (o único número de fora)
   useRodada.ts             o único arquivo de jogo/ que usa React
 src/componentes/           UI
   icones.ts                o único arquivo que conhece a biblioteca de ícones
@@ -428,6 +432,34 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    código. O nome é o gabarito, e duas linhas de efeito são o gabarito de quem
    sabe pesquisar. Isso foi medido na tela: com o limite em 72% dava pra LER o
    efeito do dia dentro da janela.
+
+23. **O contador de quem resolveu é o único número que vem de fora — e ele é
+   enfeite.** O jogo não tem backend e não vai ter (a 21 explica por que a arte
+   já mora em terceiro). Contar gente exige lugar compartilhado, então entrou um
+   serviço público de contador, o Abacus: duas rotas `GET`, sem conta e sem
+   chave — `/hit` soma 1 e devolve o total, `/get` só lê. Uma chave por desafio
+   (`modo-formato-dia`), o que zera o número à meia-noite sem ninguém limpar
+   nada lá.
+   **Três coisas dessa escolha, escritas antes de sumirem da memória:**
+   (a) **dá pra inflar** — a rota é pública, quem abrir o endereço soma 1. É
+   placar de jogo de fã, não urna, e a alternativa era não ter contador.
+   (b) **terceiro fecha** — o CountAPI, que fazia isso antes, fechou. Por isso
+   `jogo/contador.ts` devolve `null` em QUALQUER tropeço (rede, 500, JSON
+   estranho, sem `fetch`) e a linha some da tela. Nada de "— pessoas
+   resolveram", nada de recado de erro, e o jogo não espera por ele.
+   (c) **vaza IP e qual desafio** — quem pede é o navegador de quem joga.
+   `no-referrer` corta o endereço da página; o resto é o que toda requisição
+   carrega.
+   **Soma uma vez por pessoa por desafio, e isso exige DUAS travas.** A
+   persistente é `contabilizada` na rodada salva, que segura o F5 e morre junto
+   com a rodada quando o dia vira. A outra é um `Set` de módulo em
+   `useRodada.ts`, e ela não é luxo: o `StrictMode` roda todo efeito duas vezes
+   em desenvolvimento, e sem ele cada acerto somaria 2 no número de todo mundo —
+   estado do React não serve de trava porque as duas execuções acontecem antes
+   de qualquer re-renderização. A marca só entra DEPOIS de o serviço responder:
+   pedido que falhou não foi contado, e a próxima carga tenta de novo.
+   **Só com a rodada encerrada.** Durante o jogo o número não ajuda a deduzir
+   nada e ainda mete pressão. Treino nunca conta: não é o desafio do dia.
 
 ## Armadilhas
 

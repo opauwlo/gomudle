@@ -156,6 +156,7 @@ export function App() {
             historico={rodada.historico}
             dicasPedidas={rodada.dicasPedidas}
             diaDificil={rodada.diaDificil}
+            resolvedores={rodada.resolvedores}
             cartaDeOntem={rodada.cartaDeOntem}
             quantidadeDePalpites={chutou}
             numeroDoDesafio={rodada.numeroDoDesafio}

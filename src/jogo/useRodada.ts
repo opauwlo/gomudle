@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { diaDificil } from './candidatas'
 import { acharPorId } from './cartas'
+import { chaveDoDesafio, contarResolvidos } from './contador'
 import { compararCarta } from './comparar'
 import { diaDoJogo, numeroDoDesafio } from './dia'
 import type { Formato } from './formatos'
@@ -10,6 +11,7 @@ import {
   estatisticasVazias,
   guardarRodada,
   lerProgresso,
+  marcarContabilizada,
   registrarFim,
   rodadaDeHoje,
   salvarProgresso,
@@ -43,6 +45,12 @@ export interface Rodada {
   dicasPedidas: number
   usouDica: boolean
   pedirDica: () => void
+  /**
+   * Quantas pessoas já resolveram ESTE desafio hoje. `null` enquanto não
+   * chegou — e também quando não vai chegar: contador fora do ar não vira
+   * recado de erro na tela.
+   */
+  resolvedores: number | null
   /** A carta de ontem, pra fechar o ciclo de quem volta. */
   cartaDeOntem: Carta | null
   /** A carta de hoje tem sósia: a grade sozinha não resolve. */
@@ -56,6 +64,16 @@ export interface Rodada {
   treinar: () => void
   voltarParaODiario: () => void
 }
+
+/**
+ * Desafios que ESTA PÁGINA já pediu ao contador.
+ *
+ * Trava de dedo duplo, e ela não é opcional: o `StrictMode` roda todo efeito
+ * duas vezes em desenvolvimento, e sem isto cada acerto somaria 2 no número que
+ * todo mundo vê. O estado do React não serve de trava porque as duas execuções
+ * acontecem antes de qualquer re-renderização.
+ */
+const jaPedidos = new Set<string>()
 
 /**
  * Estado de uma rodada. A rodada diária vive no localStorage — recarregar a
@@ -136,6 +154,45 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     },
     [armazem],
   )
+
+  // O contador responde depois, e o `progresso` que o efeito fechou por cima já
+  // pode estar velho. A marcação vai pelo mais recente.
+  const progressoAtual = useRef(progresso)
+  useEffect(() => {
+    progressoAtual.current = progresso
+  })
+
+  /**
+   * Quantas pessoas resolveram o desafio de hoje (ver `jogo/contador.ts`).
+   *
+   * Só acontece com a rodada encerrada: durante o jogo o número não ajuda em
+   * nada e ainda mete pressão. Quem venceu soma 1 e lê o total; quem desistiu
+   * (ou já tinha somado antes do F5) só lê.
+   *
+   * O resultado carrega de qual desafio ele é: trocar de modo com a resposta
+   * voando mostraria o número do modo anterior debaixo da carta do novo.
+   */
+  const [contagem, setContagem] = useState<{ de: string; valor: number | null }>({
+    de: '',
+    valor: null,
+  })
+
+  useEffect(() => {
+    if (emTreino || !encerrada) return
+    const desafio = chaveDoDesafio(modo.id, formato.id, dia)
+    if (jaPedidos.has(desafio)) return
+    jaPedidos.add(desafio)
+
+    const registrar = venceu && salva?.contabilizada !== true
+    void contarResolvidos(desafio, registrar).then((valor) => {
+      setContagem({ de: desafio, valor })
+      // A marca só entra quando o serviço respondeu: pedido que falhou não foi
+      // contado, e a próxima carga da página precisa tentar de novo.
+      if (registrar && valor !== null) {
+        gravar(marcarContabilizada(progressoAtual.current, chave, dia))
+      }
+    })
+  }, [chave, dia, emTreino, encerrada, formato.id, gravar, modo.id, salva?.contabilizada, venceu])
 
   const chutar = useCallback(
     (carta: Carta) => {
@@ -219,6 +276,7 @@ export function useRodada(modo: Modo, formato: Formato): Rodada {
     dicasPedidas: estado.dicasPedidas,
     usouDica: usouDica(estado),
     pedirDica,
+    resolvedores: contagem.de === chaveDoDesafio(modo.id, formato.id, dia) ? contagem.valor : null,
     cartaDeOntem,
     diaDificil: dificil,
     resumoDoDia,

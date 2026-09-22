@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { compartilhar, textoDeCompartilhamento } from '../jogo/compartilhar'
+import { fraseDeResolvidos } from '../jogo/contador'
 import type { Formato } from '../jogo/formatos'
 import type { Modo } from '../jogo/modos'
 import type { Carta, IdDeModo, Pista } from '../jogo/tipos'
@@ -15,6 +16,8 @@ interface Props {
   historico: Pista[][]
   dicasPedidas: number
   diaDificil: boolean
+  /** Quantas pessoas resolveram hoje. `null` some da tela — ver jogo/contador.ts. */
+  resolvedores: number | null
   cartaDeOntem: Carta | null
   quantidadeDePalpites: number
   numeroDoDesafio: number
@@ -34,6 +37,7 @@ export function PainelDeFim({
   historico,
   dicasPedidas,
   diaDificil,
+  resolvedores,
   cartaDeOntem,
   quantidadeDePalpites,
   numeroDoDesafio,
@@ -44,6 +48,7 @@ export function PainelDeFim({
   aoVoltarParaODiario,
 }: Props) {
   const [aviso, setAviso] = useState('')
+  const resolvidos = fraseDeResolvidos(resolvedores, venceu)
 
   const aoCompartilhar = async () => {
     const texto = textoDeCompartilhamento({
@@ -114,6 +119,12 @@ export function PainelDeFim({
             </span>
           )}
         </p>
+
+        {/*
+          Sem linha nenhuma quando o contador não respondeu: "— pessoas
+          resolveram" é pior que silêncio, e o jogo não depende dele.
+        */}
+        {resolvidos !== null && <p className="mt-2 text-sm text-tinta-3">{resolvidos}</p>}
       </div>
 
       {emTreino ? (
