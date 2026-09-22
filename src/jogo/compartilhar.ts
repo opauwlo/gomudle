@@ -11,8 +11,6 @@ export interface ResumoDaRodada {
   emojiDoModo: string
   numeroDoDesafio: number
   historico: Pista[][]
-  /** Candidatas restantes a cada palpite: "1.111 → 41 → 6". */
-  trilha: number[]
   dicasPedidas: number
   diaDificil: boolean
   venceu: boolean
@@ -35,10 +33,9 @@ export function gradeDeEmojis(historico: Pista[][], venceu: boolean): string {
 }
 
 /**
- * A linha do afunilamento ("1.111 → 41 → 6") entra na mensagem de propósito: ela
- * é o que o placar sozinho não conta. "4 palpites" é resultado; "cortei de 1.111
- * pra 6 no segundo chute" é história, e história é o que faz alguém responder
- * no grupo perguntando como.
+ * A mensagem que vai pro grupo: placar, marca da dica e a grade de emoji, nessa
+ * ordem. Tudo que sai daqui tem que caber num print sem entregar a carta — quem
+ * ainda não jogou lê a mensagem inteira e continua podendo jogar.
  */
 export function textoDeCompartilhamento(resumo: ResumoDaRodada): string {
   const placar = resumo.venceu ? `${resumo.historico.length}` : 'X'
@@ -51,7 +48,6 @@ export function textoDeCompartilhamento(resumo: ResumoDaRodada): string {
   const linhas = [
     `Gomudle ${resumo.emojiDoModo} ${resumo.modo} #${resumo.numeroDoDesafio}${resumo.diaDificil ? ' (dia difícil)' : ''} — ${placar} palpite${placar === '1' ? '' : 's'}${marca}`,
   ]
-  if (resumo.trilha.length > 1) linhas.push(resumo.trilha.join(' → '))
   linhas.push('', gradeDeEmojis(resumo.historico, resumo.venceu), '', resumo.endereco)
   return linhas.join('\n')
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { compartilhar, textoDeCompartilhamento } from '../jogo/compartilhar'
+import { fraseDeResolvidos } from '../jogo/contador'
 import type { Formato } from '../jogo/formatos'
 import type { Modo } from '../jogo/modos'
 import type { Carta, IdDeModo, Pista } from '../jogo/tipos'
@@ -13,9 +14,10 @@ interface Props {
   resposta: Carta
   venceu: boolean
   historico: Pista[][]
-  trilha: number[]
   dicasPedidas: number
   diaDificil: boolean
+  /** Quantas pessoas resolveram hoje. `null` some da tela — ver jogo/contador.ts. */
+  resolvedores: number | null
   cartaDeOntem: Carta | null
   quantidadeDePalpites: number
   numeroDoDesafio: number
@@ -33,9 +35,9 @@ export function PainelDeFim({
   resposta,
   venceu,
   historico,
-  trilha,
   dicasPedidas,
   diaDificil,
+  resolvedores,
   cartaDeOntem,
   quantidadeDePalpites,
   numeroDoDesafio,
@@ -46,6 +48,7 @@ export function PainelDeFim({
   aoVoltarParaODiario,
 }: Props) {
   const [aviso, setAviso] = useState('')
+  const resolvidos = fraseDeResolvidos(resolvedores, venceu)
 
   const aoCompartilhar = async () => {
     const texto = textoDeCompartilhamento({
@@ -53,7 +56,6 @@ export function PainelDeFim({
       emojiDoModo: modo.emojiDeCompartilhamento,
       numeroDoDesafio,
       historico,
-      trilha,
       dicasPedidas,
       diaDificil,
       venceu,
@@ -93,17 +95,11 @@ export function PainelDeFim({
       </div>
 
       <div className="border-t border-hairline pt-3">
-        <h2 className="flex items-center justify-center gap-2 font-titulo text-lg sm:text-xl">
-          {venceu && <ICONE.vitoria aria-hidden="true" className="size-5 text-foil" />}
+        <h2 className="font-titulo text-lg sm:text-xl">
           {venceu
-            ? `Pegou em ${quantidadeDePalpites} ${quantidadeDePalpites === 1 ? 'palpite' : 'palpites'}`
+            ? `Acertei em ${quantidadeDePalpites} ${quantidadeDePalpites === 1 ? 'tentativa' : 'tentativas'}`
             : 'Essa era a carta de hoje'}
         </h2>
-        {trilha.length > 1 && (
-          <p className="mt-1 font-mono text-xs text-tinta-3">
-            {trilha.join(' → ')} <span className="font-sans">candidatas</span>
-          </p>
-        )}
 
         <p className="mt-2">
           <span
@@ -123,6 +119,12 @@ export function PainelDeFim({
             </span>
           )}
         </p>
+
+        {/*
+          Sem linha nenhuma quando o contador não respondeu: "— pessoas
+          resolveram" é pior que silêncio, e o jogo não depende dele.
+        */}
+        {resolvidos !== null && <p className="mt-2 text-sm text-tinta-3">{resolvidos}</p>}
       </div>
 
       {emTreino ? (

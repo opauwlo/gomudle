@@ -6,7 +6,7 @@ import { TINTA_DA_COR } from './cores'
 interface Props {
   carta: Carta
   className?: string
-  /** Estilo aplicado na <img>, usado pelo modo arte pra dar zoom. */
+  /** Estilo aplicado na <img>. O modo arte usa pra recortar a janela nítida. */
   estiloDaImagem?: React.CSSProperties
   /**
    * No modo arte a carta é o enigma: nem o `alt`, nem o aviso de falha, nem a
@@ -30,6 +30,13 @@ interface Props {
    * prioridade alta em tudo é prioridade normal em tudo.
    */
   prioritaria?: boolean
+  /**
+   * Avisa que a imagem terminou de carregar, entregando o elemento já
+   * decodificado. O modo arte desenha o mosaico a partir dele — mesma imagem
+   * que já está na tela, sem segunda requisição e sem precisar saber de CDN
+   * nem da fila de fontes.
+   */
+  aoCarregar?: (imagem: HTMLImageElement) => void
   aoFalhar?: () => void
 }
 
@@ -45,8 +52,9 @@ interface Props {
  * As duas ficam no `background` da PRÓPRIA `<img>`: quando o arquivo de
  * verdade termina de baixar, o navegador pinta em cima e a troca acontece
  * sozinha, sem estado, sem segunda tag e sem um quadro de tela vazia no meio.
- * O `cover` acompanha o `object-cover` de quem chama, e o `transform` do modo
- * arte se aplica ao elemento inteiro — prévia e imagem final cortam igual.
+ * O `cover` acompanha o `object-cover` de quem chama, e o `clip-path` do modo
+ * arte recorta o elemento inteiro — prévia e imagem final cortam igual, então
+ * a janela já mostra alguma coisa antes de a arte de verdade chegar.
  */
 function fundoDeEspera(carta: Carta, identidadeOculta: boolean, previa?: string): string {
   const cores = coresDeEspera(carta, identidadeOculta)
@@ -87,6 +95,7 @@ export function ImagemDaCarta({
   compacta = false,
   tamanho = 'miniatura',
   prioritaria = false,
+  aoCarregar,
   aoFalhar,
 }: Props) {
   // A fonte é do jogo inteiro: se ela cair enquanto esta imagem está na tela,
@@ -173,6 +182,7 @@ export function ImagemDaCarta({
       // chegando juntas travam o campo de digitar por alguns quadros.
       decoding="async"
       draggable={false}
+      onLoad={(evento) => aoCarregar?.(evento.currentTarget)}
       onError={() => {
         const temOutraFonte = seletorDeFonte.registrarFalha(indice, carta.id)
         setTentada(indice + 1)

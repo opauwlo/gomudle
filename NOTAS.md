@@ -1,7 +1,9 @@
 # Gomudle
 
 Jogo diário de adivinhar carta do One Piece Card Game. Página estática, sem
-backend, sem conta: tudo roda no navegador e o progresso mora no localStorage.
+backend próprio, sem conta: tudo roda no navegador e o progresso mora no
+localStorage. As duas coisas que saem daqui são a arte (por CDN de imagem) e o
+contador de quem já resolveu — as duas falham caladas. Ver a 21 e a 23.
 
 **Tudo aqui é escrito em português** — comentário, copy, commit, nome de
 arquivo e de função. Só o que vem do dataset (nome de carta, tipo, texto de
@@ -58,6 +60,8 @@ src/jogo/                  regra de jogo, tudo puro e testado
   dicas.ts                 a escada de dicas que a pessoa PEDE, fraca -> forte
   compartilhar.ts          grade de emoji do Wordle
   imagens.ts               de onde vem a arte: CDN, tamanho por uso, fila de fontes
+  arte.ts                  a escada do modo arte: mosaico e janela nítida
+  contador.ts              quantas pessoas resolveram hoje (o único número de fora)
   useRodada.ts             o único arquivo de jogo/ que usa React
 src/componentes/           UI
   icones.ts                o único arquivo que conhece a biblioteca de ícones
@@ -300,9 +304,13 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    QUAIS cartas sobraram acaba com o jogo em um clique — e conta grade E dica
    juntas, senão pedir dica não mexe no número e a ajuda parece de graça (ver
    `Cerco` em `jogo/candidatas.ts`, que continua lá inteiro e testado).
-   **O afunilamento não sumiu do jogo**, só da rodada em andamento: ele aparece
-   no fim ("1.111 → 41 → 6") e na mensagem de compartilhar, que é onde ele
-   conta a história em vez de ocupar espaço.
+   **O afunilamento saiu da tela inteira.** Ele ainda apareceu um tempo no fim
+   da rodada e na mensagem de compartilhar ("1.111 → 41 → 6"), e saiu de lá
+   também: no painel de fim quem acabou de jogar quer ver a CARTA e o placar,
+   não uma conta de quantas candidatas sobravam a cada chute; no print, a
+   sequência de números competia com a grade de emoji, que já conta a rodada. A
+   conta continua em `trilhaDeCandidatas` (`jogo/candidatas.ts`), testada, pra
+   quem quiser trazer de volta.
 
 20. **A grade é planilha de MARCAS, não de valores.** Um cabeçalho só, grudado
    no topo, a primeira coluna é só a arte e cada célula tem só ✓ / ✕ / ▲ / ▼ /
@@ -351,10 +359,10 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    (b) **a qualidade do WebP é por uso.** 76 foi calibrado num retângulo de
    40px, onde ninguém vê artefato. O modo arte põe uma lupa de 3× em cima do
    mesmo artefato — lá é 90.
-   O que isso NÃO resolve: 600px mostrados em 1536 (celular 2× no zoom máximo)
-   continua sendo ampliar 2,5×. Não existe pixel além do nativo. Se um dia a
-   nitidez do primeiro palpite ainda incomodar, o lugar de mexer é a escala
-   inicial em `jogo/arte.ts`, que é decisão de jogo — ver a 22.
+   O que isso NÃO resolvia: 600px mostrados em 1536 (celular 2× no zoom
+   máximo) continua sendo ampliar 2,5×, e não existe pixel além do nativo. Era
+   o teto do zoom, e foi o que acabou com ele — ver a 22, onde a janela nítida
+   exibe a arte MENOR que o nativo e o embaçado some de vez.
 
    **A arte fica guardada no aparelho, e o service worker NÃO toca no app.**
    O endereço da imagem carrega código da carta, largura e qualidade, então
@@ -381,7 +389,8 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    das cores da carta. Quando o arquivo de verdade termina de baixar, o
    navegador pinta por cima e a troca acontece sozinha: **sem estado, sem
    segunda tag, sem um quadro de tela vazia no meio**. Como é a mesma
-   `<img>`, o `transform` do modo arte corta a prévia e a final igual.
+   `<img>`, o `clip-path` do modo arte recorta a prévia e a final igual: a
+   janela já mostra alguma coisa antes de a arte de verdade chegar.
    A miniatura NÃO tem prévia, de propósito: ela já tem 64px e chega em poucos
    kB, então ali seria uma requisição a mais pra economizar nada — e a lista de
    busca mostra doze de uma vez. A fonte que não redimensiona também não tem:
@@ -394,12 +403,63 @@ A regra: `src/jogo/` (menos `useRodada.ts`) não importa React nem toca em DOM.
    pessoa está olhando agora. O modo arte pede o tamanho grande dele, o que
    custa uns 150 kB pra quem nunca troca de modo: é o preço de aquele modo, que
    é uma imagem em tela cheia, abrir pronto.
-22. **O modo arte abre em 3×, não em 7,5×.** Zoom demais não é dificuldade, é
-   sorteio: o que aparecia era uma mancha colorida, sem traço nem cenário pra
-   deduzir, e ainda por cima feia — ampliar tanto estica um punhado de pixels
-   da origem pela tela inteira. A escada agora vai de 3× a 1,08×, com desfoque
-   leve que some no quarto passo, e a dificuldade mora no RECORTE. Ver
-   `jogo/arte.ts`, que é onde ela é testada.
+22. **O modo arte não dá mais zoom: mostra a carta inteira em mosaico e abre
+   uma janela nítida.** As duas versões de zoom (7,5×, depois 3×, com desfoque
+   por cima) eram embaçadas por construção, e não tinha conserto: a arte tem
+   600px de largura e é tudo que existe, então mostrar um terço dela num painel
+   de 256px estica ~200px por 768 — 1536 num celular 2×. Ampliar não inventa
+   pixel.
+   Agora a carta aparece inteira, pixelada em blocos grossos, e o que a escada
+   abre é uma JANELA: dentro dela a mesma `<img>`, sem `transform` nenhum,
+   exibida MENOR que o nativo — que é a maior nitidez que a origem tem pra dar.
+   Cada erro alarga a janela (24% a 58% da largura) e afina o mosaico (13 a 34
+   blocos). Ver `jogo/arte.ts`, que é onde a escada é testada.
+   **O mosaico é desenhado num canvas, não pedido ao CDN.** Seria mais curto
+   pedir a mesma arte em 13px de largura e esticar com `image-rendering:
+   pixelated`, mas aí o enigma dependeria de o CDN estar de pé: a terceira
+   fonte da fila é o site oficial, que não redimensiona nada, e ela devolveria
+   a carta inteira em tamanho de impressão. O modo abriria com a resposta na
+   tela. Desenhando aqui, o mosaico sai da imagem que já chegou, seja de qual
+   fonte for, e não custa requisição nenhuma. O canvas fica contaminado (outra
+   origem, sem CORS) e tudo bem: contaminação proíbe LER pixel, não desenhar.
+   **A janela pode nascer em qualquer canto, menos embaixo.** Antes o foco
+   ficava preso no miolo (x de 28 a 72, y de 22 a 61) porque perto da borda o
+   zoom caía na moldura. Com a carta inteira na tela isso virou pista: o canto
+   de cima à esquerda é o custo, o de cima à direita é o poder e o atributo, a
+   borda é a cor — as mesmas colunas que os outros modos comparam. O que a
+   janela NUNCA alcança é a faixa de baixo (`LIMITE_DA_ARTE`, 60%): dali pra
+   baixo a carta impressa vira texto — caixa de efeito, categoria, nome e
+   código. O nome é o gabarito, e duas linhas de efeito são o gabarito de quem
+   sabe pesquisar. Isso foi medido na tela: com o limite em 72% dava pra LER o
+   efeito do dia dentro da janela.
+
+23. **O contador de quem resolveu é o único número que vem de fora — e ele é
+   enfeite.** O jogo não tem backend e não vai ter (a 21 explica por que a arte
+   já mora em terceiro). Contar gente exige lugar compartilhado, então entrou um
+   serviço público de contador, o Abacus: duas rotas `GET`, sem conta e sem
+   chave — `/hit` soma 1 e devolve o total, `/get` só lê. Uma chave por desafio
+   (`modo-formato-dia`), o que zera o número à meia-noite sem ninguém limpar
+   nada lá.
+   **Três coisas dessa escolha, escritas antes de sumirem da memória:**
+   (a) **dá pra inflar** — a rota é pública, quem abrir o endereço soma 1. É
+   placar de jogo de fã, não urna, e a alternativa era não ter contador.
+   (b) **terceiro fecha** — o CountAPI, que fazia isso antes, fechou. Por isso
+   `jogo/contador.ts` devolve `null` em QUALQUER tropeço (rede, 500, JSON
+   estranho, sem `fetch`) e a linha some da tela. Nada de "— pessoas
+   resolveram", nada de recado de erro, e o jogo não espera por ele.
+   (c) **vaza IP e qual desafio** — quem pede é o navegador de quem joga.
+   `no-referrer` corta o endereço da página; o resto é o que toda requisição
+   carrega.
+   **Soma uma vez por pessoa por desafio, e isso exige DUAS travas.** A
+   persistente é `contabilizada` na rodada salva, que segura o F5 e morre junto
+   com a rodada quando o dia vira. A outra é um `Set` de módulo em
+   `useRodada.ts`, e ela não é luxo: o `StrictMode` roda todo efeito duas vezes
+   em desenvolvimento, e sem ele cada acerto somaria 2 no número de todo mundo —
+   estado do React não serve de trava porque as duas execuções acontecem antes
+   de qualquer re-renderização. A marca só entra DEPOIS de o serviço responder:
+   pedido que falhou não foi contado, e a próxima carga tenta de novo.
+   **Só com a rodada encerrada.** Durante o jogo o número não ajuda a deduzir
+   nada e ainda mete pressão. Treino nunca conta: não é o desafio do dia.
 
 ## Armadilhas
 

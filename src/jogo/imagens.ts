@@ -40,10 +40,11 @@ export interface FonteDeImagem {
  * abaixo de 70 aparece sujeira no contorno da arte, que em carta chapada com
  * traço preto salta aos olhos. Vale pra miniatura e pro cartão.
  *
- * No modo arte não vale: lá a imagem enche a tela e ainda leva até 3× de zoom
- * por cima, que é uma lupa em cima do artefato de compressão. O que numa
- * miniatura de 40px ninguém vê, ali vira borrão em volta do traço. 90 é caro
- * em bytes, mas é UMA imagem por rodada e ela é a tela inteira do modo.
+ * No modo arte não vale: ali a janela nítida mostra a arte quase pixel a pixel
+ * num celular 2× (600px de origem em 512px de tela), e é essa nitidez que o
+ * modo vende. O que numa miniatura de 40px ninguém vê, ali aparece em volta do
+ * traço. 90 é caro em bytes, mas é UMA imagem por rodada e ela é a tela
+ * inteira do modo.
  */
 const QUALIDADE: Record<TamanhoDaImagem, number> = {
   miniatura: 76,
@@ -91,17 +92,14 @@ const TETO_NATIVO = 600
 /**
  * Largura pedida ao CDN pro 1×, em px. O 2× é o dobro, limitado ao teto.
  *
- * `arte` pede o nativo inteiro porque o painel do modo arte amplia a imagem em
- * até 3× (ver `jogo/arte.ts`), e aí todo pixel que existe é usado. Já foi 360,
- * no entendimento de que isso já passava do nativo — não passava, o nativo é
- * 600. O estrago era na tela 1×: o navegador escolhe do `srcSet` pelo tamanho
- * de LAYOUT da imagem, e o `transform: scale()` não entra nessa conta. Ele via
- * uma imagem de 256px, pegava a variante de 360, e só então o zoom esticava
- * aquilo pra 768px. Pedindo 600 de saída, o 1× já recebe o máximo que existe.
+ * `arte` pede o nativo inteiro porque a janela do modo arte (ver `jogo/arte.ts`)
+ * mostra a imagem sem ampliar nenhum: quanto mais pixel a origem der, mais
+ * nítida ela fica. Já foi 360, no entendimento de que isso já passava do
+ * nativo — não passava, o nativo é 600.
  *
- * Isso não elimina a ampliação: 600px mostrados em 768 (ou 1536 num celular
- * 2×) ainda é esticar. Só que agora estica o nativo, que é o melhor que a
- * origem tem — antes esticava um recorte de 60% dele.
+ * Com 600 de saída não sobra ampliação em lugar nenhum: o painel tem 256px de
+ * layout, 512 num celular 2×, e os dois cabem no nativo. Foi o zoom que saiu do
+ * modo, justamente porque ampliar não tinha como ficar nítido.
  */
 const LARGURA: Record<TamanhoDaImagem, number> = {
   miniatura: 64,

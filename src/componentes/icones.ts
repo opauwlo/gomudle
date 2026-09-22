@@ -11,7 +11,6 @@ import {
   Lock,
   Share2,
   Shuffle,
-  Skull,
   X,
   type LucideIcon,
 } from 'lucide-react'
@@ -30,7 +29,6 @@ export const ICONE = {
   ajuda: CircleQuestionMark,
   estatisticas: ChartColumn,
   fechado: Lock,
-  vitoria: Skull,
   compartilhar: Share2,
   treino: Shuffle,
   sequencia: Flame,
