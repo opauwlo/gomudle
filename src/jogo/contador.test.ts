@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   chaveDoDesafio,
   contarResolvidos,
@@ -8,6 +8,36 @@ import {
   lerContagem,
   type Buscar,
 } from './contador'
+
+/**
+ * Nenhum teste daqui fala com a rede — e isto é trava, não zelo.
+ *
+ * `contarResolvidos` cai no `fetch` do ambiente quando ninguém passa um. O
+ * teste do "sem fetch" passava `undefined` achando que estava passando nada:
+ * argumento `undefined` ATIVA o valor padrão do parâmetro, então o que rodou
+ * foi o `fetch` de verdade. Aqui, sem rede, ele falhava e devolvia `null` — o
+ * teste passava pelo motivo errado. No CI, com internet, o `/hit` foi pra
+ * valer: somou 1 no contador público, devolveu `{"value": 1}` e o teste quebrou.
+ *
+ * Explodir no `fetch` global não basta: `contarResolvidos` engole exceção de
+ * propósito, então o teste esquecido continuaria passando — devolvendo `null`
+ * pelo motivo errado de novo. Por isso a trava também ANOTA a tentativa, e o
+ * `afterEach` reprova quem encostou na rede.
+ */
+let tentouARede = false
+
+beforeEach(() => {
+  tentouARede = false
+  vi.stubGlobal('fetch', () => {
+    tentouARede = true
+    throw new Error('teste não fala com a rede: injete um `Buscar` falso')
+  })
+})
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+  expect(tentouARede, 'o teste caiu no fetch do ambiente em vez do falso').toBe(false)
+})
 
 /** Resposta de mentira, só com o que `contarResolvidos` olha. */
 const resposta = (corpo: unknown, status = 200): Response =>
@@ -100,8 +130,11 @@ describe('contarResolvidos', () => {
     expect(await contarResolvidos('chave', true, semJson)).toBeNull()
   })
 
+  // Navegador antigo, ou qualquer ambiente sem `fetch`: o jogo não pode cair
+  // por causa do contador.
   it('sem fetch no ambiente, devolve nada em vez de explodir', async () => {
-    expect(await contarResolvidos('chave', true, undefined as unknown as Buscar)).toBeNull()
+    vi.stubGlobal('fetch', undefined)
+    expect(await contarResolvidos('chave', true)).toBeNull()
   })
 })
 
