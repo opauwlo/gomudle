@@ -174,9 +174,9 @@ export const MODOS: Modo[] = [
     id: 'arte',
     nome: 'Arte',
     emojiDeCompartilhamento: '🖼️',
-    chamada: 'Só um pedaço da arte. Que carta é?',
+    chamada: 'A carta inteira, em blocos. Que carta é?',
     comoJoga:
-      'Começa num pedaço da arte, fora de foco. Cada erro afasta a câmera e solta uma dica.',
+      'A carta aparece pixelada, com um pedaço nítido. Cada erro alarga o pedaço, afina o mosaico e solta uma dica.',
     descricaoDoDeck: 'líderes e personagens',
     deck: comArte,
     colunas: [],
